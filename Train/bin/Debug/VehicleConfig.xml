@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<VehicleConfig>
+  <Locomotive weight="20" load="15" length="20" motornumber="1" />
+  <Trailer weight="20" load="15" length="20" />
+  <Resistance coefficientA="0" coefficientB="0" coefficientC="0" />
+  <Organization locomotivenumber="2" trailernumber="1" totalLength="140000"/>
+  <!-- left: EndB(End2)       right:EndA(End1)-->
+  <BeaconAntennaLoc disFromLeftHead="19270" disFromRightHead="19270"/>
+  <Traction number="14">
+    <Date velocity="0" traction="47" />
+    <Date velocity="10" traction="47" />
+    <Date velocity="20" traction="47" />
+    <Date velocity="30" traction="47" />
+    <Date velocity="40" traction="47" />
+    <Date velocity="50" traction="42" />
+    <Date velocity="60" traction="37" />
+    <Date velocity="70" traction="30" />
+    <Date velocity="80" traction="22.5" />
+    <Date velocity="90" traction="20" />
+    <Date velocity="100" traction="18" />
+    <Date velocity="110" traction="17" />
+    <Date velocity="120" traction="16" />
+    <Date velocity="130" traction="15" />
+  </Traction>
+  <Brake number="11">
+    <Date velocity="0" brake="110" />
+    <Date velocity="10" brake="150" />
+    <Date velocity="20" brake="150" />
+    <Date velocity="30" brake="150" />
+    <Date velocity="40" brake="150" />
+    <Date velocity="50" brake="150" />
+    <Date velocity="60" brake="150" />
+    <Date velocity="70" brake="110" />
+    <Date velocity="80" brake="95" />
+    <Date velocity="90" brake="90" />
+    <Date velocity="100" brake="85" />
+  </Brake>
+  <!--将电流值除以电流最大值，归一化(-1~1)，加速度单位m/s2-->
+  <Acceleration number="7" type="CSC">
+    <Point  normI="0" a="0"/>
+    <Point  normI="0.2" a="0"/>
+    <Point  normI="0.9" a="1.3"/>
+    <Point  normI="1" a="1.3"/>
+    <Point  normI="-0.2" a="0"/>
+    <Point  normI="-0.9" a="-1.3"/>
+    <Point  normI="-1" a="-1.3"/>
+  </Acceleration>
+  <Acceleration number="3" type="TST">
+    <Point  normI="0" a="0"/>
+    <Point  normI="1" a="1.2"/>
+    <Point  normI="-1" a="-1.15"/>
+  </Acceleration>
+</VehicleConfig>
