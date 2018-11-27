@@ -49,8 +49,10 @@ namespace Train.Messages
             }
             NID_LRBG = resultArray[4];
 
-            p15.Resolve(bitArray, ref pos);
+            bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
+            p15.Resolve(bitArray);
             ap = AbstractPacket.GetPacket(ID);
+            pos = p15.GetPacketLength();
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
             ap.Resolve(bitArray);
         }

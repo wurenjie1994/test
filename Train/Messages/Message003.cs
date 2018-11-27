@@ -45,10 +45,13 @@ namespace Train.Messages
                 M_ACK = false;
             }
             NID_LRBG = resultArray[4];
-
-            p15.Resolve(bitArray, ref pos);
-            ap = AbstractPacket.GetPacket(ID);
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
+            p15.Resolve(bitArray);
+            pos = p15.GetPacketLength();
+            bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
+            int start = 0;
+            ID = Bits.ToInt(bitArray, ref start, 8);
+            ap = AbstractPacket.GetPacket(ID);
             ap.Resolve(bitArray);
         }
         public override int GetMessageID()

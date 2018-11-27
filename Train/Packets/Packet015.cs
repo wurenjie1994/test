@@ -24,10 +24,10 @@ namespace Train.Packets
         int[] T_SECTIONTIMER;       //10bit
         int[] D_SECTIONTIMERSTOPLOC;//15bit
         int L_ENDSECTION;           //15bit
-        bool Q_SECTIONTIMER_BASE;
-        int T_SECTIONTIMER_BASE;
-        int D_SECTIONTIMERSTOPLOC_BASE;
-        bool Q_ENDTIMER;            //1bit
+        bool Q_ENDSECTIONTIMER;       //末区段有效时间信息
+        int T_ENDSECTIONTIMER;
+        int D_ENDSECTIONTIMERSTOPLOC;
+        bool Q_ENDTIMER;            //1bit     末区段保持时间信息
         int T_ENDTIMER;             //10bit
         int D_ENDTIMERSTARTLOC;     //15bit
         bool Q_DANGERPOINT;         //1bit
@@ -39,115 +39,131 @@ namespace Train.Packets
         int D_OL;                   //15bit
         int V_RELEASEOL;            //7bit
 
-        public const int LOC = 6;
-        public const int ITER = 4;
-
-        public override void Resolve(BitArray bitArray,ref int pos)
+        public override void Resolve(BitArray bitArray)
         {
-            int[] intArray = new int[] { 8, 2, 13, 2, 7, 10, 5, 15, 1, 10, 15, 15, 1, 10, 15, 1, 10, 15, 1, 15, 7, 1, 15, 10, 15, 7 };
-            int Len = intArray.Length;
-            int[] resultArray = new int[Len];
-            int i = 0;
-            for (i = 0; i < Len; i++)
+            int pos = 0;
+            NID_PACKET = Bits.ToInt(bitArray, ref pos, 8);
+            Q_DIR = Bits.ToInt(bitArray, ref pos, 2);
+            L_PACKET = Bits.ToInt(bitArray, ref pos, 13);
+            Q_SCALE = Bits.ToInt(bitArray, ref pos, 2);
+            V_LOA = Bits.ToInt(bitArray, ref pos, 7);
+            T_LOA = Bits.ToInt(bitArray, ref pos, 10);
+            //普通区段相关信息
+            N_ITER = Bits.ToInt(bitArray, ref pos, 5);
+            L_SECTION = new int[N_ITER];
+            Q_SECTIONTIMER = new bool[N_ITER];
+            T_SECTIONTIMER = new int[N_ITER];
+            D_SECTIONTIMERSTOPLOC = new int[N_ITER];
+            for(int i = 0; i < N_ITER; i++)
             {
-                resultArray[i] = Bits.ToInt(bitArray, ref pos, intArray[i]);
-
-                if ((i == 12) || (i == 15) || (i == 18) && (resultArray[i] != 1))
+                L_SECTION[i] = Bits.ToInt(bitArray, ref pos, 15);
+                Q_SECTIONTIMER[i] = bitArray[pos++];
+                if (Q_SECTIONTIMER[i] == true)
                 {
-                    i += 2;
-                    continue;
-                }
-                if ((i == 21) && (resultArray[i] != 1))
-                {
-                    i += 4;
-                    continue;
-                }
-
-                if ((i == LOC) && (resultArray[LOC] == 0))
-                {
-                    i += ITER;
-                    continue;
-                }
-
-                if (i == LOC + ITER)
-                {
-                    L_SECTION = new int[resultArray[LOC]];
-                    Q_SECTIONTIMER = new bool[resultArray[LOC]];
-                    T_SECTIONTIMER = new int[resultArray[LOC]];
-                    D_SECTIONTIMERSTOPLOC = new int[resultArray[LOC]];
-
-                    L_SECTION[0] = resultArray[LOC + 1];
-                    if (resultArray[LOC + 2] == 1)
-                    {
-                        Q_SECTIONTIMER[0] = true;
-                    }
-                    T_SECTIONTIMER[0] = resultArray[LOC + 3];
-                    D_SECTIONTIMERSTOPLOC[0] = resultArray[LOC + 4];
-
-                    for (int j = 1; j < resultArray[LOC]; j++)
-                    {
-                        L_SECTION[j] = Bits.ToInt(bitArray, ref pos, intArray[LOC + 1]);
-                        Q_SECTIONTIMER[j] = bitArray.Get(pos);
-                        pos += 1;
-                        if (Q_SECTIONTIMER[j] == true)
-                        {
-                            T_SECTIONTIMER[j] = Bits.ToInt(bitArray, ref pos, intArray[LOC + 3]);
-                            D_SECTIONTIMERSTOPLOC[j] = Bits.ToInt(bitArray, ref pos, intArray[LOC + 4]);
-                        }
-                    }
+                    T_SECTIONTIMER[i]= Bits.ToInt(bitArray, ref pos, 10);
+                    D_SECTIONTIMERSTOPLOC[i]= Bits.ToInt(bitArray, ref pos, 15);
                 }
             }
-
-            NID_PACKET = resultArray[0];
-            Q_DIR = resultArray[1];
-            L_PACKET = resultArray[2];
-            Q_SCALE = resultArray[3];
-            V_LOA = resultArray[4];
-            T_LOA = resultArray[5];
-            N_ITER = resultArray[6];
-            L_ENDSECTION = resultArray[11];
-            if (resultArray[12] == 1)
+            //末区段相关信息
+            L_ENDSECTION = Bits.ToInt(bitArray, ref pos, 15);
+            //末区段有效时间
+            Q_ENDSECTIONTIMER = bitArray[pos++];
+            if (Q_ENDSECTIONTIMER)
             {
-                Q_SECTIONTIMER_BASE = true;
+                T_ENDSECTIONTIMER = Bits.ToInt(bitArray, ref pos, 10);
+                D_ENDSECTIONTIMERSTOPLOC = Bits.ToInt(bitArray, ref pos, 15);
             }
-            else
+            //末区段保持时间
+            Q_ENDTIMER = bitArray[pos++];
+            if (Q_ENDTIMER)
             {
-                Q_SECTIONTIMER_BASE = false;
+                T_ENDTIMER = Bits.ToInt(bitArray, ref pos, 10);
+                D_ENDTIMERSTARTLOC = Bits.ToInt(bitArray, ref pos, 15);
             }
-            T_SECTIONTIMER_BASE = resultArray[13];
-            D_SECTIONTIMERSTOPLOC_BASE = resultArray[14];
-            if (resultArray[15] == 1)
+            //危险点信息
+            Q_DANGERPOINT = bitArray[pos++];
+            if (Q_DANGERPOINT)
             {
-                Q_ENDTIMER = true;
+                D_DP = Bits.ToInt(bitArray, ref pos, 15);
+                V_RELEASEDP = Bits.ToInt(bitArray, ref pos, 7);
             }
-            else
+            //保护区段信息
+            Q_OVERLAP = bitArray[pos++];
+            if (Q_OVERLAP)
             {
-                Q_ENDTIMER = false;
+                D_STARTOL = Bits.ToInt(bitArray, ref pos, 15);
+                T_OL = Bits.ToInt(bitArray, ref pos, 10);
+                D_OL = Bits.ToInt(bitArray, ref pos, 15);
+                V_RELEASEOL = Bits.ToInt(bitArray, ref pos, 7);
             }
-            T_ENDTIMER = resultArray[16];
-            D_ENDTIMERSTARTLOC = resultArray[17];
-            if (resultArray[18] == 1)
-            {
-                Q_DANGERPOINT = true;
-            }
-            else
-            {
-                Q_DANGERPOINT = false;
-            }
-            D_DP = resultArray[19];
-            V_RELEASEDP = resultArray[20];
-            if (resultArray[21] == 1)
-            {
-                Q_OVERLAP = true;
-            }
-            else
-            {
-                Q_OVERLAP = false;
-            }
-            D_STARTOL = resultArray[22];
-            T_OL = resultArray[23];
-            D_OL = resultArray[24];
-            V_RELEASEOL = resultArray[25];
         }
+
+        public void SetValueTo(MA ma)
+        {
+            ma.VLOA = V_LOA * 5 / 3.6;  //  化为m/s
+            if (T_LOA == 1023) ma.TLOA = int.MaxValue; //表示时间不受限制，使用int最大值能保证不会超时
+            else ma.TLOA = T_LOA;
+            if (Q_SCALE == 3) throw new InvalidValueException("Q_SCALE=3");
+            double scale = 0.1 * Math.Pow(10, Q_SCALE);    //使距离/长度统一使用米为单位
+            for(int i = 0; i < N_ITER; i++)
+            {
+                ma.SectionLengthList.Add(L_SECTION[i]*scale);
+                ma.SectionTimerExistsList.Add(Q_SECTIONTIMER[i]);
+                if (Q_SECTIONTIMER[i])
+                {
+                    if (T_SECTIONTIMER[i] == 1023) ma.SectionTimerList.Add(int.MaxValue);
+                    else ma.SectionTimerList.Add(T_SECTIONTIMER[i]);
+                    ma.SectionTimerStopLocList.Add(D_SECTIONTIMERSTOPLOC[i] * scale);
+                }
+                else
+                {   //这只是为了在List中占个位置，实际其值不能被使用
+                    ma.SectionTimerList.Add(-1);
+                    ma.SectionTimerStopLocList.Add(-1);
+                }
+            }
+
+            ma.EndSectionLength = L_ENDSECTION * scale;
+            ma.EndSectionTimerExists = Q_ENDSECTIONTIMER;
+            if (Q_ENDSECTIONTIMER)
+            {
+                if (T_ENDSECTIONTIMER == 1023) ma.EndSectionTimer = int.MaxValue;
+                else ma.EndSectionTimer = T_ENDSECTIONTIMER;
+                ma.EndSectionTimerStopLoc = D_ENDSECTIONTIMERSTOPLOC * scale;
+            }
+            else
+            {
+                //此时不填无效值也可以，实际在类MA中不会被用到
+            }
+            ma.EndTimerExists = Q_ENDTIMER;
+            if (Q_ENDTIMER)
+            {
+                if (T_ENDTIMER == 1023) ma.EndTimer = int.MaxValue;
+                else ma.EndTimer = T_ENDTIMER;
+                ma.EndTimerStartLoc = D_ENDTIMERSTARTLOC * scale;
+            }
+            else { }
+
+            ma.DpExists = Q_DANGERPOINT;
+            if (Q_DANGERPOINT)
+            {
+                ma.DpLength = D_DP * scale;
+                ma.VReleaseDP = V_RELEASEDP * 5 / 3.6;
+            }
+
+            ma.OverlapExists = Q_OVERLAP;
+            if (Q_OVERLAP)
+            {
+                ma.OlStart = D_STARTOL * scale;
+                if (T_OL == 1023) ma.OlTimer = int.MaxValue;
+                else ma.OlTimer = T_OL;
+                ma.OlLength = D_OL * scale;
+                ma.VReleaseOL = V_RELEASEOL * 5 / 3.6;
+            }
+        }
+
+
+
+
+        public int GetPacketLength() { return L_PACKET; }
     }
 }

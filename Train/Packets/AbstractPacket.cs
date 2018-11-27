@@ -13,10 +13,7 @@ namespace Train.Packets
         {
             throw new NotSupportedException();
         }
-        public virtual void Resolve(BitArray bitArray, ref int position)
-        {
-            throw new NotSupportedException();
-        }
+
         /// <summary>
         /// 车到地信息包需要覆盖此方法
         /// </summary>

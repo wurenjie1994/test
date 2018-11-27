@@ -50,6 +50,7 @@
     <Compile Include="Data\RBCToTrainData.cs" />
     <Compile Include="Data\TrainToRBCData.cs" />
     <Compile Include="GlobalVariables.cs" />
+    <Compile Include="MA.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +136,7 @@
     <Compile Include="Trains\TrainDynamics.cs" />
     <Compile Include="Utilities\Bits.cs" />
     <Compile Include="Utilities\DebugInfo.cs" />
+    <Compile Include="Utilities\Exceptions.cs" />
     <Compile Include="Utilities\IniFile.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
