@@ -61,18 +61,12 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.gbTrainLocation = new System.Windows.Forms.GroupBox();
-            this.groupBox14 = new System.Windows.Forms.GroupBox();
-            this.lblRightSegOffset = new System.Windows.Forms.Label();
-            this.lblRightSegID = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.lblLeftSegOffset = new System.Windows.Forms.Label();
-            this.lblLeftSegID = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblTrainLeftLoc = new System.Windows.Forms.Label();
+            this.lblTrainRightLoc = new System.Windows.Forms.Label();
             this.gbDriverConsoler.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbSteer.SuspendLayout();
@@ -82,8 +76,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudAccSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).BeginInit();
             this.gbTrainLocation.SuspendLayout();
-            this.groupBox14.SuspendLayout();
-            this.groupBox13.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbDriverConsoler
@@ -456,112 +448,16 @@
             // 
             // gbTrainLocation
             // 
-            this.gbTrainLocation.Controls.Add(this.groupBox14);
-            this.gbTrainLocation.Controls.Add(this.groupBox13);
+            this.gbTrainLocation.Controls.Add(this.label2);
+            this.gbTrainLocation.Controls.Add(this.lblTrainRightLoc);
+            this.gbTrainLocation.Controls.Add(this.lblTrainLeftLoc);
+            this.gbTrainLocation.Controls.Add(this.label1);
             this.gbTrainLocation.Location = new System.Drawing.Point(355, 394);
             this.gbTrainLocation.Name = "gbTrainLocation";
-            this.gbTrainLocation.Size = new System.Drawing.Size(192, 206);
+            this.gbTrainLocation.Size = new System.Drawing.Size(192, 173);
             this.gbTrainLocation.TabIndex = 10;
             this.gbTrainLocation.TabStop = false;
             this.gbTrainLocation.Text = "位置信息：";
-            // 
-            // groupBox14
-            // 
-            this.groupBox14.Controls.Add(this.lblRightSegOffset);
-            this.groupBox14.Controls.Add(this.lblRightSegID);
-            this.groupBox14.Controls.Add(this.label13);
-            this.groupBox14.Controls.Add(this.label14);
-            this.groupBox14.Location = new System.Drawing.Point(15, 120);
-            this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(157, 69);
-            this.groupBox14.TabIndex = 0;
-            this.groupBox14.TabStop = false;
-            this.groupBox14.Text = "端车B";
-            // 
-            // lblRightSegOffset
-            // 
-            this.lblRightSegOffset.AutoSize = true;
-            this.lblRightSegOffset.Location = new System.Drawing.Point(98, 41);
-            this.lblRightSegOffset.Name = "lblRightSegOffset";
-            this.lblRightSegOffset.Size = new System.Drawing.Size(11, 12);
-            this.lblRightSegOffset.TabIndex = 1;
-            this.lblRightSegOffset.Text = "0";
-            // 
-            // lblRightSegID
-            // 
-            this.lblRightSegID.AutoSize = true;
-            this.lblRightSegID.Location = new System.Drawing.Point(98, 19);
-            this.lblRightSegID.Name = "lblRightSegID";
-            this.lblRightSegID.Size = new System.Drawing.Size(11, 12);
-            this.lblRightSegID.TabIndex = 1;
-            this.lblRightSegID.Text = "0";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(46, 41);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(41, 12);
-            this.label13.TabIndex = 2;
-            this.label13.Text = "偏移：";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(46, 19);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(29, 12);
-            this.label14.TabIndex = 3;
-            this.label14.Text = "ID：";
-            // 
-            // groupBox13
-            // 
-            this.groupBox13.Controls.Add(this.lblLeftSegOffset);
-            this.groupBox13.Controls.Add(this.lblLeftSegID);
-            this.groupBox13.Controls.Add(this.label12);
-            this.groupBox13.Controls.Add(this.label11);
-            this.groupBox13.Location = new System.Drawing.Point(15, 30);
-            this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(156, 74);
-            this.groupBox13.TabIndex = 0;
-            this.groupBox13.TabStop = false;
-            this.groupBox13.Text = "端车A";
-            // 
-            // lblLeftSegOffset
-            // 
-            this.lblLeftSegOffset.AutoSize = true;
-            this.lblLeftSegOffset.Location = new System.Drawing.Point(97, 46);
-            this.lblLeftSegOffset.Name = "lblLeftSegOffset";
-            this.lblLeftSegOffset.Size = new System.Drawing.Size(11, 12);
-            this.lblLeftSegOffset.TabIndex = 1;
-            this.lblLeftSegOffset.Text = "0";
-            // 
-            // lblLeftSegID
-            // 
-            this.lblLeftSegID.AutoSize = true;
-            this.lblLeftSegID.Location = new System.Drawing.Point(97, 23);
-            this.lblLeftSegID.Name = "lblLeftSegID";
-            this.lblLeftSegID.Size = new System.Drawing.Size(11, 12);
-            this.lblLeftSegID.TabIndex = 1;
-            this.lblLeftSegID.Text = "0";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(45, 46);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(41, 12);
-            this.label12.TabIndex = 0;
-            this.label12.Text = "偏移：";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(45, 23);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(29, 12);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "ID：";
             // 
             // textBox1
             // 
@@ -579,6 +475,42 @@
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(35, 44);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "A端：";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(35, 70);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "B端：";
+            // 
+            // lblTrainLeftLoc
+            // 
+            this.lblTrainLeftLoc.AutoSize = true;
+            this.lblTrainLeftLoc.Location = new System.Drawing.Point(92, 47);
+            this.lblTrainLeftLoc.Name = "lblTrainLeftLoc";
+            this.lblTrainLeftLoc.Size = new System.Drawing.Size(11, 12);
+            this.lblTrainLeftLoc.TabIndex = 0;
+            this.lblTrainLeftLoc.Text = "0";
+            // 
+            // lblTrainRightLoc
+            // 
+            this.lblTrainRightLoc.AutoSize = true;
+            this.lblTrainRightLoc.Location = new System.Drawing.Point(92, 70);
+            this.lblTrainRightLoc.Name = "lblTrainRightLoc";
+            this.lblTrainRightLoc.Size = new System.Drawing.Size(11, 12);
+            this.lblTrainRightLoc.TabIndex = 0;
+            this.lblTrainRightLoc.Text = "0";
             // 
             // MainForm
             // 
@@ -606,10 +538,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudAccSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudSpeed)).EndInit();
             this.gbTrainLocation.ResumeLayout(false);
-            this.groupBox14.ResumeLayout(false);
-            this.groupBox14.PerformLayout();
-            this.groupBox13.ResumeLayout(false);
-            this.groupBox13.PerformLayout();
+            this.gbTrainLocation.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -649,19 +578,13 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.GroupBox gbTrainLocation;
-        private System.Windows.Forms.GroupBox groupBox14;
-        private System.Windows.Forms.Label lblRightSegOffset;
-        private System.Windows.Forms.Label lblRightSegID;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.GroupBox groupBox13;
-        private System.Windows.Forms.Label lblLeftSegOffset;
-        private System.Windows.Forms.Label lblLeftSegID;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.RadioButton rbCabNone;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTrainRightLoc;
+        private System.Windows.Forms.Label lblTrainLeftLoc;
+        private System.Windows.Forms.Label label1;
     }
 }
 

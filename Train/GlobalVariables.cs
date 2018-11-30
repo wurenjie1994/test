@@ -210,61 +210,39 @@ namespace Train
     }
     public class TrainLocation
     {
-        private int leftSegmentID;
-        private double leftSegmentOffset;  //以米为单位
-        private int rightSegmentID;
-        private double rightSegmentOffset;
+        private double leftLoc;  //列车左端位置，以米为单位
+        private double rightLoc;//列车右端位置
 
-        public int LeftSegmentID
+        public static String LocToString(double loc)
+        {
+            return String.Format("K{0}+{1:f2}", (int)(loc / 1000), loc % 1000);
+        }
+
+        public double LeftLoc
         {
             get
             {
-                return leftSegmentID;
+                return leftLoc;
             }
 
             set
             {
-                leftSegmentID = value;
+                leftLoc = value;
             }
         }
 
-        public double LeftSegmentOffset
+        public double RightLoc
         {
             get
             {
-                return leftSegmentOffset;
+                return rightLoc;
             }
 
             set
             {
-                leftSegmentOffset = value;
-            }
-        }
-
-        public int RightSegmentID
-        {
-            get
-            {
-                return rightSegmentID;
-            }
-
-            set
-            {
-                rightSegmentID = value;
-            }
-        }
-
-        public double RightSegmentOffset
-        {
-            get
-            {
-                return rightSegmentOffset;
-            }
-
-            set
-            {
-                rightSegmentOffset = value;
+                rightLoc = value;
             }
         }
     }
+
 }

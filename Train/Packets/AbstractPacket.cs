@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Train.Utilities;
 
 namespace Train.Packets
 {
@@ -35,6 +36,12 @@ namespace Train.Packets
             Object obj = t.GetConstructor(Type.EmptyTypes).Invoke(new Object[0]);
             AbstractPacket packet = (AbstractPacket)obj;
             return packet;
+        }
+
+        public double GetScale(int scale)
+        {
+            if (scale == 3) throw new InvalidValueException("Q_SCALE=3");
+            return 0.1 * Math.Pow(10, scale);
         }
     }
 }

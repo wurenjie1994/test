@@ -131,6 +131,10 @@
     <Compile Include="Packets\Packet140.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticSpeedLimits\ASP.cs" />
+    <Compile Include="StaticSpeedLimits\SSP.cs" />
+    <Compile Include="StaticSpeedLimits\StaticSpeedLimit.cs" />
+    <Compile Include="StaticSpeedLimits\TSR.cs" />
     <Compile Include="Trains\Switchlet.cs" />
     <Compile Include="Trains\Tracklet.cs" />
     <Compile Include="Trains\TrainDynamics.cs" />

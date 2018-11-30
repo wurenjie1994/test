@@ -22,7 +22,7 @@ namespace Train
         private void MainForm_Load(object sender, EventArgs e)
         {
             StartTrain();
-            StartComm();
+           // StartComm();
         }
 
         private void rbCabChoose_CheckedChanged(object sender, EventArgs e)
@@ -152,10 +152,8 @@ namespace Train
             //列车完整性
             trainState.TrainIntegrity = this.chkBoxTrainIntegrity.Checked;
             //列车位置
-            this.lblLeftSegID.Text = trainState.TrainLocation.LeftSegmentID.ToString();
-            this.lblLeftSegOffset.Text = (trainState.TrainLocation.LeftSegmentOffset).ToString("f2");
-            this.lblRightSegID.Text = trainState.TrainLocation.RightSegmentID.ToString();
-            this.lblRightSegOffset.Text = (trainState.TrainLocation.RightSegmentOffset).ToString("f2");
+            this.lblTrainLeftLoc.Text = TrainLocation.LocToString(trainState.TrainLocation.LeftLoc);
+            this.lblTrainRightLoc.Text = TrainLocation.LocToString(trainState.TrainLocation.RightLoc);
         }
         public void UpdateVehicleInterfaceFun()
         {

@@ -60,11 +60,11 @@ namespace Train.Trains
         private double currentA = 0;//当前加速度
         private double currentS1 = 0;//当前右车头距离
         private double currentS0 = 0;//当前左车头距离
-        private double prevS1, prevS0; //100ms前的偏移
+        private double prevS1, prevS0; //100ms前的位置
         private double displacement = 0; //总位移
         public double delT = 0.1;//时间步长
 
-        Tracklet prevLeftTracklet, prevRightTracklet;//100ms 前所在区段
+        public  const double LINE_LENGTH = 80 * 1000;//线路总长度
         Tracklet currentLeftTracklet , currentRightTracklet ;
         private List<int> trackletList = new List<int>();//当前列车所占的区段，以左车头到右车头的顺序放置
         private double deltaS = 0;
@@ -188,27 +188,39 @@ namespace Train.Trains
             double steerValue =MapSteerToCurrent(driverConsoler.SteerValue);
             double distance=CountTrain(EBStatus, FullServiceStatus, FastBrake, isLeftHead, b1,b2,currentV,currentA, driveDirection, steerValue);
             #region 计算列车位置
-            prevLeftTracklet = currentLeftTracklet;
-            prevRightTracklet = currentRightTracklet;
             prevS0 = currentS0;
             prevS1 = currentS1;
-                CalTrainLocation(distance);
+              CalTrainLocation(distance);
             {
                 trainState.Speed = currentV;
                 trainState.AccSpeed = currentA;
-                trainState.TrainLocation.LeftSegmentID = currentLeftTracklet.Id;
-                trainState.TrainLocation.LeftSegmentOffset = currentS0;
-                trainState.TrainLocation.RightSegmentID = currentRightTracklet.Id;
-                trainState.TrainLocation.RightSegmentOffset = currentS1;
+                trainState.TrainLocation.LeftLoc = currentS0;
+                trainState.TrainLocation.RightLoc = currentS1;
                 trainState.BrakeStatus = EBStatus || (steerValue < 0);
                 trainState.EBStatus = EBStatus;
             }
 
-            GetTrackletsTrainCovered(0, (new int[Tracklet.GetCount()]), currentLeftTracklet);
             #endregion
 
         }
 
+        private void CalTrainLocation(double distance)
+        {
+            currentS0 += distance;
+            currentS1 += distance;
+            if (currentS0 < 0)
+            {
+                currentS0 = 0;currentS1 = currentS0 + totalLength / 1000;
+                currentV = currentA = 0;
+            }
+            if (currentS1 > LINE_LENGTH)
+            {
+                currentS1 = LINE_LENGTH; currentS0 = currentS1 - totalLength / 1000;
+                currentV = currentA = 0;
+            }
+        }
+
+        /* 
         private void CalTrainLocation(double distance)
         {
             if (currentLeftTracklet == null||currentRightTracklet==null) return;
@@ -269,7 +281,7 @@ namespace Train.Trains
                 }
             }
         }
-      
+      */
         /// <summary>
         /// 获取列车当前覆盖的tracklet
         /// 之前是用来查找经过的应答器的，目前暂时用不着

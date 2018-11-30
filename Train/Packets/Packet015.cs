@@ -103,8 +103,8 @@ namespace Train.Packets
             ma.VLOA = V_LOA * 5 / 3.6;  //  化为m/s
             if (T_LOA == 1023) ma.TLOA = int.MaxValue; //表示时间不受限制，使用int最大值能保证不会超时
             else ma.TLOA = T_LOA;
-            if (Q_SCALE == 3) throw new InvalidValueException("Q_SCALE=3");
-            double scale = 0.1 * Math.Pow(10, Q_SCALE);    //使距离/长度统一使用米为单位
+
+            double scale = GetScale(Q_SCALE);   //使距离/长度统一使用米为单位
             for(int i = 0; i < N_ITER; i++)
             {
                 ma.SectionLengthList.Add(L_SECTION[i]*scale);

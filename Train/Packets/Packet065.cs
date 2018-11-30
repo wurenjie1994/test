@@ -50,5 +50,15 @@ namespace Train.Packets
             }
             V_TSR = resultArray[8];
         }
+
+        public void SetValueTo(StaticSpeedLimits.TSR tsr)
+        {
+            tsr.Id = NID_TSR;
+            double scale = GetScale(Q_SCALE);
+            tsr.Length = L_TSR * scale;
+            tsr.Distance = D_TSR * scale;
+            tsr.Velocity = V_TSR * 5 / 3.6;
+            tsr.Front = Q_FRONT;
+        }
     }
 }
