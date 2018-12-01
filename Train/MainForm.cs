@@ -13,7 +13,6 @@ namespace Train
     public partial class MainForm : Form
     {
         private DriverConsolerState driverConsoler = DriverConsolerState.GetNULL();
-        private Communication comm = null;
 
         public MainForm()
         {
@@ -22,9 +21,32 @@ namespace Train
         private void MainForm_Load(object sender, EventArgs e)
         {
             StartTrain();
-           // StartComm();
+            StartComm();
+        }
+        #region 菜单项
+        private void ConnectTSMI_Click(object sender, EventArgs e)
+        {
+            if (sender == rBCToolStripMenuItem)
+            {
+                Communication.Connect(_CommType.RBC);
+                StartRecvMsgModule(_CommType.RBC);
+            }
+            else if (sender == nRBCToolStripMenuItem)
+            {
+                Communication.Connect(_CommType.NRBC);
+                StartRecvMsgModule(_CommType.NRBC);
+            }
         }
 
+        private void DisconnectTSMI_Click(object sender, EventArgs e)
+        {
+            if (sender == disRBCToolStripMenuItem) Communication.Disconnect(_CommType.RBC);
+            else if (sender == disNRBCToolStripMenuItem) Communication.Disconnect(_CommType.NRBC);
+        }
+
+        #endregion
+
+        #region 主界面
         private void rbCabChoose_CheckedChanged(object sender, EventArgs e)
         {
             String name = ((RadioButton)sender).Name;
@@ -57,6 +79,7 @@ namespace Train
         {
             driverConsoler.SteerValue = trackBarSteer.Value - 10;
         }
+        #endregion
 
         #region 列车运动模块
         private TrainState trainState = new TrainState();
@@ -172,47 +195,39 @@ namespace Train
         public void StartComm()
         {
             string fileName = System.IO.Directory.GetCurrentDirectory() + "\\CommConfig.ini";
-            if (comm == null)
-                comm = new Communication(fileName);
-            comm.Init();
-            comm.Connect(_CommType.RBC);
-            StartRecvMsgModule();
+            Communication.Init(fileName);
         }
 
         #region 收包模块    
-        private Thread fromLineSimThread, fromRBCThread;
-        public void StartRecvMsgModule()
+        private Thread fromNRBCThread, fromRBCThread;
+        public void StartRecvMsgModule(_CommType commType)
         {
 
-            if (fromLineSimThread == null)
+            if (commType == _CommType.NRBC && fromNRBCThread == null)
             {
-                fromLineSimThread = new Thread(RecvFromLineSim);
-                fromLineSimThread.IsBackground = true;
-                fromLineSimThread.Start();
+                fromNRBCThread = new Thread(RecvFromNRBC);
+                fromNRBCThread.IsBackground = true;
+                fromNRBCThread.Start();
             }
-
-            if (fromRBCThread == null)
+            
+            if (commType == _CommType.RBC && fromRBCThread == null)
             {
                 fromRBCThread = new Thread(RecvFromRBC);
                 fromRBCThread.IsBackground = true;
                 fromRBCThread.Start();
             }
         }
-        public void RecvFromLineSim()
+        public void RecvFromNRBC()
         {
-            while (true)
+            while (Communication.IsConnected(_CommType.NRBC))
             {
                 try
                 {
-                    byte[] receiveData = comm.RecvMsg(_CommType.LINESIM);
-                    if (receiveData != null && receiveData.Length > 8)
+                    byte[] recvData = Communication.RecvMsg(_CommType.NRBC);
+                    if (recvData != null && recvData.Length > 8)
                     {
 
                     }
-                }
-                catch (System.Net.Sockets.SocketException)
-                {
-
                 }
                 catch (Exception)
                 { }
@@ -226,7 +241,7 @@ namespace Train
 
             sendData = Encoding.Default.GetBytes(sendString);//获取要发送的字节数组
 
-            comm.SendMsg(sendData, _CommType.RBC);
+            Communication.SendMsg(sendData, _CommType.NRBC);
         }
 
         public void RecvFromRBC()
@@ -235,12 +250,9 @@ namespace Train
             {
                 try
                 {
-                    byte[] receiveData = comm.RecvMsg(_CommType.RBC);
-                    if (receiveData != null)
-                        MessageBox.Show(receiveData.ToString());
-                }
-                catch (System.Net.Sockets.SocketException)
-                {
+                    byte[] recvData = Communication.RecvMsg(_CommType.RBC);
+                    if (recvData != null)
+                        MessageBox.Show(recvData.ToString());
                 }
                 catch (Exception) { }
             }
@@ -248,6 +260,102 @@ namespace Train
 
         #endregion
 
+        #region 通信连接状态显示
+        public void SetConnStatusLabel(ToolStripStatusLabel tssl, bool isConnect, ref DateTime dt)
+        {
+            try
+            {
+                DateTime After = DateTime.Now;
+                if (dt == null || dt == DateTime.MinValue)
+                {
+                    dt = After;
+                }
+                if (!isConnect)
+                {
+                    if (After.Subtract(dt).TotalMilliseconds > 2000)
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            if (tssl != null && !tssl.IsDisposed)//
+                            {
+                                tssl.BackColor = Color.Red;
+                                tssl.Text = "通信断开";
+                            }
+                        }));
+                    }
+                    else if (After.Subtract(dt).TotalMilliseconds > 1000)
+                    {
+                        Invoke(new Action(() =>
+                        {
+                            if (tssl != null && !tssl.IsDisposed)
+                            {
+                                tssl.BackColor = Color.Yellow;
+                                tssl.Text = "正在连接...";
+                            }
+                        }));
+                    }
+                }
+                else
+                {
+                    dt = After;
+                    Invoke(new Action(() =>
+                    {
+                        if (tssl != null && !tssl.IsDisposed)
+                        {
+                            tssl.BackColor = Color.Green;
+                            tssl.Text = "通信连接";
+                        }
+                    }));
+                }
+                //    Thread.Sleep(100);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        DateTime Before_NRBCConn;
+        public bool ConnStatus_NRBC
+        {
+            get
+            {
+                return toolStripStatusLabel_NRBC.Text == "通信连接";
+            }
+            set
+            {
+                SetConnStatusLabel(toolStripStatusLabel_NRBC, value, ref Before_NRBCConn);
+
+            }
+        }
+
+        DateTime Before_RBCConn;
+        public bool ConnStatus_RBC
+        {
+            get
+            {
+                return toolStripStatusLabel_RBC.Text == "通信连接";
+            }
+            set
+            {
+                SetConnStatusLabel(toolStripStatusLabel_RBC, value, ref Before_RBCConn);
+            }
+        }
+
+        private void timerConnStatus_Tick(object sender, EventArgs e)
+        {
+            DateTime After = DateTime.Now;
+            if (After > Before_NRBCConn)
+            {
+                if (After.Subtract(Before_NRBCConn).TotalMilliseconds > 1000)
+                    ConnStatus_NRBC = Communication.IsConnected(_CommType.NRBC);
+            }
+            if (After > Before_RBCConn)
+            {
+                if (After.Subtract(Before_RBCConn).TotalMilliseconds > 1000)
+                    ConnStatus_RBC = Communication.IsConnected(_CommType.RBC);
+            }
+        }
+        #endregion
     }
 }

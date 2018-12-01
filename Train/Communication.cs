@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using System.Net.Sockets;
-using System.Net;
-using System.Data.SqlClient;
 using Train.Utilities;
 
 namespace Train
@@ -14,40 +9,28 @@ namespace Train
     public enum _CommType
     {
         RBC,
-        LINESIM,
+        NRBC,
     }
     public class Communication
     {
         #region 通信参数配置
         //IP
-        private string trainIP;
-        private string rbcIP;
-        private string linesimIP;
+        private static string trainIP;
+        private static string rbcIP;
+        private static string nrbcIP;
         //Port
-        private string train_rbcLocalPort;                //本端列车对RBC端口号
-        private string train_linesimLocalPort;            //本端列车对LineSim端口号
-        private string rbcRemotePort;                      //对端RBC端口号
-        private string linesimRemotePort;                //对端LineSim端口号
-        //IPEndPoint
-        IPEndPoint train_rbcLocalIPEndPoint;
-        IPEndPoint train_linesimLocalIPEndPoint;
-        IPEndPoint rbcRemoteIPEndPoint;
-        IPEndPoint linesimRemoteIPEndPoint;
-        //TCP/UDP连接
-        TcpClient train_rbc;
-        UdpClient train_linesim;
+        private static string train_rbcLocalPort;                //本端列车对RBC端口号
+        private static string train_nrbcLocalPort;            //本端列车对NRBC端口号
+        private static string rbcRemotePort;                      //对端RBC端口号
+        private static string nrbcRemotePort;                //对端NRBC端口号
         //
-        NetworkStream train_rbcNS;
-        const int BUFFER_SIZE = 1024;
-        byte[] buffer = new byte[BUFFER_SIZE];
+        static Client train_rbc;
+        static Client train_nrbc;
         #endregion
 
-        public Communication(string fileName)
-        {
-            ReadIniFile(fileName);
-        }
+      
         //读取通信配置文件
-        public void ReadIniFile(string fileName)
+        public static void ReadIniFile(string fileName)
         {
             IniFile file = new IniFile(fileName);
             if (file.ExistINIFile())
@@ -55,12 +38,12 @@ namespace Train
                 //IP
                 trainIP = file.IniReadValue("IP", "TrainIP");
                 rbcIP = file.IniReadValue("IP", "RBCIP");
-                linesimIP = file.IniReadValue("IP", "LineIP");
+                nrbcIP = file.IniReadValue("IP", "NRBCIP");
                 //Port
                 train_rbcLocalPort = file.IniReadValue("Port", "Train_RBCPort");
-                train_linesimLocalPort = file.IniReadValue("Port", "Train_LinePort");
                 rbcRemotePort = file.IniReadValue("Port", "RBCPort");
-                linesimRemotePort = file.IniReadValue("Port", "LinePort");
+                train_nrbcLocalPort = file.IniReadValue("Port", "Train_NRBCPort");
+                nrbcRemotePort = file.IniReadValue("Port", "NRBCPort");
             }
             else
             {
@@ -68,100 +51,61 @@ namespace Train
             }
         }
         //初始化通信连接
-        public void Init()
+        public static void Init(string fileName)
         {
-            train_rbcLocalIPEndPoint = new IPEndPoint(IPAddress.Parse(trainIP), int.Parse(train_rbcLocalPort));
-            train_linesimLocalIPEndPoint = new IPEndPoint(IPAddress.Parse(trainIP), int.Parse(train_linesimLocalPort));
-            linesimRemoteIPEndPoint = new IPEndPoint(IPAddress.Parse(linesimIP), int.Parse(linesimRemotePort));
-            rbcRemoteIPEndPoint = new IPEndPoint(IPAddress.Parse(rbcIP), int.Parse(rbcRemotePort));
-            train_rbc = new TcpClient(train_rbcLocalIPEndPoint);
+            ReadIniFile(fileName);
+            train_rbc = new Client(trainIP, int.Parse(train_rbcLocalPort), rbcIP, int.Parse(rbcRemotePort));
+            train_nrbc = new Client(trainIP, int.Parse(train_nrbcLocalPort), nrbcIP, int.Parse(nrbcRemotePort));
         }
 
-        public void Close()
+        public static void Close()
         {
-            Disconnect(_CommType.LINESIM);
+            Disconnect(_CommType.NRBC);
             Disconnect(_CommType.RBC);
         }
-        public void Connect(_CommType commType)
+        public static void Connect(_CommType commType)
         {
-            switch(commType)
-            {
-                case _CommType.LINESIM:
-                    if(train_linesim ==null)
-                        train_linesim = new UdpClient(train_linesimLocalIPEndPoint);
-                    break;
-                case _CommType.RBC:
-                    if (train_rbc != null) train_rbc.Close();
-                    train_rbc = new TcpClient(train_rbcLocalIPEndPoint);
-                    train_rbc.Connect(rbcRemoteIPEndPoint);
-                    train_rbcNS = train_rbc.GetStream();
-                    break;
-            }
+            Client client = GetClient(commType);
+            if (client != null) client.Connect();
         }
-        public void Disconnect(_CommType commType)
+       
+        public static bool IsConnected(_CommType commType)
         {
-            switch(commType)
-            {
-                case _CommType.LINESIM:
-                    if (train_linesim != null) { train_linesim.Close(); train_linesim = null; }
-                    break;
-                case _CommType.RBC:
-                    if (train_rbcNS != null) { train_rbcNS.Close(); train_rbcNS = null; }
-                    if (train_rbc != null) {  train_rbc.Close(); train_rbc = null; }
-                    break;
-            }
+            Client client = GetClient(commType);
+            if (client != null) return client.Connected();
+            return false;
+        }
+        public static void Disconnect(_CommType commType)
+        {
+            Client client = GetClient(commType);
+            if (client != null) client.Disconnect();
         }
 
 
-        public void SendMsg(byte[] byteToSend,_CommType commType)
+        public static void SendMsg(byte[] byteToSend,_CommType commType)
         {
-            switch(commType)
-            {
-                case _CommType.LINESIM:
-                    if (train_linesim != null)
-                        train_linesim.Send(byteToSend, byteToSend.Length, linesimRemoteIPEndPoint);
-                    break;
-                case _CommType.RBC:
-                    if (train_rbcNS != null)
-                        train_rbcNS.Write(byteToSend, 0, byteToSend.Length);
-                    break;
-                default:break;
-            }  
+            Client client = GetClient(commType);
+            if (client != null)  client.SendMsg(byteToSend);
         }
-        public byte[] RecvMsg(_CommType commType)
+       
+        public static byte[] RecvMsg(_CommType commType)
         {
-            byte[] recvBytes = null;
+            Client client = GetClient(commType);
+            if (client != null) return client.RecvMsg();
+            return null;
+        }
+
+        private static Client GetClient(_CommType commType)
+        {
             switch (commType)
             {
-                case _CommType.LINESIM:
-                    if (train_linesim != null)
-                        recvBytes = train_linesim.Receive(ref linesimRemoteIPEndPoint);
-                    else Thread.Sleep(100);            //避免线程一直执行，占用CPU时间
-                    break;
+                case _CommType.NRBC:
+                    return train_nrbc;
                 case _CommType.RBC:
-                    recvBytes = RecvFromRBC();
-                    break;
+                    return train_rbc;
             }
-            return recvBytes;
+            return null;
         }
-        private byte[] RecvFromRBC()
-        {
-            byte[] recvBytes = null;
-            if (train_rbcNS == null)
-                Connect(_CommType.RBC);
-            int len = train_rbcNS.Read(buffer, 0, buffer.Length);
-            if (len == 0)   //可能是通信已经断开
-            {
-                Disconnect(_CommType.RBC);
-                Connect(_CommType.RBC);  //不一定连得上
-                Thread.Sleep(100);
-            }
-            if (len > 0)
-            {
-                recvBytes = new byte[len];
-                Array.Copy(buffer, recvBytes, len);
-            }
-            return recvBytes;
-        }
+
     }
 }
