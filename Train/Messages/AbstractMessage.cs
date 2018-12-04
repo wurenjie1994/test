@@ -31,7 +31,7 @@ namespace Train.Messages
         public static AbstractMessage GetMessage(byte[] recvData)
         {
             int id = recvData[0];
-            String className = "Train.Messages.Message" + String.Format("{0:D2}", id);
+            String className = "Train.Messages.Message" + String.Format("{0:D3}", id);
             Type t = Type.GetType(className);
             Object obj = t.GetConstructor(Type.EmptyTypes).Invoke(new Object[0]);
             AbstractMessage message = (AbstractMessage)obj;

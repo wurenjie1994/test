@@ -37,10 +37,10 @@ namespace Train.Packets
             AbstractPacket packet = (AbstractPacket)obj;
             return packet;
         }
-
+        //一个经常会使用到的函数，暂放在父类中
         public double GetScale(int scale)
         {
-            if (scale == 3) throw new InvalidValueException("Q_SCALE=3");
+            if (scale >= 3) throw new InvalidValueException("Q_SCALE="+scale);
             return 0.1 * Math.Pow(10, scale);
         }
     }

@@ -1,0 +1,9 @@
+F:\RBC\Train\UnitTestProject\bin\Debug\UnitTestProject.dll
+F:\RBC\Train\UnitTestProject\bin\Debug\UnitTestProject.pdb
+F:\RBC\Train\UnitTestProject\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+F:\RBC\Train\UnitTestProject\bin\Debug\zh-Hans\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+F:\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.csprojResolveAssemblyReference.cache
+F:\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.dll
+F:\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.pdb
+F:\RBC\Train\UnitTestProject\bin\Debug\Train.exe
+F:\RBC\Train\UnitTestProject\bin\Debug\Train.pdb
