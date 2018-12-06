@@ -8,18 +8,13 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
-    public class Message009 : AbstractMessage
+    public class Message009 : AbstractRecvMessage
     {
         /// <summary>
         /// 地到车——请求缩短MA
         /// </summary>
         const int MESSAGEID = 9;
         int ID = 80;
-        int NID_MESSAGE;            //8bit
-        int L_MESSAGE;              //10bit
-        uint T_TRAIN;               //32bit
-        bool M_ACK;                 //1bit
-        int NID_LRBG;               //24bit
         Packet015 p15 = new Packet015();
         AbstractPacket ap;          //可选择的信息包
 

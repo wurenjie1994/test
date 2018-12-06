@@ -9,21 +9,17 @@ using Train.Data;
 
 namespace Train.Messages
 {
-    public class Message154:AbstractMessage
+    public class Message154: AbstractSendMessage
     {
         /// <summary>
         /// 车到地——版本不兼容
         /// </summary>
         const int MESSAGEID = 154;
-        int NID_MESSAGE;            //8bit
-        int L_MESSAGE;              //10bit
-        uint T_TRAIN;               //32bit
-        int NID_ENGINE;             //24bit
 
         const int BitArrayLEN = 80;
         const int byteLEN = BitArrayLEN / 8;
 
-        public override byte[] Resolve(TrainToRBCData trainToRBCData)
+        public override byte[] Resolve()
         {
             BitArray bitArray = new BitArray(BitArrayLEN);
             int[] intArray = new int[] { 8, 10, 32, 24 };

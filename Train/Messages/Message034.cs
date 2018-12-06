@@ -8,17 +8,13 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
-    public class Message034:AbstractMessage
+    public class Message034:AbstractRecvMessage
     {
         /// <summary>
         /// 地到车——确认前方轨道空闲
         /// </summary>
         const int MESSAGEID = 34;
-        int NID_MESSAGE;            //8bit
-        int L_MESSAGE;              //10bit
-        uint T_TRAIN;               //32bit
-        bool M_ACK;                 //1bit
-        int NID_LRBG;               //24bit
+
         int Q_SCALE;                //2bit
         int D_REF;                  //16bit
         int Q_DIR;                  //2bit

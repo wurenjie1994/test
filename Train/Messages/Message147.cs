@@ -5,21 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Train.Packets;
 using Train.Utilities;
-using Train.Data;
 
 namespace Train.Messages
 {
-    public class Message147 : AbstractMessage
+    public class Message147 : AbstractSendMessage
     {
         /// <summary>
         /// 车到地——紧急停车确认
         /// </summary>
         const int MESSAGEID = 147;
         int ID01;
-        int NID_MESSAGE;            //8bit
-        int L_MESSAGE;              //10bit
-        uint T_TRAIN;               //32bit
-        int NID_ENGINE;             //24bit
+
         int NID_EM;                 //4bit
         int Q_EMERGENCYSTOP;        //2bit（可选）
         AbstractPacket ap01;        //可选择的信息包0/1
@@ -27,7 +23,7 @@ namespace Train.Messages
         const int BitArrayLEN = 248;
         const int byteLEN = BitArrayLEN / 8;
 
-        public override byte[] Resolve(TrainToRBCData trainToRBCData)
+        public override byte[] Resolve()
         {
             BitArray bitArray = new BitArray(BitArrayLEN);
             int[] intArray = new int[] { 8, 10, 32, 24, 4, 2 };
@@ -56,6 +52,18 @@ namespace Train.Messages
             Bits.ToByte(sendData, bitArray);
 
             return sendData;
+        }
+        public void SetNID_EM(int nid_em)
+        {
+            NID_EM = nid_em;
+        }
+        public void SetQ_ES(int es)
+        {
+            Q_EMERGENCYSTOP = es;
+        }
+        public void SetAbstractPacket(AbstractPacket ap)
+        {
+            ap01 = ap;
         }
         public override int GetMessageID()
         {

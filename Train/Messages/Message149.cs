@@ -9,23 +9,20 @@ using Train.Data;
 
 namespace Train.Messages
 {
-    public class Message149:AbstractMessage
+    public class Message149: AbstractSendMessage
     {
         /// <summary>
         /// 车到地——前方轨道空闲确认
         /// </summary>
         const int MESSAGEID = 149;
         int ID01;
-        int NID_MESSAGE;            //8bit
-        int L_MESSAGE;              //10bit
-        uint T_TRAIN;               //32bit
-        int NID_ENGINE;             //24bit
+
         AbstractPacket ap01;        //可选择的信息包0/1
 
         const int BitArrayLEN = 240;
         const int byteLEN = BitArrayLEN / 8;
 
-        public override byte[] Resolve(TrainToRBCData trainToRBCData)
+        public override byte[] Resolve()
         {
             BitArray bitArray = new BitArray(BitArrayLEN);
             int[] intArray = new int[] { 8, 10, 32, 24 };

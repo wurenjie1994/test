@@ -64,3 +64,4 @@ F:\RBC\Train\Train\obj\Debug\Train.csprojResolveAssemblyReference.cache
 F:\RBC\Train\Train\obj\Debug\Train.MainForm.resources
 F:\RBC\Train\Train\obj\Debug\Train.Properties.Resources.resources
 F:\RBC\Train\Train\obj\Debug\Train.csproj.GenerateResource.Cache
+F:\RBC\Train\Train\obj\Debug\Train.ShowMsg.ShowMsgForm.resources

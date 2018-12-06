@@ -7,12 +7,17 @@ using System.Threading;
 using System.Windows.Forms;
 using Train.Trains;
 using System.Text;
+using Train.Utilities;
+using Train.ShowMsg;
+using Train.Messages;
 
 namespace Train
 {
     public partial class MainForm : Form
     {
         private DriverConsolerState driverConsoler = DriverConsolerState.GetNULL();
+        private CircularQueue<ListViewContent> recvMsgQueue = new CircularQueue<ListViewContent>();
+        private CircularQueue<ListViewContent> sendMsgQueue = new CircularQueue<ListViewContent>();
 
         public MainForm()
         {
@@ -42,6 +47,7 @@ namespace Train
         {
             if (sender == disRBCToolStripMenuItem) Communication.Disconnect(_CommType.RBC);
             else if (sender == disNRBCToolStripMenuItem) Communication.Disconnect(_CommType.NRBC);
+            MessageBox.Show("要经过2MSL时间（约2分钟）后才能再次发起连接！");
         }
 
         #endregion
@@ -202,7 +208,7 @@ namespace Train
         private Thread fromNRBCThread, fromRBCThread;
         public void StartRecvMsgModule(_CommType commType)
         {
-
+            updateListView += UpdateListView;
             if (commType == _CommType.NRBC && fromNRBCThread == null)
             {
                 fromNRBCThread = new Thread(RecvFromNRBC);
@@ -219,15 +225,15 @@ namespace Train
         }
         public void RecvFromNRBC()
         {
-            while (Communication.IsConnected(_CommType.NRBC))
+            while (true)
             {
                 try
                 {
                     byte[] recvData = Communication.RecvMsg(_CommType.NRBC);
-                    if (recvData != null && recvData.Length > 8)
-                    {
-
-                    }
+                    if (recvData == null || recvData.Length==0) continue;
+                    AbstractRecvMessage arm = AbstractRecvMessage.GetMessage(recvData);
+                    ListViewContent lvc = new ListViewContent(DateTime.Now,arm.NID_MESSAGE,_CommType.NRBC,arm);
+                    this.BeginInvoke(updateListView, lvRecvMsg, recvMsgQueue, lvc);
                 }
                 catch (Exception)
                 { }
@@ -236,7 +242,7 @@ namespace Train
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string sendString = Convert.ToString(textBox1.Text);//要发送的字符串
+            string sendString = Convert.ToString(123);//要发送的字符串
             byte[] sendData = null;//要发送的字节数组
 
             sendData = Encoding.Default.GetBytes(sendString);//获取要发送的字节数组
@@ -251,13 +257,57 @@ namespace Train
                 try
                 {
                     byte[] recvData = Communication.RecvMsg(_CommType.RBC);
-                    if (recvData != null)
-                        MessageBox.Show(recvData.ToString());
+                    if (recvData == null) continue;
+                    AbstractRecvMessage arm = AbstractRecvMessage.GetMessage(recvData);
+                    ListViewContent lvc = new ListViewContent(DateTime.Now, arm.NID_MESSAGE, _CommType.RBC, arm);
+                    this.BeginInvoke(updateListView, lvRecvMsg, recvMsgQueue, lvc);
                 }
                 catch (Exception) { }
             }
         }
+        private void ListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListView listView = (ListView)sender;
+            int index = listView.SelectedItems[0].Index;
+            if(sender == lvRecvMsg)
+            {
+                AbstractRecvMessage arm = recvMsgQueue.IndexOf(index).Arm;
+                new ShowMsgForm(arm.ToString());
+            }
+        }
 
+        private delegate void UpdateListViewEventHandler(ListView lv, CircularQueue<ListViewContent> q, ListViewContent lvc);
+        private event UpdateListViewEventHandler updateListView; 
+        private void UpdateListView(ListView listView, CircularQueue<ListViewContent> queue,ListViewContent lvc)
+        {
+            if (lvc == null) return;
+            listView.BeginUpdate();
+            if (queue.IsFull() == false)
+            {
+                queue.Push(lvc);
+                listView.Items.Add(GetItem(lvc));
+            }
+            else
+            {
+                listView.Items.Clear();
+                queue.Pop();
+                queue.Push(lvc);
+                queue.DecreaseToHalf();     //如果消息队列满，则只保留最近的一半消息
+                foreach(ListViewContent v in queue)
+                {
+                    listView.Items.Add(GetItem(v));
+                }
+            }
+            listView.EndUpdate();
+        }
+        private ListViewItem GetItem(ListViewContent lvc)
+        {
+            ListViewItem lvi = new ListViewItem();
+            lvi.Text = lvc.Time.ToString();
+            lvi.SubItems.Add(lvc.MsgId.ToString());
+            lvi.SubItems.Add(lvc.CommType.ToString());
+            return lvi;
+        }
         #endregion
 
         #region 通信连接状态显示

@@ -8,18 +8,13 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
-    public class Message028:AbstractMessage
+    public class Message028:AbstractRecvMessage
     {
         /// <summary>
         /// 地到车——授权调车模式
         /// </summary>
         const int MESSAGEID = 28;
         int ID;
-        int NID_MESSAGE;            //8bit
-        int L_MESSAGE;              //10bit
-        uint T_TRAIN;               //32bit
-        bool M_ACK;                 //1bit
-        int NID_LRBG;               //24bit
         uint T_TRAIN2;
         AbstractPacket ap;          //可选择的信息包
 

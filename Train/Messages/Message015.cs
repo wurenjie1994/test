@@ -8,17 +8,13 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
-    public class Message015:AbstractMessage
+    public class Message015:AbstractRecvMessage
     {
         /// <summary>
         /// 地到车——有条件紧急停车
         /// </summary>
         const int MESSAGEID = 15;
-        int NID_MESSAGE;
-        int L_MESSAGE;              //8bit
-        uint T_TRAIN;               //10bit
-        bool M_ACK;                 //1bit
-        int NID_LRBG;               //24bit
+
         int NID_EM;                 //4bit
         int Q_SCALE;                //2bit
         int D_REF;                  //16bit
@@ -60,5 +56,6 @@ namespace Train.Messages
         {
             return MESSAGEID;
         }
+        public int GetNID_EM() { return NID_EM; }
     }
 }

@@ -12,7 +12,7 @@ namespace Train.MessageHandlers
     class CommSession_MH:AbstractMessageHandler
     {
 
-        public override bool Solve(AbstractMessage am)
+        public override bool Solve(AbstractRecvMessage am)
         {
             int msgId = am.GetMessageID();
             //系统版本，收到此消息后车载设备应认为通信会话已经建立 
@@ -20,7 +20,7 @@ namespace Train.MessageHandlers
             {
                 //车载设备应发送消息159：通信会话已建立（含车载设备电话号码:Packet003Train）
                 Message159 m159 = new Message159();
-                Communication.SendMsg(m159.Resolve(new Data.TrainToRBCData()), _CommType.RBC);
+                Communication.SendMsg(m159.Resolve(), _CommType.RBC);
                 return true;
             }
             //通信会话开始，这是由RBC 发起的
@@ -28,7 +28,7 @@ namespace Train.MessageHandlers
             {
                 //车载设备应发送消息：通信会话已建立（不必发送车载设备电话号码）
                 Message159 m159 = new Message159();
-                Communication.SendMsg(m159.Resolve(new Data.TrainToRBCData()), _CommType.RBC);
+                Communication.SendMsg(m159.Resolve(), _CommType.RBC);
                 return true;
             }
             //通信会话结束确认

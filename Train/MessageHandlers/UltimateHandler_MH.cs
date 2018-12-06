@@ -8,7 +8,7 @@ using Train.Messages;
 namespace Train.MessageHandlers
 {
     /// <summary>
-    /// Message应在此类之前被处理
+    /// 责任链的末端，Message应在此类之前被处理
     /// </summary>
     class UltimateHandler_MH : AbstractMessageHandler
     {
@@ -18,7 +18,7 @@ namespace Train.MessageHandlers
         /// </summary>
         /// <param name="am"></param>
         /// <returns></returns>
-        public override bool Solve(AbstractMessage am)
+        public override bool Solve(AbstractRecvMessage am)
         {
             return true;
         }

@@ -5,18 +5,14 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
-    public class Message003:AbstractMessage
+    public class Message003:AbstractRecvMessage
     {
         /// <summary>
         /// 地到车——行车许可
         /// </summary>
         const int MESSAGEID = 3;
         int ID;
-        int NID_MESSAGE;            //8bit
-        int L_MESSAGE;              //10bit
-        uint T_TRAIN;               //32bit
-        bool M_ACK;                 //1bit
-        int NID_LRBG;               //24bit
+
         Packet015 p15 = new Packet015();
         AbstractPacket ap;          //可选择的信息包
 

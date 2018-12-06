@@ -8,17 +8,12 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
-    public class Message041:AbstractMessage
+    public class Message041:AbstractRecvMessage
     {
         /// <summary>
         /// 地到车——接收列车
         /// </summary>
         const int MESSAGEID = 41;
-        int NID_MESSAGE;            //8bit
-        int L_MESSAGE;              //10bit
-        uint T_TRAIN;               //32bit
-        bool M_ACK;                 //1bit
-        int NID_LRBG;               //24bit
 
         public override void Resolve(byte[] recvData)
         {

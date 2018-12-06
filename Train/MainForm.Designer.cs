@@ -66,7 +66,6 @@
             this.lblTrainRightLoc = new System.Windows.Forms.Label();
             this.lblTrainLeftLoc = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.初始化ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,6 +95,10 @@
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_NRBC = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerConnStatus = new System.Windows.Forms.Timer(this.components);
+            this.lvRecvMsg = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbDriverConsoler.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbSteer.SuspendLayout();
@@ -526,16 +529,9 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "A端：";
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(470, 129);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 21);
-            this.textBox1.TabIndex = 11;
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(486, 172);
+            this.button1.Location = new System.Drawing.Point(486, 262);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -555,7 +551,7 @@
             this.ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(696, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(820, 25);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -595,7 +591,7 @@
             this.rBCToolStripMenuItem,
             this.nRBCToolStripMenuItem});
             this.建立通信ToolStripMenuItem.Name = "建立通信ToolStripMenuItem";
-            this.建立通信ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.建立通信ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.建立通信ToolStripMenuItem.Text = "建立通信";
             // 
             // rBCToolStripMenuItem
@@ -618,20 +614,20 @@
             this.disRBCToolStripMenuItem,
             this.disNRBCToolStripMenuItem});
             this.断开通信ToolStripMenuItem.Name = "断开通信ToolStripMenuItem";
-            this.断开通信ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.断开通信ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.断开通信ToolStripMenuItem.Text = "断开通信";
             // 
             // disRBCToolStripMenuItem
             // 
             this.disRBCToolStripMenuItem.Name = "disRBCToolStripMenuItem";
-            this.disRBCToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
+            this.disRBCToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.disRBCToolStripMenuItem.Text = "RBC";
             this.disRBCToolStripMenuItem.Click += new System.EventHandler(this.DisconnectTSMI_Click);
             // 
             // disNRBCToolStripMenuItem
             // 
             this.disNRBCToolStripMenuItem.Name = "disNRBCToolStripMenuItem";
-            this.disNRBCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.disNRBCToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.disNRBCToolStripMenuItem.Text = "NRBC";
             this.disNRBCToolStripMenuItem.Click += new System.EventHandler(this.DisconnectTSMI_Click);
             // 
@@ -722,7 +718,7 @@
             this.toolStripStatusLabel_NRBC});
             this.statusStrip1.Location = new System.Drawing.Point(0, 656);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(696, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(820, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -757,15 +753,47 @@
             this.timerConnStatus.Enabled = true;
             this.timerConnStatus.Tick += new System.EventHandler(this.timerConnStatus_Tick);
             // 
+            // lvRecvMsg
+            // 
+            this.lvRecvMsg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvRecvMsg.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
+            this.lvRecvMsg.FullRowSelect = true;
+            this.lvRecvMsg.GridLines = true;
+            this.lvRecvMsg.Location = new System.Drawing.Point(449, 73);
+            this.lvRecvMsg.Name = "lvRecvMsg";
+            this.lvRecvMsg.Size = new System.Drawing.Size(256, 154);
+            this.lvRecvMsg.TabIndex = 15;
+            this.lvRecvMsg.UseCompatibleStateImageBehavior = false;
+            this.lvRecvMsg.View = System.Windows.Forms.View.Details;
+            this.lvRecvMsg.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListView_MouseDoubleClick);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "时间";
+            this.columnHeader1.Width = 96;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "消息编号";
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "发送者";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(696, 678);
+            this.ClientSize = new System.Drawing.Size(820, 678);
+            this.Controls.Add(this.lvRecvMsg);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.gbTrainLocation);
             this.Controls.Add(this.gbTrainState);
             this.Controls.Add(this.gbDriverConsoler);
@@ -830,7 +858,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.GroupBox gbTrainLocation;
         private System.Windows.Forms.RadioButton rbCabNone;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label lblTrainRightLoc;
@@ -864,6 +891,10 @@
         private System.Windows.Forms.Timer timerConnStatus;
         private System.Windows.Forms.ToolStripMenuItem rBCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nRBCToolStripMenuItem;
+        private System.Windows.Forms.ListView lvRecvMsg;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
 
