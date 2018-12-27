@@ -13,7 +13,7 @@ namespace Train.Messages
         /// <summary>
         /// 地到车——目视行车模式授权
         /// </summary>
-        const int MESSAGEID = 2;
+        public const int MESSAGEID = 2;
         int ID;
 
         int Q_SCALE;                //2bit

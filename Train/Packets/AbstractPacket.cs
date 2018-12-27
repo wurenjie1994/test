@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections;
 using Train.Utilities;
 
@@ -37,6 +38,40 @@ namespace Train.Packets
             AbstractPacket packet = (AbstractPacket)obj;
             return packet;
         }
+
+        public override string ToString()
+        {
+            string s = "";
+            Type t = this.GetType();
+            //父类私有字段不好获取，改为获取其公有属性
+            PropertyInfo[] p = t.GetProperties();
+            foreach (PropertyInfo fi in p)
+            {
+                s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
+            }
+            //获取子类非公有字段
+            FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            foreach (FieldInfo fi in f)
+            {
+                s += fi.Name + ":";
+                if (fi.FieldType.IsArray)//数组类型
+                {
+                    object tmp = fi.GetValue(this);
+                    if (tmp == null) s += "null array";
+                    else if (fi.FieldType == typeof(int[]))
+                        s += string.Join(",", tmp as int[]);
+                    else if (fi.FieldType == typeof(bool[]))
+                        s += string.Join(",", tmp as bool[]);
+                }
+                else//值类型
+                {
+                    s += fi.GetValue(this);
+                }
+                s+= "\r\n";
+            }
+            return s;
+        }
+
         //一个经常会使用到的函数，暂放在父类中
         public double GetScale(int scale)
         {

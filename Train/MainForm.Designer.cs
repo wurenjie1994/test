@@ -99,6 +99,19 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.gbWorkMode = new System.Windows.Forms.GroupBox();
+            this.rbFS = new System.Windows.Forms.RadioButton();
+            this.rbOS = new System.Windows.Forms.RadioButton();
+            this.rbCO = new System.Windows.Forms.RadioButton();
+            this.rbSH = new System.Windows.Forms.RadioButton();
+            this.rbSL = new System.Windows.Forms.RadioButton();
+            this.rbSB = new System.Windows.Forms.RadioButton();
+            this.rbIS = new System.Windows.Forms.RadioButton();
+            this.rbTR = new System.Windows.Forms.RadioButton();
+            this.rbPT = new System.Windows.Forms.RadioButton();
+            this.gbControlLevel = new System.Windows.Forms.GroupBox();
+            this.rbCTCS_2 = new System.Windows.Forms.RadioButton();
+            this.rbCTCS_3 = new System.Windows.Forms.RadioButton();
             this.gbDriverConsoler.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbSteer.SuspendLayout();
@@ -110,18 +123,22 @@
             this.gbTrainLocation.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.gbWorkMode.SuspendLayout();
+            this.gbControlLevel.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbDriverConsoler
             // 
+            this.gbDriverConsoler.Controls.Add(this.gbWorkMode);
             this.gbDriverConsoler.Controls.Add(this.groupBox1);
             this.gbDriverConsoler.Controls.Add(this.gbSteer);
+            this.gbDriverConsoler.Controls.Add(this.gbControlLevel);
             this.gbDriverConsoler.Controls.Add(this.gbDriveDirection);
             this.gbDriverConsoler.Controls.Add(this.btnEBButton);
             this.gbDriverConsoler.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.gbDriverConsoler.Location = new System.Drawing.Point(50, 53);
             this.gbDriverConsoler.Name = "gbDriverConsoler";
-            this.gbDriverConsoler.Size = new System.Drawing.Size(285, 356);
+            this.gbDriverConsoler.Size = new System.Drawing.Size(458, 356);
             this.gbDriverConsoler.TabIndex = 2;
             this.gbDriverConsoler.TabStop = false;
             this.gbDriverConsoler.Text = "驾驶室";
@@ -184,7 +201,7 @@
             this.gbSteer.Controls.Add(this.lblNegTen_EndB);
             this.gbSteer.Controls.Add(this.trackBarSteer);
             this.gbSteer.Controls.Add(this.lblSteerValue_EndB);
-            this.gbSteer.Location = new System.Drawing.Point(144, 20);
+            this.gbSteer.Location = new System.Drawing.Point(319, 31);
             this.gbSteer.Name = "gbSteer";
             this.gbSteer.Size = new System.Drawing.Size(127, 305);
             this.gbSteer.TabIndex = 41;
@@ -282,7 +299,7 @@
             this.gbDriveDirection.Controls.Add(this.rbDirectionBackward);
             this.gbDriveDirection.Controls.Add(this.rbDirectionZero);
             this.gbDriveDirection.Controls.Add(this.rbDirectionForward);
-            this.gbDriveDirection.Location = new System.Drawing.Point(22, 160);
+            this.gbDriveDirection.Location = new System.Drawing.Point(158, 31);
             this.gbDriveDirection.Name = "gbDriveDirection";
             this.gbDriveDirection.Size = new System.Drawing.Size(99, 87);
             this.gbDriveDirection.TabIndex = 38;
@@ -326,7 +343,7 @@
             // 
             // btnEBButton
             // 
-            this.btnEBButton.Location = new System.Drawing.Point(30, 293);
+            this.btnEBButton.Location = new System.Drawing.Point(212, 287);
             this.btnEBButton.Name = "btnEBButton";
             this.btnEBButton.Size = new System.Drawing.Size(75, 23);
             this.btnEBButton.TabIndex = 6;
@@ -531,7 +548,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(486, 262);
+            this.button1.Location = new System.Drawing.Point(667, 277);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 12;
@@ -764,7 +781,7 @@
             this.columnHeader3});
             this.lvRecvMsg.FullRowSelect = true;
             this.lvRecvMsg.GridLines = true;
-            this.lvRecvMsg.Location = new System.Drawing.Point(449, 73);
+            this.lvRecvMsg.Location = new System.Drawing.Point(523, 71);
             this.lvRecvMsg.Name = "lvRecvMsg";
             this.lvRecvMsg.Size = new System.Drawing.Size(256, 154);
             this.lvRecvMsg.TabIndex = 15;
@@ -784,6 +801,156 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "发送者";
+            // 
+            // gbWorkMode
+            // 
+            this.gbWorkMode.Controls.Add(this.rbCO);
+            this.gbWorkMode.Controls.Add(this.rbOS);
+            this.gbWorkMode.Controls.Add(this.rbSB);
+            this.gbWorkMode.Controls.Add(this.rbSL);
+            this.gbWorkMode.Controls.Add(this.rbPT);
+            this.gbWorkMode.Controls.Add(this.rbTR);
+            this.gbWorkMode.Controls.Add(this.rbIS);
+            this.gbWorkMode.Controls.Add(this.rbSH);
+            this.gbWorkMode.Controls.Add(this.rbFS);
+            this.gbWorkMode.Location = new System.Drawing.Point(22, 151);
+            this.gbWorkMode.Name = "gbWorkMode";
+            this.gbWorkMode.Size = new System.Drawing.Size(188, 96);
+            this.gbWorkMode.TabIndex = 43;
+            this.gbWorkMode.TabStop = false;
+            this.gbWorkMode.Text = "工作模式";
+            // 
+            // rbFS
+            // 
+            this.rbFS.AutoSize = true;
+            this.rbFS.Location = new System.Drawing.Point(23, 22);
+            this.rbFS.Name = "rbFS";
+            this.rbFS.Size = new System.Drawing.Size(35, 16);
+            this.rbFS.TabIndex = 0;
+            this.rbFS.Text = "FS";
+            this.rbFS.UseVisualStyleBackColor = true;
+            this.rbFS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbOS
+            // 
+            this.rbOS.AutoSize = true;
+            this.rbOS.Location = new System.Drawing.Point(23, 66);
+            this.rbOS.Name = "rbOS";
+            this.rbOS.Size = new System.Drawing.Size(35, 16);
+            this.rbOS.TabIndex = 0;
+            this.rbOS.Text = "OS";
+            this.rbOS.UseVisualStyleBackColor = true;
+            this.rbOS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbCO
+            // 
+            this.rbCO.AutoSize = true;
+            this.rbCO.Location = new System.Drawing.Point(22, 44);
+            this.rbCO.Name = "rbCO";
+            this.rbCO.Size = new System.Drawing.Size(35, 16);
+            this.rbCO.TabIndex = 0;
+            this.rbCO.Text = "CO";
+            this.rbCO.UseVisualStyleBackColor = true;
+            this.rbCO.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbSH
+            // 
+            this.rbSH.AutoSize = true;
+            this.rbSH.Location = new System.Drawing.Point(76, 22);
+            this.rbSH.Name = "rbSH";
+            this.rbSH.Size = new System.Drawing.Size(35, 16);
+            this.rbSH.TabIndex = 0;
+            this.rbSH.Text = "SH";
+            this.rbSH.UseVisualStyleBackColor = true;
+            this.rbSH.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbSL
+            // 
+            this.rbSL.AutoSize = true;
+            this.rbSL.Location = new System.Drawing.Point(75, 44);
+            this.rbSL.Name = "rbSL";
+            this.rbSL.Size = new System.Drawing.Size(35, 16);
+            this.rbSL.TabIndex = 0;
+            this.rbSL.Text = "SL";
+            this.rbSL.UseVisualStyleBackColor = true;
+            this.rbSL.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbSB
+            // 
+            this.rbSB.AutoSize = true;
+            this.rbSB.Location = new System.Drawing.Point(75, 66);
+            this.rbSB.Name = "rbSB";
+            this.rbSB.Size = new System.Drawing.Size(35, 16);
+            this.rbSB.TabIndex = 0;
+            this.rbSB.Text = "SB";
+            this.rbSB.UseVisualStyleBackColor = true;
+            this.rbSB.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbIS
+            // 
+            this.rbIS.AutoSize = true;
+            this.rbIS.Location = new System.Drawing.Point(129, 20);
+            this.rbIS.Name = "rbIS";
+            this.rbIS.Size = new System.Drawing.Size(35, 16);
+            this.rbIS.TabIndex = 0;
+            this.rbIS.Text = "IS";
+            this.rbIS.UseVisualStyleBackColor = true;
+            this.rbIS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbTR
+            // 
+            this.rbTR.AutoSize = true;
+            this.rbTR.Location = new System.Drawing.Point(129, 42);
+            this.rbTR.Name = "rbTR";
+            this.rbTR.Size = new System.Drawing.Size(35, 16);
+            this.rbTR.TabIndex = 0;
+            this.rbTR.Text = "TR";
+            this.rbTR.UseVisualStyleBackColor = true;
+            this.rbTR.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbPT
+            // 
+            this.rbPT.AutoSize = true;
+            this.rbPT.Location = new System.Drawing.Point(131, 64);
+            this.rbPT.Name = "rbPT";
+            this.rbPT.Size = new System.Drawing.Size(35, 16);
+            this.rbPT.TabIndex = 0;
+            this.rbPT.Text = "PT";
+            this.rbPT.UseVisualStyleBackColor = true;
+            this.rbPT.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // gbControlLevel
+            // 
+            this.gbControlLevel.Controls.Add(this.rbCTCS_2);
+            this.gbControlLevel.Controls.Add(this.rbCTCS_3);
+            this.gbControlLevel.Location = new System.Drawing.Point(22, 253);
+            this.gbControlLevel.Name = "gbControlLevel";
+            this.gbControlLevel.Size = new System.Drawing.Size(99, 87);
+            this.gbControlLevel.TabIndex = 38;
+            this.gbControlLevel.TabStop = false;
+            this.gbControlLevel.Text = "控车等级";
+            // 
+            // rbCTCS_2
+            // 
+            this.rbCTCS_2.AutoSize = true;
+            this.rbCTCS_2.Location = new System.Drawing.Point(28, 53);
+            this.rbCTCS_2.Name = "rbCTCS_2";
+            this.rbCTCS_2.Size = new System.Drawing.Size(59, 16);
+            this.rbCTCS_2.TabIndex = 0;
+            this.rbCTCS_2.Text = "CTCS-2";
+            this.rbCTCS_2.UseVisualStyleBackColor = true;
+            this.rbCTCS_2.CheckedChanged += new System.EventHandler(this.rbControlLevel_CheckedChanged);
+            // 
+            // rbCTCS_3
+            // 
+            this.rbCTCS_3.AutoSize = true;
+            this.rbCTCS_3.Location = new System.Drawing.Point(28, 22);
+            this.rbCTCS_3.Name = "rbCTCS_3";
+            this.rbCTCS_3.Size = new System.Drawing.Size(59, 16);
+            this.rbCTCS_3.TabIndex = 0;
+            this.rbCTCS_3.Text = "CTCS-3";
+            this.rbCTCS_3.UseVisualStyleBackColor = true;
+            this.rbCTCS_3.CheckedChanged += new System.EventHandler(this.rbControlLevel_CheckedChanged);
             // 
             // MainForm
             // 
@@ -818,6 +985,10 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.gbWorkMode.ResumeLayout(false);
+            this.gbWorkMode.PerformLayout();
+            this.gbControlLevel.ResumeLayout(false);
+            this.gbControlLevel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -895,6 +1066,19 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.GroupBox gbWorkMode;
+        private System.Windows.Forms.RadioButton rbCO;
+        private System.Windows.Forms.RadioButton rbOS;
+        private System.Windows.Forms.RadioButton rbSB;
+        private System.Windows.Forms.RadioButton rbSL;
+        private System.Windows.Forms.RadioButton rbPT;
+        private System.Windows.Forms.RadioButton rbTR;
+        private System.Windows.Forms.RadioButton rbIS;
+        private System.Windows.Forms.RadioButton rbSH;
+        private System.Windows.Forms.RadioButton rbFS;
+        private System.Windows.Forms.GroupBox gbControlLevel;
+        private System.Windows.Forms.RadioButton rbCTCS_2;
+        private System.Windows.Forms.RadioButton rbCTCS_3;
     }
 }
 

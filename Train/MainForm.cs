@@ -74,6 +74,28 @@ namespace Train
             else driverConsoler.DriveDirection = DriveDirection.ZERO;
         }
 
+        private void rbWorkMode_CheckedChanged(object sender, EventArgs e)
+        {
+            String name = ((RadioButton)sender).Name;
+            foreach(_WorkMode wm in Enum.GetValues(typeof(_WorkMode)))
+                if (name.Contains(wm.ToString()))
+                {
+                    driverConsoler.WorkMode = wm;
+                    break;
+                }
+        }
+
+        private void rbControlLevel_CheckedChanged(object sender, EventArgs e)
+        {
+            String name = ((RadioButton)sender).Name;
+            foreach (_ControlLevel cl in Enum.GetValues(typeof(_ControlLevel)))
+                if (name.Contains(cl.ToString()))
+                {
+                    driverConsoler.ControlLevel = cl;
+                    break;
+                }
+        }
+
         private void btnEBButton_Click(object sender, EventArgs e)
         {
             bool b = !driverConsoler.EBStatus;

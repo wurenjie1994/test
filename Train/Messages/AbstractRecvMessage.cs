@@ -69,5 +69,23 @@ namespace Train.Messages
         {
             throw new NotSupportedException();
         }
+        public override string ToString()
+        {
+            string s = "";
+            Type t = this.GetType();
+            //父类私有字段不好获取，改为获取其公有属性
+            PropertyInfo[] p = t.GetProperties();
+            foreach (PropertyInfo fi in p)
+            {
+                s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
+            }
+            //获取子类私有字段
+            FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            foreach (FieldInfo fi in f)
+            {
+                s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
+            }
+            return s;
+        }
     }
 }

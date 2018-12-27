@@ -18,7 +18,7 @@ namespace Train.Packets
         int Q_SCALE;            //2bit距离/长度信息单位的限定词
         int D_VALIDNV;          //15bit至配置参数生效地点的距离
         int N_ITER;             //5bit数据包中跟随该变量的数组的重复次数
-        int[] NID_C;            //10bit地区号
+        int[] NID_C=new int[4];            //10bit地区号
         int V_NVSHUNT;          //7bit调车模式允许速度
         int V_NVSTFF;           //7bit目视行车模式的允许速度
         int V_NVONSIGHT;        //7bit引导模式的允许速度

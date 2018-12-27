@@ -6,6 +6,23 @@ using System.Threading.Tasks;
 
 namespace Train
 {
+    public enum _WorkMode
+    {
+        FS=1,///完全监控模式
+        CO=2,//引导模式
+        OS=3,//目视行车模式
+        SH=4,//调车模式
+        SL=5,//休眠模式
+        SB=6,//待机模式
+        IS=7,//隔离模式
+        TR=8,//冒进防护模式
+        PT=9,//冒进后防护模式
+    }
+    public enum _ControlLevel
+    {
+        CTCS_2=2,
+        CTCS_3=3
+    }
     public enum DriveDirection : byte
     {
         RMF = 0x01,                //RMF（向前）
@@ -42,6 +59,8 @@ namespace Train
         DriveDirection driveDirection;
         double steerValue;
         bool eBStatus;
+        _WorkMode workMode;
+        _ControlLevel controlLevel;
 
         public bool CabActive
         {
@@ -92,6 +111,32 @@ namespace Train
             set
             {
                 eBStatus = value;
+            }
+        }
+
+        public _WorkMode WorkMode
+        {
+            get
+            {
+                return workMode;
+            }
+
+            set
+            {
+                workMode = value;
+            }
+        }
+
+        public _ControlLevel ControlLevel
+        {
+            get
+            {
+                return controlLevel;
+            }
+
+            set
+            {
+                controlLevel = value;
             }
         }
     }

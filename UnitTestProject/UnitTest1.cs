@@ -5,6 +5,10 @@ using Train.MessageHandlers;
 using Train.Messages;
 using Train.Utilities;
 using System.Diagnostics;
+using System.Reflection;
+using System.Reflection;
+using Train;
+using Train.Packets;
 
 namespace UnitTestProject
 {
@@ -36,6 +40,23 @@ namespace UnitTestProject
                 if (cnt % 10 == 0)
                     Console.WriteLine("");
             }
+        }
+        [TestMethod]
+        public void GetFields()
+        {
+            AbstractPacket ap = new Packet003();
+            Type t = ap.GetType();
+            AbstractRecvMessage arm = new Message009();
+            t = arm.GetType();
+            string s = "";
+            FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            foreach(FieldInfo fi in f)
+            {
+                if (fi.FieldType.IsArray)
+                    s += string.Join(",", fi.GetValue(arm) as int[])+"\r\n";
+                s += fi.Name + ":" + fi.GetValue(arm) + "\r\n";
+            }
+            MessageBox.Show(arm.ToString());
         }
     }
 }

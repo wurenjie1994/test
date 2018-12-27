@@ -14,7 +14,6 @@ namespace Train.Messages
         /// 地到车——请求缩短MA
         /// </summary>
         const int MESSAGEID = 9;
-        int ID = 80;
         Packet015 p15 = new Packet015();
         AbstractPacket ap;          //可选择的信息包
 
@@ -46,6 +45,7 @@ namespace Train.Messages
 
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
             p15.Resolve(bitArray);
+            int ID = 80;
             ap = AbstractPacket.GetPacket(ID);
             pos = p15.GetPacketLength();
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
