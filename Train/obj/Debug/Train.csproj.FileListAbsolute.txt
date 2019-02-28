@@ -65,3 +65,6 @@ F:\RBC\Train\Train\obj\Debug\Train.MainForm.resources
 F:\RBC\Train\Train\obj\Debug\Train.Properties.Resources.resources
 F:\RBC\Train\Train\obj\Debug\Train.csproj.GenerateResource.Cache
 F:\RBC\Train\Train\obj\Debug\Train.ShowMsg.ShowMsgForm.resources
+D:\RBC\Train\Train\bin\Debug\Train.exe.config
+D:\RBC\Train\Train\obj\Debug\Train.exe
+D:\RBC\Train\Train\obj\Debug\Train.pdb
