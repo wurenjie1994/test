@@ -21,12 +21,22 @@ namespace Train.Utilities
             }
             return bit;
         }
+        public static BitArray Union(BitArray first,BitArray second)
+        {
+            int len1 = first.Length, len2 = second.Length;
+            BitArray res = new BitArray(len1 + len2);
+            for (int i = 0; i < len1;) res[i] = first[i++];
+            for (int i = len1, j = 0; i < res.Length; i++)
+                res[i++] = second[j++];
+            return res;
+        }
         public static int ToInt(BitArray bitArray, ref int position, int length)
         {
             int result = 0;
             for (int i = 0; i < length; i++)
             {
-                result = bitArray.Get(position + i) ? result + (1 << i) : result;
+                if (position + i >= bitArray.Length) break;
+                result = bitArray.Get(position + i) ? result | (1 << i) : result;
             }
             position += length;
             return result;
@@ -41,13 +51,20 @@ namespace Train.Utilities
             position += length;
             return result;
         }
+        /// <summary>
+        /// 将data中低length位放到bitArray中
+        /// </summary>
+        /// <param name="bitArray"></param>
+        /// <param name="data"></param>
+        /// <param name="position">bitArray中起点</param>
+        /// <param name="length">data长度</param>
         public static void ConvergeBitArray(BitArray bitArray, int data, ref int position, int length)
         {
             int remain = 0;
-            for (int i = 0; i < length; i--)
+            for (int i = length-1; i >=0; i--)
             {
                 remain = data % 2;
-                bitArray[position + i] = (remain == 1) ? true : false;
+                bitArray[position + i] = (remain == 1);
                 data /= 2;
             }
             position += length;
@@ -55,10 +72,10 @@ namespace Train.Utilities
         public static void ConvergeBitArray(BitArray bitArray, long data, ref int position, int length)
         {
             long remain = 0;
-            for (int i = 0; i < length; i--)
+            for (int i = length-1; i >=0; i--)
             {
                 remain = data % 2;
-                bitArray[position + i] = (remain == 1) ? true : false;
+                bitArray[position + i] = (remain == 1);
                 data /= 2;
             }
             position += length;
@@ -66,10 +83,10 @@ namespace Train.Utilities
         public static void ConvergeBitArray(BitArray bitArray, ulong data, ref int position, int length)
         {
             ulong remain = 0;
-            for (int i = 0; i < length; i--)
+            for (int i = length - 1; i >= 0; i--)
             {
                 remain = data % 2;
-                bitArray[position + i] = (remain == 1) ? true : false;
+                bitArray[position + i] = (remain == 1);
                 data /= 2;
             }
             position += length;

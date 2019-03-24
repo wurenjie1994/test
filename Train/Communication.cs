@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using Train.Utilities;
+using Train.XmlResolve;
 
 namespace Train
 {
@@ -65,8 +66,21 @@ namespace Train
         }
         public static void Connect(_CommType commType)
         {
-            Client client = GetClient(commType);
-            if (client != null) client.Connect();
+            int ctcsid = 10020632;
+            switch (commType)
+            {
+                case _CommType.NRBC:
+                    if(train_nrbc!=null) train_nrbc.Connect();
+                    break;
+                case _CommType.RBC:
+                    if (train_rbc != null)
+                    {
+                        train_rbc.Connect();
+                        byte[] toSend = XmlParser.ConnReq(ctcsid);
+                        SendMsg(toSend, commType);
+                    }
+                    break;
+            }
         }
        
         public static bool IsConnected(_CommType commType)
@@ -77,21 +91,60 @@ namespace Train
         }
         public static void Disconnect(_CommType commType)
         {
-            Client client = GetClient(commType);
-            if (client != null) client.Disconnect();
+            switch (commType)
+            {
+                case _CommType.NRBC:
+                    if (train_nrbc != null) train_nrbc.Disconnect();
+                    break;
+                case _CommType.RBC:
+                    if (train_rbc != null)
+                    {
+                        train_rbc.Connect();
+                        byte[] toSend = XmlParser.Disconnect();
+                        SendMsg(toSend, commType);
+                    }
+                    break;
+            }
         }
 
 
         public static void SendMsg(byte[] byteToSend,_CommType commType)
         {
-            Client client = GetClient(commType);
-            if (client != null)  client.SendMsg(byteToSend);
+            switch (commType)
+            {
+                case _CommType.NRBC:
+                    if (train_nrbc != null) train_nrbc.SendMsg(byteToSend);
+                    break;
+                case _CommType.RBC:
+                    if (train_rbc != null)
+                    {
+                        byte[] b = new byte[2];
+                        int len = byteToSend.Length;
+                        b[1] = (byte)len;
+                        b[0] = (byte)(len >> 8);
+                        train_rbc.SendMsg(b);
+                        train_rbc.SendMsg(byteToSend);
+                    }
+                    break;
+            }
         }
        
         public static byte[] RecvMsg(_CommType commType)
         {
-            Client client = GetClient(commType);
-            if (client != null) return client.RecvMsg();
+            switch (commType)
+            {
+                case _CommType.NRBC:
+                    if (train_nrbc != null) return train_nrbc.RecvMsg();
+                    break; 
+                case _CommType.RBC:
+                    if (train_rbc != null)
+                    {
+                        byte[] recv = train_rbc.RecvMsg();
+                        if (recv.Length == 2) return null;  //msglen,discard
+                        return recv;
+                    }
+                    break;
+            }
             return null;
         }
 

@@ -45,7 +45,7 @@ namespace Train.MessageHandlers
                 m147.SetNID_EM(nid_em);
                 m147.SetQ_ES(1);  //考虑有条件紧急停车 使用值1
                 m147.SetAbstractPacket(null);
-                Communication.SendMsg(m147.Resolve(), _CommType.RBC);
+                SendMsg(m147, _CommType.RBC);
             }
         }
         private void MH(Message016 m16)
@@ -59,7 +59,7 @@ namespace Train.MessageHandlers
                 m147.SetNID_EM(nid_em);
                 m147.SetQ_ES(2);  //无条件紧急停车 使用值2
                 m147.SetAbstractPacket(null);
-                Communication.SendMsg(m147.Resolve(), _CommType.RBC);
+                SendMsg(m147, _CommType.RBC);
             }
         }
         private void MH(Message018 m18)
@@ -71,7 +71,7 @@ namespace Train.MessageHandlers
             {
                 Message146 m146 = new Message146();
                 m146.T_TRAIN2 = m18.T_TRAIN;
-                Communication.SendMsg(m146.Resolve(), _CommType.RBC);
+                SendMsg(m146, _CommType.RBC);
             }
         }
     }

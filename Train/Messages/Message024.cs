@@ -14,7 +14,6 @@ namespace Train.Messages
         /// 地到车——通常信息
         /// </summary>
         const int MESSAGEID = 24;
-        int ID;
         AbstractPacket ap;          //可选择的信息包
 
         public override void Resolve(byte[] recvData)
@@ -43,8 +42,10 @@ namespace Train.Messages
             }
             NID_LRBG = resultArray[4];
 
-            ap = AbstractPacket.GetPacket(ID);
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
+            pos = 0;
+            int ID = Bits.ToInt(bitArray, ref pos, 8);
+            ap = AbstractPacket.GetPacket(ID);
             ap.Resolve(bitArray);
         }
         public override int GetMessageID()

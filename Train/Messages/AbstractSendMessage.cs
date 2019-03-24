@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,9 +14,9 @@ namespace Train.Messages
     {
         private int nID_MESSAGE; //8bit
         private int l_MESSAGE; //10bit
-        private int nID_ENGINE;//24bit
+        private static int nID_ENGINE = TrainInfo.NID_ENGINE;//24bit
         private  uint t_TRAIN; //车载设备发送消息的时间戳，32bit
-        protected uint t_TRAIN2;//被确认消息的时间戳，32bit
+        private uint t_TRAIN2;//被确认消息的时间戳，32bit
 
         public  int NID_MESSAGE
         {
@@ -27,12 +28,12 @@ namespace Train.Messages
             get { return l_MESSAGE; }
             protected set { l_MESSAGE = value; }
         }
-        public int NID_ENGINE
+        public static  int NID_ENGINE
         {
             get { return nID_ENGINE; }
             set { nID_ENGINE = value; }
         }
-        protected uint T_TRAIN
+        public uint T_TRAIN
         {
             get
             {
@@ -56,6 +57,24 @@ namespace Train.Messages
         public virtual int GetMessageID()
         {
             throw new NotSupportedException();
+        }
+        public override string ToString()
+        {
+            string s = "";
+            Type t = this.GetType();
+            //父类私有字段不好获取，改为获取其公有属性
+            PropertyInfo[] p = t.GetProperties();
+            foreach (PropertyInfo fi in p)
+            {
+                s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
+            }
+            //获取子类私有字段
+            FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            foreach (FieldInfo fi in f)
+            {
+                s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
+            }
+            return s;
         }
     }
 }

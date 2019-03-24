@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Collections;
 using Train.Utilities;
+using System.Collections.Generic;
 
 namespace Train.Packets
 {
@@ -19,7 +20,6 @@ namespace Train.Packets
         /// <summary>
         /// 车到地信息包需要覆盖此方法
         /// </summary>
-        /// <param name="obj">存放要发送的信息，目前还没想好用什么类型，暂且用Object</param>
         /// <returns>返回组装好信息的BitArray</returns>
         public virtual BitArray Resolve()
         {
@@ -41,7 +41,7 @@ namespace Train.Packets
 
         public override string ToString()
         {
-            string s = "";
+            string s = "\r\n";
             Type t = this.GetType();
             //父类私有字段不好获取，改为获取其公有属性
             PropertyInfo[] p = t.GetProperties();
@@ -50,7 +50,7 @@ namespace Train.Packets
                 s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
             }
             //获取子类非公有字段
-            FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
+            FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic|BindingFlags.Public);
             foreach (FieldInfo fi in f)
             {
                 s += fi.Name + ":";
@@ -62,6 +62,32 @@ namespace Train.Packets
                         s += string.Join(",", tmp as int[]);
                     else if (fi.FieldType == typeof(bool[]))
                         s += string.Join(",", tmp as bool[]);
+                }
+                else if(fi.FieldType == typeof(List<int>))
+                {
+                    List<int> tmp = (List<int>)fi.GetValue(this);
+                    s += "[";
+                    if(tmp!=null && tmp.Count >= 1)
+                    {
+                        int i = 0;
+                        for (i = 0; i < tmp.Count - 1; i++)
+                            s += tmp[i] + ",";
+                        s += tmp[i];
+                    }
+                    s += "]";
+                }
+                else if (fi.FieldType == typeof(List<ulong>))
+                {
+                    List<ulong> tmp = (List<ulong>)fi.GetValue(this);
+                    s += "[";
+                    if (tmp != null && tmp.Count >= 1)
+                    {
+                        int i = 0;
+                        for (i = 0; i < tmp.Count - 1; i++)
+                            s += tmp[i] + ",";
+                        s += tmp[i];
+                    }
+                    s += "]";
                 }
                 else//值类型
                 {

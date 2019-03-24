@@ -8,7 +8,7 @@ namespace Train.Utilities
 {
     public class CircularQueue<T>
     {
-        private const int _capacity = 10+1;
+        private const int _capacity = 100+1;
         private T[] _queue = new T[_capacity];
         private int _front=0, _rear = 0;
 
@@ -22,6 +22,8 @@ namespace Train.Utilities
         {
             if (_front == _rear) return default(T);
             T a = _queue[_front];
+            _queue[_front] = default(T);//解除引用，对于引用类型，如果不将_queue[_front] 置为null的话，
+                                                        //会导致由于队列中还存在对其的引用，而使其不能被垃圾回收
             _front = (_front+1)%_capacity;
             return a;
         }
@@ -35,7 +37,8 @@ namespace Train.Utilities
         public void DecreaseToHalf()
         {
             int half = Size() / 2;
-            _front = (_front + half) % _capacity;
+            for (int i = 0; i < half; i++) Pop();
+           // _front = (_front + half) % _capacity;
         }
         public T IndexOf(int index)
         {

@@ -30,6 +30,16 @@
         {
             this.components = new System.ComponentModel.Container();
             this.gbDriverConsoler = new System.Windows.Forms.GroupBox();
+            this.gbWorkMode = new System.Windows.Forms.GroupBox();
+            this.rbCO = new System.Windows.Forms.RadioButton();
+            this.rbOS = new System.Windows.Forms.RadioButton();
+            this.rbSB = new System.Windows.Forms.RadioButton();
+            this.rbSL = new System.Windows.Forms.RadioButton();
+            this.rbPT = new System.Windows.Forms.RadioButton();
+            this.rbTR = new System.Windows.Forms.RadioButton();
+            this.rbIS = new System.Windows.Forms.RadioButton();
+            this.rbSH = new System.Windows.Forms.RadioButton();
+            this.rbFS = new System.Windows.Forms.RadioButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.rbCabNone = new System.Windows.Forms.RadioButton();
             this.rbCabB = new System.Windows.Forms.RadioButton();
@@ -44,6 +54,9 @@
             this.lblNegTen_EndB = new System.Windows.Forms.Label();
             this.trackBarSteer = new System.Windows.Forms.TrackBar();
             this.lblSteerValue_EndB = new System.Windows.Forms.Label();
+            this.gbControlLevel = new System.Windows.Forms.GroupBox();
+            this.rbCTCS_2 = new System.Windows.Forms.RadioButton();
+            this.rbCTCS_3 = new System.Windows.Forms.RadioButton();
             this.gbDriveDirection = new System.Windows.Forms.GroupBox();
             this.rbDirectionBackward = new System.Windows.Forms.RadioButton();
             this.rbDirectionZero = new System.Windows.Forms.RadioButton();
@@ -78,9 +91,9 @@
             this.断开通信ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disRBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.disNRBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.故障注入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.列车位置设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.状态设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.列车位置设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.故障注入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.列车打滑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.无应答器故障ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.倒溜ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,23 +112,32 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.gbWorkMode = new System.Windows.Forms.GroupBox();
-            this.rbFS = new System.Windows.Forms.RadioButton();
-            this.rbOS = new System.Windows.Forms.RadioButton();
-            this.rbCO = new System.Windows.Forms.RadioButton();
-            this.rbSH = new System.Windows.Forms.RadioButton();
-            this.rbSL = new System.Windows.Forms.RadioButton();
-            this.rbSB = new System.Windows.Forms.RadioButton();
-            this.rbIS = new System.Windows.Forms.RadioButton();
-            this.rbTR = new System.Windows.Forms.RadioButton();
-            this.rbPT = new System.Windows.Forms.RadioButton();
-            this.gbControlLevel = new System.Windows.Forms.GroupBox();
-            this.rbCTCS_2 = new System.Windows.Forms.RadioButton();
-            this.rbCTCS_3 = new System.Windows.Forms.RadioButton();
+            this.发送消息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message129ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message155ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message156ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message157ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message159ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg157Packet4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg157Packet44ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg157NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg159Packet3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg159NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message132ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message136ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg136NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg132NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg132Packet9ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lvSendMsg = new System.Windows.Forms.ListView();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gbDriverConsoler.SuspendLayout();
+            this.gbWorkMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbSteer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSteer)).BeginInit();
+            this.gbControlLevel.SuspendLayout();
             this.gbDriveDirection.SuspendLayout();
             this.gbTrainState.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudAccSpeed)).BeginInit();
@@ -123,8 +145,6 @@
             this.gbTrainLocation.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.gbWorkMode.SuspendLayout();
-            this.gbControlLevel.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbDriverConsoler
@@ -142,6 +162,123 @@
             this.gbDriverConsoler.TabIndex = 2;
             this.gbDriverConsoler.TabStop = false;
             this.gbDriverConsoler.Text = "驾驶室";
+            // 
+            // gbWorkMode
+            // 
+            this.gbWorkMode.Controls.Add(this.rbCO);
+            this.gbWorkMode.Controls.Add(this.rbOS);
+            this.gbWorkMode.Controls.Add(this.rbSB);
+            this.gbWorkMode.Controls.Add(this.rbSL);
+            this.gbWorkMode.Controls.Add(this.rbPT);
+            this.gbWorkMode.Controls.Add(this.rbTR);
+            this.gbWorkMode.Controls.Add(this.rbIS);
+            this.gbWorkMode.Controls.Add(this.rbSH);
+            this.gbWorkMode.Controls.Add(this.rbFS);
+            this.gbWorkMode.Location = new System.Drawing.Point(22, 151);
+            this.gbWorkMode.Name = "gbWorkMode";
+            this.gbWorkMode.Size = new System.Drawing.Size(188, 96);
+            this.gbWorkMode.TabIndex = 43;
+            this.gbWorkMode.TabStop = false;
+            this.gbWorkMode.Text = "工作模式";
+            // 
+            // rbCO
+            // 
+            this.rbCO.AutoSize = true;
+            this.rbCO.Location = new System.Drawing.Point(22, 44);
+            this.rbCO.Name = "rbCO";
+            this.rbCO.Size = new System.Drawing.Size(35, 16);
+            this.rbCO.TabIndex = 0;
+            this.rbCO.Text = "CO";
+            this.rbCO.UseVisualStyleBackColor = true;
+            this.rbCO.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbOS
+            // 
+            this.rbOS.AutoSize = true;
+            this.rbOS.Location = new System.Drawing.Point(23, 66);
+            this.rbOS.Name = "rbOS";
+            this.rbOS.Size = new System.Drawing.Size(35, 16);
+            this.rbOS.TabIndex = 0;
+            this.rbOS.Text = "OS";
+            this.rbOS.UseVisualStyleBackColor = true;
+            this.rbOS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbSB
+            // 
+            this.rbSB.AutoSize = true;
+            this.rbSB.Location = new System.Drawing.Point(75, 66);
+            this.rbSB.Name = "rbSB";
+            this.rbSB.Size = new System.Drawing.Size(35, 16);
+            this.rbSB.TabIndex = 0;
+            this.rbSB.Text = "SB";
+            this.rbSB.UseVisualStyleBackColor = true;
+            this.rbSB.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbSL
+            // 
+            this.rbSL.AutoSize = true;
+            this.rbSL.Location = new System.Drawing.Point(75, 44);
+            this.rbSL.Name = "rbSL";
+            this.rbSL.Size = new System.Drawing.Size(35, 16);
+            this.rbSL.TabIndex = 0;
+            this.rbSL.Text = "SL";
+            this.rbSL.UseVisualStyleBackColor = true;
+            this.rbSL.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbPT
+            // 
+            this.rbPT.AutoSize = true;
+            this.rbPT.Location = new System.Drawing.Point(131, 64);
+            this.rbPT.Name = "rbPT";
+            this.rbPT.Size = new System.Drawing.Size(35, 16);
+            this.rbPT.TabIndex = 0;
+            this.rbPT.Text = "PT";
+            this.rbPT.UseVisualStyleBackColor = true;
+            this.rbPT.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbTR
+            // 
+            this.rbTR.AutoSize = true;
+            this.rbTR.Location = new System.Drawing.Point(129, 42);
+            this.rbTR.Name = "rbTR";
+            this.rbTR.Size = new System.Drawing.Size(35, 16);
+            this.rbTR.TabIndex = 0;
+            this.rbTR.Text = "TR";
+            this.rbTR.UseVisualStyleBackColor = true;
+            this.rbTR.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbIS
+            // 
+            this.rbIS.AutoSize = true;
+            this.rbIS.Location = new System.Drawing.Point(129, 20);
+            this.rbIS.Name = "rbIS";
+            this.rbIS.Size = new System.Drawing.Size(35, 16);
+            this.rbIS.TabIndex = 0;
+            this.rbIS.Text = "IS";
+            this.rbIS.UseVisualStyleBackColor = true;
+            this.rbIS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbSH
+            // 
+            this.rbSH.AutoSize = true;
+            this.rbSH.Location = new System.Drawing.Point(76, 22);
+            this.rbSH.Name = "rbSH";
+            this.rbSH.Size = new System.Drawing.Size(35, 16);
+            this.rbSH.TabIndex = 0;
+            this.rbSH.Text = "SH";
+            this.rbSH.UseVisualStyleBackColor = true;
+            this.rbSH.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            // 
+            // rbFS
+            // 
+            this.rbFS.AutoSize = true;
+            this.rbFS.Location = new System.Drawing.Point(23, 22);
+            this.rbFS.Name = "rbFS";
+            this.rbFS.Size = new System.Drawing.Size(35, 16);
+            this.rbFS.TabIndex = 0;
+            this.rbFS.Text = "FS";
+            this.rbFS.UseVisualStyleBackColor = true;
+            this.rbFS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
             // 
             // groupBox1
             // 
@@ -293,6 +430,39 @@
             this.lblSteerValue_EndB.Size = new System.Drawing.Size(11, 12);
             this.lblSteerValue_EndB.TabIndex = 50;
             this.lblSteerValue_EndB.Text = "0";
+            // 
+            // gbControlLevel
+            // 
+            this.gbControlLevel.Controls.Add(this.rbCTCS_2);
+            this.gbControlLevel.Controls.Add(this.rbCTCS_3);
+            this.gbControlLevel.Location = new System.Drawing.Point(22, 253);
+            this.gbControlLevel.Name = "gbControlLevel";
+            this.gbControlLevel.Size = new System.Drawing.Size(99, 87);
+            this.gbControlLevel.TabIndex = 38;
+            this.gbControlLevel.TabStop = false;
+            this.gbControlLevel.Text = "控车等级";
+            // 
+            // rbCTCS_2
+            // 
+            this.rbCTCS_2.AutoSize = true;
+            this.rbCTCS_2.Location = new System.Drawing.Point(28, 53);
+            this.rbCTCS_2.Name = "rbCTCS_2";
+            this.rbCTCS_2.Size = new System.Drawing.Size(59, 16);
+            this.rbCTCS_2.TabIndex = 0;
+            this.rbCTCS_2.Text = "CTCS-2";
+            this.rbCTCS_2.UseVisualStyleBackColor = true;
+            this.rbCTCS_2.CheckedChanged += new System.EventHandler(this.rbControlLevel_CheckedChanged);
+            // 
+            // rbCTCS_3
+            // 
+            this.rbCTCS_3.AutoSize = true;
+            this.rbCTCS_3.Location = new System.Drawing.Point(28, 22);
+            this.rbCTCS_3.Name = "rbCTCS_3";
+            this.rbCTCS_3.Size = new System.Drawing.Size(59, 16);
+            this.rbCTCS_3.TabIndex = 0;
+            this.rbCTCS_3.Text = "CTCS-3";
+            this.rbCTCS_3.UseVisualStyleBackColor = true;
+            this.rbCTCS_3.CheckedChanged += new System.EventHandler(this.rbControlLevel_CheckedChanged);
             // 
             // gbDriveDirection
             // 
@@ -548,13 +718,10 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(667, 277);
+            this.button1.Location = new System.Drawing.Point(0, 0);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.TabIndex = 16;
             // 
             // menuStrip1
             // 
@@ -563,9 +730,10 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.初始化ToolStripMenuItem,
             this.通信ToolStripMenuItem,
-            this.故障注入ToolStripMenuItem,
             this.状态设置ToolStripMenuItem,
-            this.ToolStripMenuItem});
+            this.故障注入ToolStripMenuItem,
+            this.ToolStripMenuItem,
+            this.发送消息ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(820, 25);
@@ -608,7 +776,7 @@
             this.rBCToolStripMenuItem,
             this.nRBCToolStripMenuItem});
             this.建立通信ToolStripMenuItem.Name = "建立通信ToolStripMenuItem";
-            this.建立通信ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.建立通信ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.建立通信ToolStripMenuItem.Text = "建立通信";
             // 
             // rBCToolStripMenuItem
@@ -631,7 +799,7 @@
             this.disRBCToolStripMenuItem,
             this.disNRBCToolStripMenuItem});
             this.断开通信ToolStripMenuItem.Name = "断开通信ToolStripMenuItem";
-            this.断开通信ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.断开通信ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.断开通信ToolStripMenuItem.Text = "断开通信";
             // 
             // disRBCToolStripMenuItem
@@ -648,54 +816,54 @@
             this.disNRBCToolStripMenuItem.Text = "NRBC";
             this.disNRBCToolStripMenuItem.Click += new System.EventHandler(this.DisconnectTSMI_Click);
             // 
-            // 故障注入ToolStripMenuItem
+            // 状态设置ToolStripMenuItem
             // 
-            this.故障注入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.状态设置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.列车位置设置ToolStripMenuItem});
-            this.故障注入ToolStripMenuItem.Name = "故障注入ToolStripMenuItem";
-            this.故障注入ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.故障注入ToolStripMenuItem.Text = "状态设置";
+            this.状态设置ToolStripMenuItem.Name = "状态设置ToolStripMenuItem";
+            this.状态设置ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.状态设置ToolStripMenuItem.Text = "状态设置";
             // 
             // 列车位置设置ToolStripMenuItem
             // 
             this.列车位置设置ToolStripMenuItem.Name = "列车位置设置ToolStripMenuItem";
-            this.列车位置设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.列车位置设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.列车位置设置ToolStripMenuItem.Text = "列车位置设置";
             // 
-            // 状态设置ToolStripMenuItem
+            // 故障注入ToolStripMenuItem
             // 
-            this.状态设置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.故障注入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.列车打滑ToolStripMenuItem,
             this.无应答器故障ToolStripMenuItem,
             this.倒溜ToolStripMenuItem,
             this.列车空转ToolStripMenuItem,
             this.零速设置ToolStripMenuItem});
-            this.状态设置ToolStripMenuItem.Name = "状态设置ToolStripMenuItem";
-            this.状态设置ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.状态设置ToolStripMenuItem.Text = "故障注入";
+            this.故障注入ToolStripMenuItem.Name = "故障注入ToolStripMenuItem";
+            this.故障注入ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.故障注入ToolStripMenuItem.Text = "故障注入";
             // 
             // 列车打滑ToolStripMenuItem
             // 
             this.列车打滑ToolStripMenuItem.Name = "列车打滑ToolStripMenuItem";
-            this.列车打滑ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.列车打滑ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.列车打滑ToolStripMenuItem.Text = "列车打滑";
             // 
             // 无应答器故障ToolStripMenuItem
             // 
             this.无应答器故障ToolStripMenuItem.Name = "无应答器故障ToolStripMenuItem";
-            this.无应答器故障ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.无应答器故障ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.无应答器故障ToolStripMenuItem.Text = "无应答器故障";
             // 
             // 倒溜ToolStripMenuItem
             // 
             this.倒溜ToolStripMenuItem.Name = "倒溜ToolStripMenuItem";
-            this.倒溜ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.倒溜ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.倒溜ToolStripMenuItem.Text = "倒溜";
             // 
             // 列车空转ToolStripMenuItem
             // 
             this.列车空转ToolStripMenuItem.Name = "列车空转ToolStripMenuItem";
-            this.列车空转ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.列车空转ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.列车空转ToolStripMenuItem.Text = "列车空转";
             // 
             // 零速设置ToolStripMenuItem
@@ -704,19 +872,19 @@
             this.零速ToolStripMenuItem,
             this.非零速ToolStripMenuItem});
             this.零速设置ToolStripMenuItem.Name = "零速设置ToolStripMenuItem";
-            this.零速设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.零速设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.零速设置ToolStripMenuItem.Text = "零速设置";
             // 
             // 零速ToolStripMenuItem
             // 
             this.零速ToolStripMenuItem.Name = "零速ToolStripMenuItem";
-            this.零速ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.零速ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.零速ToolStripMenuItem.Text = "零速";
             // 
             // 非零速ToolStripMenuItem
             // 
             this.非零速ToolStripMenuItem.Name = "非零速ToolStripMenuItem";
-            this.非零速ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.非零速ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.非零速ToolStripMenuItem.Text = "非零速";
             // 
             // ToolStripMenuItem
@@ -802,161 +970,171 @@
             // 
             this.columnHeader3.Text = "发送者";
             // 
-            // gbWorkMode
+            // 发送消息ToolStripMenuItem
             // 
-            this.gbWorkMode.Controls.Add(this.rbCO);
-            this.gbWorkMode.Controls.Add(this.rbOS);
-            this.gbWorkMode.Controls.Add(this.rbSB);
-            this.gbWorkMode.Controls.Add(this.rbSL);
-            this.gbWorkMode.Controls.Add(this.rbPT);
-            this.gbWorkMode.Controls.Add(this.rbTR);
-            this.gbWorkMode.Controls.Add(this.rbIS);
-            this.gbWorkMode.Controls.Add(this.rbSH);
-            this.gbWorkMode.Controls.Add(this.rbFS);
-            this.gbWorkMode.Location = new System.Drawing.Point(22, 151);
-            this.gbWorkMode.Name = "gbWorkMode";
-            this.gbWorkMode.Size = new System.Drawing.Size(188, 96);
-            this.gbWorkMode.TabIndex = 43;
-            this.gbWorkMode.TabStop = false;
-            this.gbWorkMode.Text = "工作模式";
+            this.发送消息ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Message129ToolStripMenuItem,
+            this.Message132ToolStripMenuItem,
+            this.Message136ToolStripMenuItem,
+            this.Message155ToolStripMenuItem,
+            this.Message156ToolStripMenuItem,
+            this.Message157ToolStripMenuItem,
+            this.Message159ToolStripMenuItem});
+            this.发送消息ToolStripMenuItem.Name = "发送消息ToolStripMenuItem";
+            this.发送消息ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.发送消息ToolStripMenuItem.Text = "发送消息";
             // 
-            // rbFS
+            // Message129ToolStripMenuItem
             // 
-            this.rbFS.AutoSize = true;
-            this.rbFS.Location = new System.Drawing.Point(23, 22);
-            this.rbFS.Name = "rbFS";
-            this.rbFS.Size = new System.Drawing.Size(35, 16);
-            this.rbFS.TabIndex = 0;
-            this.rbFS.Text = "FS";
-            this.rbFS.UseVisualStyleBackColor = true;
-            this.rbFS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Message129ToolStripMenuItem.Name = "Message129ToolStripMenuItem";
+            this.Message129ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Message129ToolStripMenuItem.Text = "消息129";
+            this.Message129ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
-            // rbOS
+            // Message155ToolStripMenuItem
             // 
-            this.rbOS.AutoSize = true;
-            this.rbOS.Location = new System.Drawing.Point(23, 66);
-            this.rbOS.Name = "rbOS";
-            this.rbOS.Size = new System.Drawing.Size(35, 16);
-            this.rbOS.TabIndex = 0;
-            this.rbOS.Text = "OS";
-            this.rbOS.UseVisualStyleBackColor = true;
-            this.rbOS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Message155ToolStripMenuItem.Name = "Message155ToolStripMenuItem";
+            this.Message155ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Message155ToolStripMenuItem.Text = "消息155";
+            this.Message155ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
-            // rbCO
+            // Message156ToolStripMenuItem
             // 
-            this.rbCO.AutoSize = true;
-            this.rbCO.Location = new System.Drawing.Point(22, 44);
-            this.rbCO.Name = "rbCO";
-            this.rbCO.Size = new System.Drawing.Size(35, 16);
-            this.rbCO.TabIndex = 0;
-            this.rbCO.Text = "CO";
-            this.rbCO.UseVisualStyleBackColor = true;
-            this.rbCO.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Message156ToolStripMenuItem.Name = "Message156ToolStripMenuItem";
+            this.Message156ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Message156ToolStripMenuItem.Text = "消息156";
+            this.Message156ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
-            // rbSH
+            // Message157ToolStripMenuItem
             // 
-            this.rbSH.AutoSize = true;
-            this.rbSH.Location = new System.Drawing.Point(76, 22);
-            this.rbSH.Name = "rbSH";
-            this.rbSH.Size = new System.Drawing.Size(35, 16);
-            this.rbSH.TabIndex = 0;
-            this.rbSH.Text = "SH";
-            this.rbSH.UseVisualStyleBackColor = true;
-            this.rbSH.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Message157ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Msg157Packet4ToolStripMenuItem,
+            this.Msg157Packet44ToolStripMenuItem,
+            this.Msg157NoPacketToolStripMenuItem});
+            this.Message157ToolStripMenuItem.Name = "Message157ToolStripMenuItem";
+            this.Message157ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Message157ToolStripMenuItem.Text = "消息157";
             // 
-            // rbSL
+            // Message159ToolStripMenuItem
             // 
-            this.rbSL.AutoSize = true;
-            this.rbSL.Location = new System.Drawing.Point(75, 44);
-            this.rbSL.Name = "rbSL";
-            this.rbSL.Size = new System.Drawing.Size(35, 16);
-            this.rbSL.TabIndex = 0;
-            this.rbSL.Text = "SL";
-            this.rbSL.UseVisualStyleBackColor = true;
-            this.rbSL.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Message159ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Msg159Packet3ToolStripMenuItem,
+            this.Msg159NoPacketToolStripMenuItem});
+            this.Message159ToolStripMenuItem.Name = "Message159ToolStripMenuItem";
+            this.Message159ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Message159ToolStripMenuItem.Text = "消息159";
             // 
-            // rbSB
+            // Msg157Packet4ToolStripMenuItem
             // 
-            this.rbSB.AutoSize = true;
-            this.rbSB.Location = new System.Drawing.Point(75, 66);
-            this.rbSB.Name = "rbSB";
-            this.rbSB.Size = new System.Drawing.Size(35, 16);
-            this.rbSB.TabIndex = 0;
-            this.rbSB.Text = "SB";
-            this.rbSB.UseVisualStyleBackColor = true;
-            this.rbSB.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Msg157Packet4ToolStripMenuItem.Name = "Msg157Packet4ToolStripMenuItem";
+            this.Msg157Packet4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Msg157Packet4ToolStripMenuItem.Text = "信息包4";
+            this.Msg157Packet4ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
-            // rbIS
+            // Msg157Packet44ToolStripMenuItem
             // 
-            this.rbIS.AutoSize = true;
-            this.rbIS.Location = new System.Drawing.Point(129, 20);
-            this.rbIS.Name = "rbIS";
-            this.rbIS.Size = new System.Drawing.Size(35, 16);
-            this.rbIS.TabIndex = 0;
-            this.rbIS.Text = "IS";
-            this.rbIS.UseVisualStyleBackColor = true;
-            this.rbIS.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Msg157Packet44ToolStripMenuItem.Name = "Msg157Packet44ToolStripMenuItem";
+            this.Msg157Packet44ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Msg157Packet44ToolStripMenuItem.Text = "信息包44";
+            this.Msg157Packet44ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
-            // rbTR
+            // Msg157NoPacketToolStripMenuItem
             // 
-            this.rbTR.AutoSize = true;
-            this.rbTR.Location = new System.Drawing.Point(129, 42);
-            this.rbTR.Name = "rbTR";
-            this.rbTR.Size = new System.Drawing.Size(35, 16);
-            this.rbTR.TabIndex = 0;
-            this.rbTR.Text = "TR";
-            this.rbTR.UseVisualStyleBackColor = true;
-            this.rbTR.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Msg157NoPacketToolStripMenuItem.Name = "Msg157NoPacketToolStripMenuItem";
+            this.Msg157NoPacketToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Msg157NoPacketToolStripMenuItem.Text = "不选择";
+            this.Msg157NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
-            // rbPT
+            // Msg159Packet3ToolStripMenuItem
             // 
-            this.rbPT.AutoSize = true;
-            this.rbPT.Location = new System.Drawing.Point(131, 64);
-            this.rbPT.Name = "rbPT";
-            this.rbPT.Size = new System.Drawing.Size(35, 16);
-            this.rbPT.TabIndex = 0;
-            this.rbPT.Text = "PT";
-            this.rbPT.UseVisualStyleBackColor = true;
-            this.rbPT.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
+            this.Msg159Packet3ToolStripMenuItem.Name = "Msg159Packet3ToolStripMenuItem";
+            this.Msg159Packet3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Msg159Packet3ToolStripMenuItem.Text = "信息包3";
+            this.Msg159Packet3ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
-            // gbControlLevel
+            // Msg159NoPacketToolStripMenuItem
             // 
-            this.gbControlLevel.Controls.Add(this.rbCTCS_2);
-            this.gbControlLevel.Controls.Add(this.rbCTCS_3);
-            this.gbControlLevel.Location = new System.Drawing.Point(22, 253);
-            this.gbControlLevel.Name = "gbControlLevel";
-            this.gbControlLevel.Size = new System.Drawing.Size(99, 87);
-            this.gbControlLevel.TabIndex = 38;
-            this.gbControlLevel.TabStop = false;
-            this.gbControlLevel.Text = "控车等级";
+            this.Msg159NoPacketToolStripMenuItem.Name = "Msg159NoPacketToolStripMenuItem";
+            this.Msg159NoPacketToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Msg159NoPacketToolStripMenuItem.Text = "不选择";
+            this.Msg159NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
-            // rbCTCS_2
+            // Message132ToolStripMenuItem
             // 
-            this.rbCTCS_2.AutoSize = true;
-            this.rbCTCS_2.Location = new System.Drawing.Point(28, 53);
-            this.rbCTCS_2.Name = "rbCTCS_2";
-            this.rbCTCS_2.Size = new System.Drawing.Size(59, 16);
-            this.rbCTCS_2.TabIndex = 0;
-            this.rbCTCS_2.Text = "CTCS-2";
-            this.rbCTCS_2.UseVisualStyleBackColor = true;
-            this.rbCTCS_2.CheckedChanged += new System.EventHandler(this.rbControlLevel_CheckedChanged);
+            this.Message132ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Msg132NoPacketToolStripMenuItem,
+            this.Msg132Packet9ToolStripMenuItem});
+            this.Message132ToolStripMenuItem.Name = "Message132ToolStripMenuItem";
+            this.Message132ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Message132ToolStripMenuItem.Text = "消息132";
             // 
-            // rbCTCS_3
+            // Message136ToolStripMenuItem
             // 
-            this.rbCTCS_3.AutoSize = true;
-            this.rbCTCS_3.Location = new System.Drawing.Point(28, 22);
-            this.rbCTCS_3.Name = "rbCTCS_3";
-            this.rbCTCS_3.Size = new System.Drawing.Size(59, 16);
-            this.rbCTCS_3.TabIndex = 0;
-            this.rbCTCS_3.Text = "CTCS-3";
-            this.rbCTCS_3.UseVisualStyleBackColor = true;
-            this.rbCTCS_3.CheckedChanged += new System.EventHandler(this.rbControlLevel_CheckedChanged);
+            this.Message136ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Msg136NoPacketToolStripMenuItem});
+            this.Message136ToolStripMenuItem.Name = "Message136ToolStripMenuItem";
+            this.Message136ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Message136ToolStripMenuItem.Text = "消息136";
+            // 
+            // Msg136NoPacketToolStripMenuItem
+            // 
+            this.Msg136NoPacketToolStripMenuItem.Name = "Msg136NoPacketToolStripMenuItem";
+            this.Msg136NoPacketToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Msg136NoPacketToolStripMenuItem.Text = "不选择";
+            this.Msg136NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Msg132NoPacketToolStripMenuItem
+            // 
+            this.Msg132NoPacketToolStripMenuItem.Name = "Msg132NoPacketToolStripMenuItem";
+            this.Msg132NoPacketToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Msg132NoPacketToolStripMenuItem.Text = "不选择";
+            this.Msg132NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Msg132Packet9ToolStripMenuItem
+            // 
+            this.Msg132Packet9ToolStripMenuItem.Name = "Msg132Packet9ToolStripMenuItem";
+            this.Msg132Packet9ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Msg132Packet9ToolStripMenuItem.Text = "信息包9";
+            this.Msg132Packet9ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // lvSendMsg
+            // 
+            this.lvSendMsg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lvSendMsg.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader4,
+            this.columnHeader5,
+            this.columnHeader6});
+            this.lvSendMsg.FullRowSelect = true;
+            this.lvSendMsg.GridLines = true;
+            this.lvSendMsg.Location = new System.Drawing.Point(523, 239);
+            this.lvSendMsg.Name = "lvSendMsg";
+            this.lvSendMsg.Size = new System.Drawing.Size(256, 154);
+            this.lvSendMsg.TabIndex = 15;
+            this.lvSendMsg.UseCompatibleStateImageBehavior = false;
+            this.lvSendMsg.View = System.Windows.Forms.View.Details;
+            this.lvSendMsg.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ListView_MouseDoubleClick);
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "时间";
+            this.columnHeader4.Width = 96;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "消息编号";
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "发送给";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 678);
+            this.Controls.Add(this.lvSendMsg);
             this.Controls.Add(this.lvRecvMsg);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -968,11 +1146,15 @@
             this.Text = "Train";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.gbDriverConsoler.ResumeLayout(false);
+            this.gbWorkMode.ResumeLayout(false);
+            this.gbWorkMode.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.gbSteer.ResumeLayout(false);
             this.gbSteer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSteer)).EndInit();
+            this.gbControlLevel.ResumeLayout(false);
+            this.gbControlLevel.PerformLayout();
             this.gbDriveDirection.ResumeLayout(false);
             this.gbDriveDirection.PerformLayout();
             this.gbTrainState.ResumeLayout(false);
@@ -985,10 +1167,6 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.gbWorkMode.ResumeLayout(false);
-            this.gbWorkMode.PerformLayout();
-            this.gbControlLevel.ResumeLayout(false);
-            this.gbControlLevel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1043,9 +1221,9 @@
         private System.Windows.Forms.ToolStripMenuItem 断开通信ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disRBCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem disNRBCToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 故障注入ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 列车位置设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 状态设置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 列车位置设置ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 故障注入ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 列车打滑ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 无应答器故障ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 倒溜ToolStripMenuItem;
@@ -1079,6 +1257,26 @@
         private System.Windows.Forms.GroupBox gbControlLevel;
         private System.Windows.Forms.RadioButton rbCTCS_2;
         private System.Windows.Forms.RadioButton rbCTCS_3;
+        private System.Windows.Forms.ToolStripMenuItem 发送消息ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Message129ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Message155ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Message156ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Message157ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Message159ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Msg157Packet4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Msg157Packet44ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Msg157NoPacketToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Msg159Packet3ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Msg159NoPacketToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Message132ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Msg132NoPacketToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Message136ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Msg136NoPacketToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Msg132Packet9ToolStripMenuItem;
+        private System.Windows.Forms.ListView lvSendMsg;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }
 

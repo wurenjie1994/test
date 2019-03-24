@@ -9,11 +9,11 @@ using Train.Data;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 车到地——通信会话开始
+    /// </summary>
     public class Message155: AbstractSendMessage
     {
-        /// <summary>
-        /// 车到地——通信会话开始
-        /// </summary>
         const int MESSAGEID = 155;
 
         const int BitArrayLEN = 80;
@@ -23,6 +23,8 @@ namespace Train.Messages
         {
             BitArray bitArray = new BitArray(BitArrayLEN);
             int[] intArray = new int[] { 8, 10, 32, 24 };
+            NID_MESSAGE = MESSAGEID;
+            L_MESSAGE = byteLEN;
             int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE };
             int pos = 0;
             for (int i = 0; i < intArray.Length; i++)

@@ -9,11 +9,12 @@ using Train.Data;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 车到地——任务结束
+    /// </summary>
     public class Message150: AbstractSendMessage
     {
-        /// <summary>
-        /// 车到地——任务结束
-        /// </summary>
+
         const int MESSAGEID = 150;
         int ID01;
 

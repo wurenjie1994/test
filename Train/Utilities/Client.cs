@@ -32,6 +32,7 @@ namespace Train.Utilities
 
         public void SendMsg(byte[] byteToSend)
         {
+            if (byteToSend == null) return;
             if (networkStream != null)
                 networkStream.Write(byteToSend, 0, byteToSend.Length);
         }

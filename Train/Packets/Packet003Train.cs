@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,14 +13,16 @@ namespace Train.Packets
     /// </summary>
     public class Packet003Train : AbstractPacket
     {
-        int NID_PACKET;         //8bit
-        int L_PACKET;           //13bit
+        int NID_PACKET=3;         //8bit
+        int L_PACKET=8+13+5;           //13bit
         int N_ITER;             //5bit
-        ulong[] NID_RADIO;      //64bit
+        List<ulong> NID_RADIO;      //64bit
 
         public override BitArray Resolve()
         {
-            BitArray bitArray = new BitArray(200);
+            Fill();
+            L_PACKET += N_ITER * 64;
+            BitArray bitArray = new BitArray(L_PACKET);
             int[] intArray = new int[] { 8, 13 };
             int[] DataArray = new int[] { NID_PACKET, L_PACKET };
             int pos = 0;
@@ -33,6 +36,11 @@ namespace Train.Packets
                 Bits.ConvergeBitArray(bitArray, NID_RADIO[i], ref pos, 64);
             }
             return bitArray;
+        }
+        private void Fill()
+        {
+            N_ITER = TrainInfo.NID_RADIOList.Count;
+            NID_RADIO = TrainInfo.NID_RADIOList;
         }
     }
 }

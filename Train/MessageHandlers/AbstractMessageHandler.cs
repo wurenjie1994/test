@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-
+using Train.Messages;
 namespace Train.MessageHandlers
 {
     public abstract class AbstractMessageHandler
@@ -21,9 +20,12 @@ namespace Train.MessageHandlers
         private static CommSession_MH mhCommSession = new CommSession_MH();
         private static EB_MH mhEB = new EB_MH();
         private static UltimateHandler_MH mhUltimateHandler = new UltimateHandler_MH();
+
+        private static MainForm mainForm;
         //设置责任链
-        public static void Init()
+        public static void Init(MainForm mf)
         {
+            mainForm = mf;
             mhCommSession.SetNext(mhEB)
                 .SetNext(mhUltimateHandler).SetNext(null);
         }
@@ -33,6 +35,13 @@ namespace Train.MessageHandlers
             AbstractMessageHandler amh = mhCommSession;
             while (!amh.Solve(am))
                 amh = amh.GetNext();
+        }
+        protected void SendMsg(AbstractSendMessage asm,_CommType commType)
+        {
+            if(commType == _CommType.RBC)
+            {
+                mainForm.SendToRBC(asm);
+            }
         }
     }
 }

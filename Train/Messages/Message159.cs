@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Train.Packets;
 using Train.Utilities;
 using Train.Data;
@@ -15,16 +12,21 @@ namespace Train.Messages
         /// 车到地——通信会话已建立
         /// </summary>
         const int MESSAGEID = 159;
-        int ID;
         AbstractPacket ap;          //可选择的信息包
 
-        const int BitArrayLEN = 280;
-        const int byteLEN = BitArrayLEN / 8;
+        int BitArrayLEN = 8 + 10 + 32 + 24;
 
         public override byte[] Resolve()
         {
+            BitArray bit = null;
+            if (ap != null) bit = ap.Resolve();
+            if (bit != null) BitArrayLEN += bit.Length;
             BitArray bitArray = new BitArray(BitArrayLEN);
             int[] intArray = new int[] { 8, 10, 32, 24 };
+
+            NID_MESSAGE = MESSAGEID;
+            L_MESSAGE = BitArrayLEN / 8 + (BitArrayLEN % 8 == 0 ? 0 : 1);
+
             int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE };
             int pos = 0;
             for (int i = 0; i < intArray.Length; i++)
@@ -38,15 +40,12 @@ namespace Train.Messages
                     Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
                 }
             }
-            ap = AbstractPacket.GetPacket(ID);
-            BitArray bit = ap.Resolve();
-            for (int i = 0; i < bit.Length; i++)
+            for (int i = 0;bit!=null && i < bit.Length; i++)
             {
-                bitArray[pos] = bit[i];
-                pos++;
+                bitArray[pos++] = bit[i];
             }
 
-            byte[] sendData = new byte[byteLEN];
+            byte[] sendData = new byte[L_MESSAGE];
             Bits.ToByte(sendData, bitArray);
 
             return sendData;
@@ -54,6 +53,10 @@ namespace Train.Messages
         public override int GetMessageID()
         {
             return MESSAGEID;
+        }
+        public void SetAlternativePacket(AbstractPacket ap)
+        {
+            this.ap = ap;
         }
     }
 }

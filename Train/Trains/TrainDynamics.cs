@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Xml;
+using Train.Data;
+using Train.Packets;
 
 namespace Train.Trains
 {
@@ -55,7 +56,7 @@ namespace Train.Trains
         //当前列车运行信息
         private double currentV = 0;//当前速度
         private double currentA = 0;//当前加速度
-        private double currentS1 = 0;//当前右车头距离
+        private double currentS1 = 0;//当前右车头距离，单位：米
         private double currentS0 = 0;//当前左车头距离
         private double prevS1, prevS0; //100ms前的位置
         private double displacement = 0; //总位移
@@ -63,6 +64,9 @@ namespace Train.Trains
 
         public  const double LINE_LENGTH = 80 * 1000;//线路总长度,80km
         private double deltaS = 0;
+
+        private BaliseGroup lrbg=BaliseGroup.BgList[0];
+        private Packet000 p0 = new Packet000();
 
         public TrainDynamics()
         {
@@ -75,6 +79,7 @@ namespace Train.Trains
             currentDirectory = currentDirectory + "\\VehicleConfig.xml";
              GetParamersFromXML(currentDirectory);
             CaculateWeight();
+            totalLength = 1000 * TrainInfo.L_TRAIN;
            currentS1 = currentS0 + totalLength / 1000;
         }
         //初始化时从XML中读取列车配置参数信息
@@ -161,9 +166,8 @@ namespace Train.Trains
                 trainState.BrakeStatus = EBStatus || (steerValue < 0);
                 trainState.EBStatus = EBStatus;
             }
-
             #endregion
-
+            FillPacket0(driverConsoler);
         }
 
         private void CalTrainLocation(double distance)
@@ -174,12 +178,49 @@ namespace Train.Trains
             {
                 currentS0 = 0;currentS1 = currentS0 + totalLength / 1000;
                 currentV = currentA = 0;
+                return;
             }
             if (currentS1 > LINE_LENGTH)
             {
                 currentS1 = LINE_LENGTH; currentS0 = currentS1 - totalLength / 1000;
                 currentV = currentA = 0;
+                return;
             }
+        }
+       
+        //填充packet0各字段信息
+        private void FillPacket0(DriverConsolerState driverConsoler)
+        {
+            BaliseGroup next = lrbg;
+            //假定BgList中应答器组按地理位置升序排序
+            foreach(BaliseGroup bg in BaliseGroup.BgList)
+            {
+                if(bg.Position>lrbg.Position)
+                {
+                    next = bg;break;
+                }
+            }
+            if (next.Position < currentS1) lrbg = next;
+
+            p0.Q_SCALE = 1;// meter
+            p0.NID_LRBG = (lrbg.Nid_c << 14) | (lrbg.Nid_bg);
+            p0.D_LRBG = (int)(currentS1 - lrbg.Position);
+            p0.Q_DIRLRBG = 1; //相对于LRBG方向的列车朝向，设为正向
+            p0.Q_DLRBG = 1;//估计列车前端位于LRBG哪一侧，设为正向
+            p0.L_DOUBTOVER = 1;//低限
+            p0.L_DOUBTUNDER = 1;//高限
+            p0.Q_LENGTH = 2;//设为由司机确认的列车完整性
+            p0.L_TRAININT = totalLength / 1000;
+            p0.V_TRAIN = (int)(currentV * 3.6 / 5);
+            p0.Q_DIRTRAIN = 1;  //相对于LRBG方向的列车运行方向，设为正向
+            p0.M_MODE = (int)driverConsoler.WorkMode;  //车载设备工作模式
+            p0.M_LEVEL = (int)driverConsoler.ControlLevel;
+            if (p0.M_LEVEL == 1)
+                p0.NID_STM = 123;//自己设的一个值
+        }
+        public Packet000 GetPacket0()
+        {
+            return p0;
         }
 
         //根据当前速度、牵引制动状态以及牵引制动等级计算出下一个时刻的速度，返回行驶的距离

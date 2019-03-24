@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace Train
 {
+    //具体含义见数据库表
     public class TrainInfo
     {
         private static int trainID;
         private static int l_TRAIN;
         private static int nID_ENGINE;
         private static int nID_XUSER;
-        private static int nID_OPERATIONAL;
-        private static int nC_TRAIN;
+        private static int nID_OPERATIONAL;    //在地对车信息包140中，RBC会给列车分配车次号
+        private static int nC_TRAIN=0; //default
         private static int v_MAXTRAIN;
         private static int m_LOADINGGAUGE;
         private static int m_AXLELOAD;
@@ -117,7 +118,7 @@ namespace Train
             }
         }
 
-        public static int LOADINGGAUGE
+        public static int M_LOADINGGAUGE
         {
             get
             {
@@ -130,7 +131,7 @@ namespace Train
             }
         }
 
-        public static int AXLELOAD
+        public static int M_AXLELOAD
         {
             get
             {
@@ -143,7 +144,7 @@ namespace Train
             }
         }
 
-        public static int AIRTIGHT
+        public static int M_AIRTIGHT
         {
             get
             {
@@ -182,7 +183,7 @@ namespace Train
             }
         }
 
-        public static List<int> TRACTION
+        public static List<int> M_TRACTION
         {
             get
             {

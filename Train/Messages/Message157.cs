@@ -9,26 +9,31 @@ using Train.Data;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 车到地——SoM位置报告
+    /// </summary>
     public class Message157: AbstractSendMessage
     {
-        /// <summary>
-        /// 车到地——SoM位置报告
-        /// </summary>
         const int MESSAGEID = 157;
-        int ID01, ID;
 
         int Q_STATUS;               //2bit
-        AbstractPacket ap01;        //可选择的信息包0/1
+        AbstractPacket ap01;        //信息包0/1
         AbstractPacket ap;          //可选择的信息包
 
-        const int BitArrayLEN = 344;
-        const int byteLEN = BitArrayLEN / 8;
+         int BitArrayLEN = 8+10+32+24+2;
 
         public override byte[] Resolve()
         {
+            BitArray bit01 = ap01.Resolve();
+            BitArray bit = (ap == null ? null : ap.Resolve());
+            BitArrayLEN += (bit01 == null ? 0 : bit01.Length) + (bit == null ? 0 : bit.Length);
             BitArray bitArray = new BitArray(BitArrayLEN);
+
+            Q_STATUS = 1; //设置SoM位置报告状态为有效
+            NID_MESSAGE = MESSAGEID;
+            L_MESSAGE = BitArrayLEN / 8 + (BitArrayLEN % 8 == 0 ? 0 : 1);
             int[] intArray = new int[] { 8, 10, 32, 24, 2 };
-            int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE };
+            int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE,Q_STATUS };
             int pos = 0;
             for (int i = 0; i < intArray.Length; i++)
             {
@@ -41,22 +46,16 @@ namespace Train.Messages
                     Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
                 }
             }
-            ap01 = AbstractPacket.GetPacket(ID01);
-            BitArray bit = ap01.Resolve();
-            for (int i = 0; i < bit.Length; i++)
+            for (int i = 0; i < bit01.Length; i++)
             {
-                bitArray[pos] = bit[i];
-                pos++;
+                bitArray[pos++] = bit01[i];
             }
-            ap = AbstractPacket.GetPacket(ID);
-            bit = ap.Resolve();
-            for (int i = 0; i < bit.Length; i++)
+            for (int i = 0;bit!=null && i < bit.Length; i++)
             {
-                bitArray[pos] = bit[i];
-                pos++;
+                bitArray[pos++] = bit[i];
             }
 
-            byte[] sendData = new byte[byteLEN];
+            byte[] sendData = new byte[L_MESSAGE];
             Bits.ToByte(sendData, bitArray);
 
             return sendData;
@@ -64,6 +63,14 @@ namespace Train.Messages
         public override int GetMessageID()
         {
             return MESSAGEID;
+        }
+        public void SetPacket0or1(AbstractPacket ap)
+        {
+            ap01 = ap;
+        }
+        public void SetAlternativePacket(AbstractPacket ap)
+        {
+            this.ap = ap;
         }
     }
 }

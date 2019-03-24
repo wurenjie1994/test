@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Train.Utilities;
+using Train.Data;
+using System.Collections.Generic;
 
 namespace Train.Packets
 {
@@ -12,8 +12,8 @@ namespace Train.Packets
     /// </summary>
     public class Packet011:AbstractPacket
     {
-        int NID_PACKET;         //8bit
-        int L_PACKET;           //13bit
+        int NID_PACKET=11;         //8bit
+        int L_PACKET=8+13+32+15+12+7+8+7+2+5+5;           //13bit
         long NID_OPERATIONAL;   //32bit
         int NC_TRAIN;           //15bit
         int L_TRAIN;            //12bit
@@ -23,14 +23,18 @@ namespace Train.Packets
         int M_AIRTIGHT;         //2bit
         int N_ITER1;            //5bit
         int N_ITER2;            //5bit
-        int[] M_TRACTION;       //8bit
-        int[] NID_STM;          //8bit
+        List<int> M_TRACTION;       //8bit
+        List<int> NID_STM;          //8bit
 
         public override BitArray Resolve()
         {
-            BitArray bitArray = new BitArray(200);
+            Fill(); //must invoke this method first!
+            L_PACKET +=  (N_ITER1+N_ITER2)* 8;
+
+            BitArray bitArray = new BitArray(L_PACKET);
             int[] intArray = new int[] { 8, 13, 32, 15, 12, 7, 8, 7, 2 };
-            int[] DataArray = new int[] { NID_PACKET, L_PACKET, 0, NC_TRAIN, L_TRAIN, V_MAXTRAIN, M_LOADINGGAUGE, M_AXLELOAD, M_AIRTIGHT };
+            int[] DataArray = new int[] { NID_PACKET, L_PACKET, 0, NC_TRAIN,
+                L_TRAIN, V_MAXTRAIN, M_LOADINGGAUGE, M_AXLELOAD, M_AIRTIGHT };
             int pos = 0;
             for (int i = 0; i < intArray.Length; i++)
             {
@@ -43,7 +47,7 @@ namespace Train.Packets
                     Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
                 }
             }
-
+            
             Bits.ConvergeBitArray(bitArray, N_ITER1, ref pos, 5);
             for (int i = 0; i < N_ITER1; i++)
             {
@@ -56,6 +60,21 @@ namespace Train.Packets
             }
 
             return bitArray;
+        }
+        private void Fill()
+        {
+
+            NID_OPERATIONAL = TrainInfo.NID_OPERATIONAL;
+            NC_TRAIN = TrainInfo.NC_TRAIN;
+            L_TRAIN = TrainInfo.L_TRAIN;
+            V_MAXTRAIN = TrainInfo.V_MAXTRAIN;
+            M_LOADINGGAUGE = TrainInfo.M_LOADINGGAUGE;
+            M_AXLELOAD = TrainInfo.M_AXLELOAD;
+            M_AIRTIGHT = TrainInfo.M_AIRTIGHT;
+            N_ITER1 = TrainInfo.M_TRACTION.Count;
+            M_TRACTION = TrainInfo.M_TRACTION;
+            N_ITER2 = TrainInfo.NID_STMList.Count;
+            NID_STM = TrainInfo.NID_STMList;
         }
     }
 }

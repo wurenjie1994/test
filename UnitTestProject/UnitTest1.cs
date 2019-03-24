@@ -6,9 +6,9 @@ using Train.Messages;
 using Train.Utilities;
 using System.Diagnostics;
 using System.Reflection;
-using System.Reflection;
 using Train;
 using Train.Packets;
+using Train.Data;
 
 namespace UnitTestProject
 {
@@ -18,7 +18,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethod1()
         {
-            AbstractMessageHandler.Init();
+            AbstractMessageHandler.Init(new MainForm());
             byte[] b = new byte[1024];
             b[0] = 16;
             AbstractMessageHandler.Handling(AbstractRecvMessage.GetMessage(b));
@@ -46,7 +46,10 @@ namespace UnitTestProject
         {
             AbstractPacket ap = new Packet003();
             Type t = ap.GetType();
-            AbstractRecvMessage arm = new Message009();
+            Database.Init();
+            AbstractSendMessage arm = new Message129();
+            ((Message129)arm).SetPacket0or1(new Packet000());
+            arm.Resolve();
             t = arm.GetType();
             string s = "";
             FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);

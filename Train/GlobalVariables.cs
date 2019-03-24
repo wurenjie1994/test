@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,26 +7,29 @@ namespace Train
 {
     public enum _WorkMode
     {
-        FS=1,///完全监控模式
-        CO=2,//引导模式
-        OS=3,//目视行车模式
-        SH=4,//调车模式
+        FS=0,///完全监控模式
+        CO=1,//引导模式
+        OS=2,//目视行车模式
+        SH=3,//调车模式
         SL=5,//休眠模式
         SB=6,//待机模式
-        IS=7,//隔离模式
-        TR=8,//冒进防护模式
-        PT=9,//冒进后防护模式
+        IS=10,//隔离模式
+        TR=7,//冒进防护模式
+        PT=8,//冒进后防护模式
     }
     public enum _ControlLevel
     {
-        CTCS_2=2,
-        CTCS_3=3
+        CTCS_0=0,
+        STM=1,
+        CTCS_1=2,
+        CTCS_2=3,
+        CTCS_3=4
     }
     public enum DriveDirection : byte
     {
         RMF = 0x01,                //RMF（向前）
         ZERO = 0x02,             //0
-        RMR = 0x03               //RMR（向后）
+        RMR = 0x00               //RMR（向后）
     }
     public class DriverConsolerState
     {
@@ -289,5 +291,4 @@ namespace Train
             }
         }
     }
-
 }

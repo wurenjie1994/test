@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication.cs" />
+    <Compile Include="Data\BaliseGroup.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\TrainInfo.cs" />
     <Compile Include="MessageHandlers\AbstractMessageHandler.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Utilities\DebugInfo.cs" />
     <Compile Include="Utilities\Exceptions.cs" />
     <Compile Include="Utilities\IniFile.cs" />
+    <Compile Include="XmlResolve\XmlParser.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -184,7 +186,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="XmlResolve\ConnAck.xml" />
+    <Content Include="XmlResolve\ConnReq.xml" />
+    <Content Include="XmlResolve\RecvData.xml" />
+    <Content Include="XmlResolve\Disconnect.xml" />
+    <Content Include="XmlResolve\SendData.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

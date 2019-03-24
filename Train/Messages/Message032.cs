@@ -8,11 +8,11 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——系统版本
+    /// </summary>
     public class Message032:AbstractRecvMessage
     {
-        /// <summary>
-        /// 地到车——系统版本
-        /// </summary>
         const int MESSAGEID = 32;
         int M_VERSION;              //7bit
 

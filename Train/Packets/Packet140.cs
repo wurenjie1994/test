@@ -32,6 +32,7 @@ namespace Train.Packets
             Q_DIR = Convert.ToInt32(resultArray[1]);
             L_PACKET = Convert.ToInt32(resultArray[2]);
             NID_OPERARIONAL = resultArray[3];
+            TrainInfo.NID_OPERATIONAL = (int)NID_OPERARIONAL;
         }
     }
 }

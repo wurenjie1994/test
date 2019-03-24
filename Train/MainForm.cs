@@ -10,6 +10,9 @@ using System.Text;
 using Train.Utilities;
 using Train.ShowMsg;
 using Train.Messages;
+using Train.Packets;
+using Train.XmlResolve;
+using Train.Data;
 
 namespace Train
 {
@@ -18,13 +21,14 @@ namespace Train
         private DriverConsolerState driverConsoler = DriverConsolerState.GetNULL();
         private CircularQueue<ListViewContent> recvMsgQueue = new CircularQueue<ListViewContent>();
         private CircularQueue<ListViewContent> sendMsgQueue = new CircularQueue<ListViewContent>();
-
+        private bool isISDNIFConnected = false;//to mark the status of connection with ISDNIF 
         public MainForm()
         {
             InitializeComponent();
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Database.Init();
             StartTrain();
             StartComm();
         }
@@ -45,11 +49,76 @@ namespace Train
 
         private void DisconnectTSMI_Click(object sender, EventArgs e)
         {
-            if (sender == disRBCToolStripMenuItem) Communication.Disconnect(_CommType.RBC);
+            if (sender == disRBCToolStripMenuItem)
+            {
+                Communication.Disconnect(_CommType.RBC);
+                isISDNIFConnected = false;
+            }
             else if (sender == disNRBCToolStripMenuItem) Communication.Disconnect(_CommType.NRBC);
             MessageBox.Show("要经过2MSL时间（约2分钟）后才能再次发起连接！");
         }
-
+        //发送一次指定消息
+        private void SendMessagetTSMI_Click(object sender, EventArgs e)
+        {
+            if(sender == Message129ToolStripMenuItem)
+            {
+                Message129 m129 = new Message129();
+                if (trainDynamic == null) return;
+                m129.SetPacket0or1(trainDynamic.GetPacket0());
+                //Packet011 are some static configurations,so don't need to set its field here.
+                SendToRBC(m129);
+            }
+            if(sender == Msg132NoPacketToolStripMenuItem)
+            {
+                Message132 m132 = new Message132();
+                if (trainDynamic == null) return;
+                m132.SetPacket0or1(trainDynamic.GetPacket0());
+                SendToRBC(m132);
+            }
+            if (sender == Msg132Packet9ToolStripMenuItem)
+            {
+                Message132 m132 = new Message132();
+                if (trainDynamic == null) return;
+                m132.SetPacket0or1(trainDynamic.GetPacket0());
+                m132.SetAlternativePacket(new Packet009());  //设置可选择的信息包9
+                SendToRBC(m132);
+            }
+            if (sender == Msg136NoPacketToolStripMenuItem)
+            {
+                Message136 m136 = new Message136();
+                if (trainDynamic == null) return;
+                m136.SetPacket0or1(trainDynamic.GetPacket0());
+                SendToRBC(m136);
+            }
+            if(sender == Message155ToolStripMenuItem)
+            {
+                Message155 m155 = new Message155();
+                SendToRBC(m155);
+            }
+            if(sender == Message156ToolStripMenuItem)
+            {
+                Message156 m156 = new Message156();
+                SendToRBC(m156);
+            }
+            if(sender == Msg157NoPacketToolStripMenuItem)
+            {
+                Message157 m157 = new Message157();
+                if (trainDynamic == null) return;
+                m157.SetPacket0or1(trainDynamic.GetPacket0());
+                SendToRBC(m157);
+            }
+            if(sender == Msg159NoPacketToolStripMenuItem)
+            {
+                Message159 m159 = new Message159();
+                SendToRBC(m159);
+            }
+            if(sender == Msg159Packet3ToolStripMenuItem)
+            {
+                Message159 m159 = new Message159();
+                m159.SetAlternativePacket(new Packet003Train());
+                SendToRBC(m159);
+            }
+        }
         #endregion
 
         #region 主界面
@@ -226,11 +295,28 @@ namespace Train
             Communication.Init(fileName);
         }
 
+        #region 发包模块
+        /// <summary>
+        /// 所有发送报文都要使用这个方法
+        /// （除了与ISDNIF接口的建立连接和释放连接过程）
+        /// </summary>
+        /// <param name="asm"></param>
+        public void SendToRBC(AbstractSendMessage asm)
+        {
+            byte[] sendData = asm.Resolve();
+            sendData = XmlParser.SendData(sendData);
+            Communication.SendMsg(sendData, _CommType.RBC);
+            ListViewContent lvc = new ListViewContent(DateTime.Now, asm.NID_MESSAGE, _CommType.RBC, asm);
+            this.BeginInvoke(updateListView, lvSendMsg, sendMsgQueue, lvc);
+        }
+        #endregion
+
         #region 收包模块    
         private Thread fromNRBCThread, fromRBCThread;
         public void StartRecvMsgModule(_CommType commType)
         {
             updateListView += UpdateListView;
+            MessageHandlers.AbstractMessageHandler.Init(this);
             if (commType == _CommType.NRBC && fromNRBCThread == null)
             {
                 fromNRBCThread = new Thread(RecvFromNRBC);
@@ -247,7 +333,7 @@ namespace Train
         }
         public void RecvFromNRBC()
         {
-            while (true)
+            while (Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
             {
                 try
                 {
@@ -262,25 +348,28 @@ namespace Train
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string sendString = Convert.ToString(123);//要发送的字符串
-            byte[] sendData = null;//要发送的字节数组
-
-            sendData = Encoding.Default.GetBytes(sendString);//获取要发送的字节数组
-
-            Communication.SendMsg(sendData, _CommType.NRBC);
-        }
-
         public void RecvFromRBC()
         {
-            while (true)
+            while (Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
             {
                 try
                 {
                     byte[] recvData = Communication.RecvMsg(_CommType.RBC);
                     if (recvData == null) continue;
+                    if (isISDNIFConnected)
+                    {
+                        recvData = XmlParser.RecvData(recvData);
+                    }
+                    else
+                    {
+                        int rbcid;
+                        XmlParser.ConnAck(recvData, out rbcid);
+                        isISDNIFConnected = true;
+                        continue;
+                    }
                     AbstractRecvMessage arm = AbstractRecvMessage.GetMessage(recvData);
+                    MessageHandlers.AbstractMessageHandler.Handling(arm);
+
                     ListViewContent lvc = new ListViewContent(DateTime.Now, arm.NID_MESSAGE, _CommType.RBC, arm);
                     this.BeginInvoke(updateListView, lvRecvMsg, recvMsgQueue, lvc);
                 }
@@ -295,6 +384,11 @@ namespace Train
             {
                 AbstractRecvMessage arm = recvMsgQueue.IndexOf(index).Arm;
                 new ShowMsgForm(arm.ToString());
+            }
+            if (sender == lvSendMsg)
+            {
+                AbstractSendMessage asm = sendMsgQueue.IndexOf(index).Asm;
+                new ShowMsgForm(asm.ToString());
             }
         }
 
@@ -425,7 +519,7 @@ namespace Train
             if (After > Before_RBCConn)
             {
                 if (After.Subtract(Before_RBCConn).TotalMilliseconds > 1000)
-                    ConnStatus_RBC = Communication.IsConnected(_CommType.RBC);
+                    ConnStatus_RBC = Communication.IsConnected(_CommType.RBC) && isISDNIFConnected;
             }
         }
         #endregion
