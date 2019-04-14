@@ -16,15 +16,17 @@ namespace Train.Messages
     {
 
         const int MESSAGEID = 150;
-        int ID01;
-
         AbstractPacket ap01;        //可选择的信息包0/1
 
-        const int BitArrayLEN = 240;
-        const int byteLEN = BitArrayLEN / 8;
+        int BitArrayLEN = 74;
 
         public override byte[] Resolve()
         {
+            BitArray bit01 = ap01.Resolve();
+            BitArrayLEN += bit01.Length;
+            NID_MESSAGE = MESSAGEID;
+            L_MESSAGE = BitArrayLEN / 8 + (BitArrayLEN % 8 == 0 ? 0 : 1);
+
             BitArray bitArray = new BitArray(BitArrayLEN);
             int[] intArray = new int[] { 8, 10, 32, 24 };
             int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE };
@@ -40,18 +42,20 @@ namespace Train.Messages
                     Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
                 }
             }
-            ap01 = AbstractPacket.GetPacket(ID01);
-            BitArray bit = ap01.Resolve();
-            for (int i = 0; i < bit.Length; i++)
+            for (int i = 0; i < bit01.Length; i++)
             {
-                bitArray[pos] = bit[i];
-                pos++;
+                bitArray[pos++] = bit01[i];
             }
 
-            byte[] sendData = new byte[byteLEN];
+            byte[] sendData = new byte[L_MESSAGE];
             Bits.ToByte(sendData, bitArray);
 
             return sendData;
+        }
+
+        public void SetPacket0or1(AbstractPacket ap)
+        {
+            ap01 = ap;
         }
         public override int GetMessageID()
         {

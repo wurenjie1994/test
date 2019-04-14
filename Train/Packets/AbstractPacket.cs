@@ -84,14 +84,18 @@ namespace Train.Packets
                     {
                         int i = 0;
                         for (i = 0; i < tmp.Count - 1; i++)
-                            s += tmp[i] + ",";
-                        s += tmp[i];
+                            s += string.Format("{0:x}", tmp[i]) + ",";
+                        s += string.Format("{0:x}", tmp[i]);
                     }
                     s += "]";
                 }
                 else//值类型
                 {
-                    s += fi.GetValue(this);
+                    // only for NID_RADIO,to print it in BCD code
+                    if(fi.FieldType==typeof(ulong))
+                        s += string.Format("{0:x}", fi.GetValue(this));
+                    else
+                        s += fi.GetValue(this);
                 }
                 s+= "\r\n";
             }

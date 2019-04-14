@@ -11,6 +11,17 @@ namespace Train.Utilities
     /// </summary>
     public class Bits
     {
+        public static BitArray ToBitArray(byte[] data)
+        {
+            int len = data.Length;
+            BitArray bitArray = new BitArray(len * 8);
+            for(int i = 0; i < len; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                    bitArray[i * 8 + j] = ((data[i] >> (7 - j)) & 1) == 1;
+            }
+            return bitArray;
+        }
         //截取BitArray
         public static BitArray SubBitArray(BitArray bitArray,int start,int length)
         {
@@ -36,7 +47,8 @@ namespace Train.Utilities
             for (int i = 0; i < length; i++)
             {
                 if (position + i >= bitArray.Length) break;
-                result = bitArray.Get(position + i) ? result | (1 << i) : result;
+                result <<= 1;
+                result += bitArray[position + i] ? 1 : 0;
             }
             position += length;
             return result;
@@ -46,7 +58,9 @@ namespace Train.Utilities
             long result = 0;
             for (int i = 0; i < length; i++)
             {
-                result = bitArray.Get(position + i) ? result + (1 << i) : result;
+                if (position + i >= bitArray.Length) break;
+                result <<= 1;
+                result += bitArray[position + i] ? 1 : 0;
             }
             position += length;
             return result;

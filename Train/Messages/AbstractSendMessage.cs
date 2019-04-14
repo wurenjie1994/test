@@ -68,6 +68,7 @@ namespace Train.Messages
             {
                 s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
             }
+            s += "NID_ENGINE:" + NID_ENGINE + "\r\n";
             //获取子类私有字段
             FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
             foreach (FieldInfo fi in f)

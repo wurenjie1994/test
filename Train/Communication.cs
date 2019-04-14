@@ -66,7 +66,7 @@ namespace Train
         }
         public static void Connect(_CommType commType)
         {
-            int ctcsid = 10020632;
+            int ctcsid = TrainInfo.NID_ENGINE;
             switch (commType)
             {
                 case _CommType.NRBC:
@@ -75,7 +75,8 @@ namespace Train
                 case _CommType.RBC:
                     if (train_rbc != null)
                     {
-                        train_rbc.Connect();
+                        if(train_rbc.Connected()==false)//if three-way hands not established
+                            train_rbc.Connect();
                         byte[] toSend = XmlParser.ConnReq(ctcsid);
                         SendMsg(toSend, commType);
                     }

@@ -17,7 +17,7 @@ namespace Train.Data
         {
             TrainInfo.TrainID = 0x123456;
             TrainInfo.L_TRAIN = 140;//设为140米
-            TrainInfo.NID_ENGINE = 0x123456;
+            TrainInfo.NID_ENGINE = 10020632;
             TrainInfo.NID_XUSER = 123;
             TrainInfo.NID_OPERATIONAL = 0x12345678;
             TrainInfo.NC_TRAIN = 0;

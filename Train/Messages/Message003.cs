@@ -18,8 +18,8 @@ namespace Train.Messages
 
         public override void Resolve(byte[] recvData)
         {
-            BitArray bitArray = new BitArray(recvData);
-            
+            BitArray bitArray = Bits.ToBitArray(recvData);
+
             int[] intArray = new int[] { 8, 10, 32, 1, 24 };
             int Len = intArray.Length;
             int[] resultArray = new int[Len];
@@ -31,7 +31,7 @@ namespace Train.Messages
 
             NID_MESSAGE = resultArray[0];
             L_MESSAGE = resultArray[1];
-            T_TRAIN = Convert.ToUInt32(resultArray[2]);
+            T_TRAIN=(uint)(resultArray[2]);
             if (resultArray[3] == 1)
             {
                 M_ACK = true;

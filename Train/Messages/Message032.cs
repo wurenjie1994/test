@@ -18,7 +18,7 @@ namespace Train.Messages
 
         public override void Resolve(byte[] recvData)
         {
-            BitArray bitArray = new BitArray(recvData);
+            BitArray bitArray = Bits.ToBitArray(recvData);
 
             int[] intArray = new int[] { 8, 10, 32, 1, 24, 7 };
             int Len = intArray.Length;

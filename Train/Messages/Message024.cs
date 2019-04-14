@@ -18,7 +18,7 @@ namespace Train.Messages
 
         public override void Resolve(byte[] recvData)
         {
-            BitArray bitArray = new BitArray(recvData);
+            BitArray bitArray = Bits.ToBitArray(recvData);
 
             int[] intArray = new int[] { 8, 10, 32, 1, 24 };
             int Len = intArray.Length;
@@ -31,15 +31,8 @@ namespace Train.Messages
 
             NID_MESSAGE = resultArray[0];
             L_MESSAGE = resultArray[1];
-            T_TRAIN = Convert.ToUInt32(resultArray[2]);
-            if (resultArray[3] == 1)
-            {
-                M_ACK = true;
-            }
-            else
-            {
-                M_ACK = false;
-            }
+            T_TRAIN = (uint)(resultArray[2]);
+            M_ACK = resultArray[3] == 1;
             NID_LRBG = resultArray[4];
 
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
@@ -51,6 +44,10 @@ namespace Train.Messages
         public override int GetMessageID()
         {
             return MESSAGEID;
+        }
+        public AbstractPacket GetAlternativePacket()
+        {
+            return ap;
         }
     }
 }

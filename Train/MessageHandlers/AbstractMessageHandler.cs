@@ -19,6 +19,7 @@ namespace Train.MessageHandlers
 
         private static CommSession_MH mhCommSession = new CommSession_MH();
         private static EB_MH mhEB = new EB_MH();
+        private static Version_MH mhVersion = new Version_MH();
         private static UltimateHandler_MH mhUltimateHandler = new UltimateHandler_MH();
 
         private static MainForm mainForm;
@@ -26,7 +27,7 @@ namespace Train.MessageHandlers
         public static void Init(MainForm mf)
         {
             mainForm = mf;
-            mhCommSession.SetNext(mhEB)
+            mhCommSession.SetNext(mhEB).SetNext(mhVersion)
                 .SetNext(mhUltimateHandler).SetNext(null);
         }
         //处理接收到的报文

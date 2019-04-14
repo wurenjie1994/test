@@ -102,6 +102,22 @@
             this.零速ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.非零速ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.发送消息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message129ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message132ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg132NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg132Packet9ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message136ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg136NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message155ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message156ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message157ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg157Packet4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg157Packet44ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg157NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message159ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg159Packet3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Msg159NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_RBC = new System.Windows.Forms.ToolStripStatusLabel();
@@ -112,26 +128,11 @@
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.发送消息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Message129ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Message155ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Message156ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Message157ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Message159ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Msg157Packet4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Msg157Packet44ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Msg157NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Msg159Packet3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Msg159NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Message132ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Message136ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Msg136NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Msg132NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Msg132Packet9ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lvSendMsg = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Message150ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbDriverConsoler.SuspendLayout();
             this.gbWorkMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -776,7 +777,7 @@
             this.rBCToolStripMenuItem,
             this.nRBCToolStripMenuItem});
             this.建立通信ToolStripMenuItem.Name = "建立通信ToolStripMenuItem";
-            this.建立通信ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.建立通信ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.建立通信ToolStripMenuItem.Text = "建立通信";
             // 
             // rBCToolStripMenuItem
@@ -799,7 +800,7 @@
             this.disRBCToolStripMenuItem,
             this.disNRBCToolStripMenuItem});
             this.断开通信ToolStripMenuItem.Name = "断开通信ToolStripMenuItem";
-            this.断开通信ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.断开通信ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.断开通信ToolStripMenuItem.Text = "断开通信";
             // 
             // disRBCToolStripMenuItem
@@ -827,7 +828,7 @@
             // 列车位置设置ToolStripMenuItem
             // 
             this.列车位置设置ToolStripMenuItem.Name = "列车位置设置ToolStripMenuItem";
-            this.列车位置设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.列车位置设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.列车位置设置ToolStripMenuItem.Text = "列车位置设置";
             // 
             // 故障注入ToolStripMenuItem
@@ -845,25 +846,25 @@
             // 列车打滑ToolStripMenuItem
             // 
             this.列车打滑ToolStripMenuItem.Name = "列车打滑ToolStripMenuItem";
-            this.列车打滑ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.列车打滑ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.列车打滑ToolStripMenuItem.Text = "列车打滑";
             // 
             // 无应答器故障ToolStripMenuItem
             // 
             this.无应答器故障ToolStripMenuItem.Name = "无应答器故障ToolStripMenuItem";
-            this.无应答器故障ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.无应答器故障ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.无应答器故障ToolStripMenuItem.Text = "无应答器故障";
             // 
             // 倒溜ToolStripMenuItem
             // 
             this.倒溜ToolStripMenuItem.Name = "倒溜ToolStripMenuItem";
-            this.倒溜ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.倒溜ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.倒溜ToolStripMenuItem.Text = "倒溜";
             // 
             // 列车空转ToolStripMenuItem
             // 
             this.列车空转ToolStripMenuItem.Name = "列车空转ToolStripMenuItem";
-            this.列车空转ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.列车空转ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.列车空转ToolStripMenuItem.Text = "列车空转";
             // 
             // 零速设置ToolStripMenuItem
@@ -872,19 +873,19 @@
             this.零速ToolStripMenuItem,
             this.非零速ToolStripMenuItem});
             this.零速设置ToolStripMenuItem.Name = "零速设置ToolStripMenuItem";
-            this.零速设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.零速设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.零速设置ToolStripMenuItem.Text = "零速设置";
             // 
             // 零速ToolStripMenuItem
             // 
             this.零速ToolStripMenuItem.Name = "零速ToolStripMenuItem";
-            this.零速ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.零速ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.零速ToolStripMenuItem.Text = "零速";
             // 
             // 非零速ToolStripMenuItem
             // 
             this.非零速ToolStripMenuItem.Name = "非零速ToolStripMenuItem";
-            this.非零速ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.非零速ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.非零速ToolStripMenuItem.Text = "非零速";
             // 
             // ToolStripMenuItem
@@ -892,6 +893,134 @@
             this.ToolStripMenuItem.Name = "ToolStripMenuItem";
             this.ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.ToolStripMenuItem.Text = "报文信息";
+            // 
+            // 发送消息ToolStripMenuItem
+            // 
+            this.发送消息ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Message129ToolStripMenuItem,
+            this.Message132ToolStripMenuItem,
+            this.Message136ToolStripMenuItem,
+            this.Message150ToolStripMenuItem,
+            this.Message155ToolStripMenuItem,
+            this.Message156ToolStripMenuItem,
+            this.Message157ToolStripMenuItem,
+            this.Message159ToolStripMenuItem});
+            this.发送消息ToolStripMenuItem.Name = "发送消息ToolStripMenuItem";
+            this.发送消息ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
+            this.发送消息ToolStripMenuItem.Text = "发送消息";
+            // 
+            // Message129ToolStripMenuItem
+            // 
+            this.Message129ToolStripMenuItem.Name = "Message129ToolStripMenuItem";
+            this.Message129ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message129ToolStripMenuItem.Text = "消息129";
+            this.Message129ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Message132ToolStripMenuItem
+            // 
+            this.Message132ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Msg132NoPacketToolStripMenuItem,
+            this.Msg132Packet9ToolStripMenuItem});
+            this.Message132ToolStripMenuItem.Name = "Message132ToolStripMenuItem";
+            this.Message132ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message132ToolStripMenuItem.Text = "消息132";
+            // 
+            // Msg132NoPacketToolStripMenuItem
+            // 
+            this.Msg132NoPacketToolStripMenuItem.Name = "Msg132NoPacketToolStripMenuItem";
+            this.Msg132NoPacketToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.Msg132NoPacketToolStripMenuItem.Text = "不选择";
+            this.Msg132NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Msg132Packet9ToolStripMenuItem
+            // 
+            this.Msg132Packet9ToolStripMenuItem.Name = "Msg132Packet9ToolStripMenuItem";
+            this.Msg132Packet9ToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.Msg132Packet9ToolStripMenuItem.Text = "信息包9";
+            this.Msg132Packet9ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Message136ToolStripMenuItem
+            // 
+            this.Message136ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Msg136NoPacketToolStripMenuItem});
+            this.Message136ToolStripMenuItem.Name = "Message136ToolStripMenuItem";
+            this.Message136ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message136ToolStripMenuItem.Text = "消息136";
+            // 
+            // Msg136NoPacketToolStripMenuItem
+            // 
+            this.Msg136NoPacketToolStripMenuItem.Name = "Msg136NoPacketToolStripMenuItem";
+            this.Msg136NoPacketToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.Msg136NoPacketToolStripMenuItem.Text = "不选择";
+            this.Msg136NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Message155ToolStripMenuItem
+            // 
+            this.Message155ToolStripMenuItem.Name = "Message155ToolStripMenuItem";
+            this.Message155ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message155ToolStripMenuItem.Text = "消息155";
+            this.Message155ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Message156ToolStripMenuItem
+            // 
+            this.Message156ToolStripMenuItem.Name = "Message156ToolStripMenuItem";
+            this.Message156ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message156ToolStripMenuItem.Text = "消息156";
+            this.Message156ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Message157ToolStripMenuItem
+            // 
+            this.Message157ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Msg157Packet4ToolStripMenuItem,
+            this.Msg157Packet44ToolStripMenuItem,
+            this.Msg157NoPacketToolStripMenuItem});
+            this.Message157ToolStripMenuItem.Name = "Message157ToolStripMenuItem";
+            this.Message157ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message157ToolStripMenuItem.Text = "消息157";
+            // 
+            // Msg157Packet4ToolStripMenuItem
+            // 
+            this.Msg157Packet4ToolStripMenuItem.Name = "Msg157Packet4ToolStripMenuItem";
+            this.Msg157Packet4ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.Msg157Packet4ToolStripMenuItem.Text = "信息包4";
+            this.Msg157Packet4ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Msg157Packet44ToolStripMenuItem
+            // 
+            this.Msg157Packet44ToolStripMenuItem.Name = "Msg157Packet44ToolStripMenuItem";
+            this.Msg157Packet44ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.Msg157Packet44ToolStripMenuItem.Text = "信息包44";
+            this.Msg157Packet44ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Msg157NoPacketToolStripMenuItem
+            // 
+            this.Msg157NoPacketToolStripMenuItem.Name = "Msg157NoPacketToolStripMenuItem";
+            this.Msg157NoPacketToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.Msg157NoPacketToolStripMenuItem.Text = "不选择";
+            this.Msg157NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Message159ToolStripMenuItem
+            // 
+            this.Message159ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Msg159Packet3ToolStripMenuItem,
+            this.Msg159NoPacketToolStripMenuItem});
+            this.Message159ToolStripMenuItem.Name = "Message159ToolStripMenuItem";
+            this.Message159ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message159ToolStripMenuItem.Text = "消息159";
+            // 
+            // Msg159Packet3ToolStripMenuItem
+            // 
+            this.Msg159Packet3ToolStripMenuItem.Name = "Msg159Packet3ToolStripMenuItem";
+            this.Msg159Packet3ToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.Msg159Packet3ToolStripMenuItem.Text = "信息包3";
+            this.Msg159Packet3ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
+            // Msg159NoPacketToolStripMenuItem
+            // 
+            this.Msg159NoPacketToolStripMenuItem.Name = "Msg159NoPacketToolStripMenuItem";
+            this.Msg159NoPacketToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.Msg159NoPacketToolStripMenuItem.Text = "不选择";
+            this.Msg159NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
             // statusStrip1
             // 
@@ -970,133 +1099,6 @@
             // 
             this.columnHeader3.Text = "发送者";
             // 
-            // 发送消息ToolStripMenuItem
-            // 
-            this.发送消息ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Message129ToolStripMenuItem,
-            this.Message132ToolStripMenuItem,
-            this.Message136ToolStripMenuItem,
-            this.Message155ToolStripMenuItem,
-            this.Message156ToolStripMenuItem,
-            this.Message157ToolStripMenuItem,
-            this.Message159ToolStripMenuItem});
-            this.发送消息ToolStripMenuItem.Name = "发送消息ToolStripMenuItem";
-            this.发送消息ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.发送消息ToolStripMenuItem.Text = "发送消息";
-            // 
-            // Message129ToolStripMenuItem
-            // 
-            this.Message129ToolStripMenuItem.Name = "Message129ToolStripMenuItem";
-            this.Message129ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Message129ToolStripMenuItem.Text = "消息129";
-            this.Message129ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Message155ToolStripMenuItem
-            // 
-            this.Message155ToolStripMenuItem.Name = "Message155ToolStripMenuItem";
-            this.Message155ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Message155ToolStripMenuItem.Text = "消息155";
-            this.Message155ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Message156ToolStripMenuItem
-            // 
-            this.Message156ToolStripMenuItem.Name = "Message156ToolStripMenuItem";
-            this.Message156ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Message156ToolStripMenuItem.Text = "消息156";
-            this.Message156ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Message157ToolStripMenuItem
-            // 
-            this.Message157ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Msg157Packet4ToolStripMenuItem,
-            this.Msg157Packet44ToolStripMenuItem,
-            this.Msg157NoPacketToolStripMenuItem});
-            this.Message157ToolStripMenuItem.Name = "Message157ToolStripMenuItem";
-            this.Message157ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Message157ToolStripMenuItem.Text = "消息157";
-            // 
-            // Message159ToolStripMenuItem
-            // 
-            this.Message159ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Msg159Packet3ToolStripMenuItem,
-            this.Msg159NoPacketToolStripMenuItem});
-            this.Message159ToolStripMenuItem.Name = "Message159ToolStripMenuItem";
-            this.Message159ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Message159ToolStripMenuItem.Text = "消息159";
-            // 
-            // Msg157Packet4ToolStripMenuItem
-            // 
-            this.Msg157Packet4ToolStripMenuItem.Name = "Msg157Packet4ToolStripMenuItem";
-            this.Msg157Packet4ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Msg157Packet4ToolStripMenuItem.Text = "信息包4";
-            this.Msg157Packet4ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Msg157Packet44ToolStripMenuItem
-            // 
-            this.Msg157Packet44ToolStripMenuItem.Name = "Msg157Packet44ToolStripMenuItem";
-            this.Msg157Packet44ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Msg157Packet44ToolStripMenuItem.Text = "信息包44";
-            this.Msg157Packet44ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Msg157NoPacketToolStripMenuItem
-            // 
-            this.Msg157NoPacketToolStripMenuItem.Name = "Msg157NoPacketToolStripMenuItem";
-            this.Msg157NoPacketToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Msg157NoPacketToolStripMenuItem.Text = "不选择";
-            this.Msg157NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Msg159Packet3ToolStripMenuItem
-            // 
-            this.Msg159Packet3ToolStripMenuItem.Name = "Msg159Packet3ToolStripMenuItem";
-            this.Msg159Packet3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Msg159Packet3ToolStripMenuItem.Text = "信息包3";
-            this.Msg159Packet3ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Msg159NoPacketToolStripMenuItem
-            // 
-            this.Msg159NoPacketToolStripMenuItem.Name = "Msg159NoPacketToolStripMenuItem";
-            this.Msg159NoPacketToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Msg159NoPacketToolStripMenuItem.Text = "不选择";
-            this.Msg159NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Message132ToolStripMenuItem
-            // 
-            this.Message132ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Msg132NoPacketToolStripMenuItem,
-            this.Msg132Packet9ToolStripMenuItem});
-            this.Message132ToolStripMenuItem.Name = "Message132ToolStripMenuItem";
-            this.Message132ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Message132ToolStripMenuItem.Text = "消息132";
-            // 
-            // Message136ToolStripMenuItem
-            // 
-            this.Message136ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Msg136NoPacketToolStripMenuItem});
-            this.Message136ToolStripMenuItem.Name = "Message136ToolStripMenuItem";
-            this.Message136ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Message136ToolStripMenuItem.Text = "消息136";
-            // 
-            // Msg136NoPacketToolStripMenuItem
-            // 
-            this.Msg136NoPacketToolStripMenuItem.Name = "Msg136NoPacketToolStripMenuItem";
-            this.Msg136NoPacketToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Msg136NoPacketToolStripMenuItem.Text = "不选择";
-            this.Msg136NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Msg132NoPacketToolStripMenuItem
-            // 
-            this.Msg132NoPacketToolStripMenuItem.Name = "Msg132NoPacketToolStripMenuItem";
-            this.Msg132NoPacketToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Msg132NoPacketToolStripMenuItem.Text = "不选择";
-            this.Msg132NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
-            // Msg132Packet9ToolStripMenuItem
-            // 
-            this.Msg132Packet9ToolStripMenuItem.Name = "Msg132Packet9ToolStripMenuItem";
-            this.Msg132Packet9ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.Msg132Packet9ToolStripMenuItem.Text = "信息包9";
-            this.Msg132Packet9ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
-            // 
             // lvSendMsg
             // 
             this.lvSendMsg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1128,6 +1130,13 @@
             // columnHeader6
             // 
             this.columnHeader6.Text = "发送给";
+            // 
+            // Message150ToolStripMenuItem
+            // 
+            this.Message150ToolStripMenuItem.Name = "Message150ToolStripMenuItem";
+            this.Message150ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message150ToolStripMenuItem.Text = "消息150";
+            this.Message150ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
             // MainForm
             // 
@@ -1277,6 +1286,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.ToolStripMenuItem Message150ToolStripMenuItem;
     }
 }
 

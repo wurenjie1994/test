@@ -62,6 +62,7 @@ namespace Train.Utilities
             {
                 //如果EP已经被使用，则会报错：AddressAlreadyInUse，ErrorCode：10048
                 tcpClient = new TcpClient(localEP);
+                //tcpClient.ExclusiveAddressUse = false;// permit reuse port
                 //如果Server端未开启，则会报错：ConnectionRefused，ErrorCode：10061
                 tcpClient.Connect(remoteEP);
                 networkStream = tcpClient.GetStream();
@@ -70,7 +71,7 @@ namespace Train.Utilities
             {
                 //如果距离上次断开通信还未经过2MSL时间，则会报错：
                 //通常每个套接字地址只能使用一次，ErrorCode：10048
-                Thread.Sleep(1000*60*2); //2分钟
+                Thread.Sleep(1000); //2分钟
                 MessageBox.Show(se.Message+"\r\nErrorCode"+se.ErrorCode,"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
         }

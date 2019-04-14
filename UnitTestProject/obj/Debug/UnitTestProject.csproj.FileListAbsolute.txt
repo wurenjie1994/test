@@ -7,3 +7,15 @@ F:\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.dll
 F:\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.pdb
 F:\RBC\Train\UnitTestProject\bin\Debug\Train.exe
 F:\RBC\Train\UnitTestProject\bin\Debug\Train.pdb
+F:\wrj\RBC\Train\UnitTestProject\bin\Debug\UnitTestProject.dll
+F:\wrj\RBC\Train\UnitTestProject\bin\Debug\UnitTestProject.pdb
+F:\wrj\RBC\Train\UnitTestProject\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+F:\wrj\RBC\Train\UnitTestProject\bin\Debug\Train.exe
+F:\wrj\RBC\Train\UnitTestProject\bin\Debug\Train.pdb
+F:\wrj\RBC\Train\UnitTestProject\bin\Debug\Train.exe.config
+F:\wrj\RBC\Train\UnitTestProject\bin\Debug\zh-Hans\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.csprojAssemblyReference.cache
+F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.csproj.CoreCompileInputs.cache
+F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.csproj.CopyComplete
+F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.dll
+F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.pdb

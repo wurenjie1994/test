@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using Train.Utilities;
+
 namespace Train.XmlResolve
 {
     public class XmlParser
     {
         static XmlDocument senddoc = new XmlDocument();
         static XmlDocument recvdoc = new XmlDocument();
-        static string path = @"F:\RBC\Train\Train\XmlResolve";
+        static string path = @"F:\wrj\RBC\Train\Train\XmlResolve";
         public static byte[] SendData(byte[] msg)
         {
             senddoc.Load(path+"\\SendData.xml");
-            String str = Convert.ToBase64String(msg);
+             String str = Convert.ToBase64String(msg);
             XmlElement root = senddoc.DocumentElement;
             XmlElement sadata = (XmlElement)senddoc.SelectSingleNode("requests/datas/data/sadata");
             sadata.InnerText=str;
@@ -44,9 +46,9 @@ namespace Train.XmlResolve
         {
             XmlDocument doc = new XmlDocument();
             string recv = Encoding.UTF8.GetString(recvBytes);
-            recvdoc.LoadXml(recv);
+            doc.LoadXml(recv);
 
-            XmlElement element = (XmlElement)doc.SelectSingleNode("indications/connects/connect/calledctcsid");
+            XmlElement element = (XmlElement)doc.SelectSingleNode("indications/connects/connect/callingctcsid");
             string str = element.InnerText;
             calledctcsid = Convert.ToInt32(str);
         }
@@ -57,6 +59,24 @@ namespace Train.XmlResolve
             doc.Load(path + "\\Disconnect.xml");
             string ss = doc.InnerXml;
             return Encoding.UTF8.GetBytes(ss);
+        }
+        // ISDNIF would send disconnect indication initiatively
+        public static  bool IsDisconnectRecved(byte[] recvBytes)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                string recv = Encoding.UTF8.GetString(recvBytes);
+                doc.LoadXml(recv);
+
+                XmlElement element = (XmlElement)doc.SelectSingleNode("indications/disconnects/disconnect/reason");
+                String str = element.InnerText;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

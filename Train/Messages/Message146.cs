@@ -16,12 +16,13 @@ namespace Train.Messages
         /// </summary>
         const int MESSAGEID = 146;
 
-        const int BitArrayLEN = 80;
-        const int byteLEN = BitArrayLEN / 8;
+        const int BitArrayLEN = 106;
 
         public override byte[] Resolve()
         {
             BitArray bitArray = new BitArray(BitArrayLEN);
+            NID_MESSAGE = MESSAGEID;
+            L_MESSAGE = BitArrayLEN / 8 + (BitArrayLEN % 8 == 0 ? 0 : 1);
             int[] intArray = new int[] { 8, 10, 32, 24, 32 };
             int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE, 0 };
             int pos = 0;
@@ -40,8 +41,7 @@ namespace Train.Messages
                     Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
                 }
             }
-
-            byte[] sendData = new byte[byteLEN];
+            byte[] sendData = new byte[L_MESSAGE];
             Bits.ToByte(sendData, bitArray);
 
             return sendData;

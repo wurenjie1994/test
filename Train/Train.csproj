@@ -54,6 +54,7 @@
     <Compile Include="MessageHandlers\CommSession_MH.cs" />
     <Compile Include="MessageHandlers\EB_MH.cs" />
     <Compile Include="MessageHandlers\UltimateHandler_MH.cs" />
+    <Compile Include="MessageHandlers\Version_MH.cs" />
     <Compile Include="Messages\AbstractSendMessage.cs" />
     <Compile Include="ShowMsg\ListViewContent.cs" />
     <Compile Include="ShowMsg\ShowMsgForm.cs">

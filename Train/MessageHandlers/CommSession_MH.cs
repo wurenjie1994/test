@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Train.Messages;
+using Train.Packets;
 
 namespace Train.MessageHandlers
 {
@@ -20,6 +21,7 @@ namespace Train.MessageHandlers
             {
                 //车载设备应发送消息159：通信会话已建立（含车载设备电话号码:Packet003Train）
                 Message159 m159 = new Message159();
+                m159.SetAlternativePacket(new Packet003Train());
                 SendMsg(m159, _CommType.RBC);
                 return true;
             }
@@ -46,7 +48,9 @@ namespace Train.MessageHandlers
             //接受列车
             if (msgId == 41)
             {
-
+                Message146 m146 = new Message146();
+                m146.T_TRAIN2 = am.T_TRAIN;
+                SendMsg(m146, _CommType.RBC);
                 return true;
             }
             return false;

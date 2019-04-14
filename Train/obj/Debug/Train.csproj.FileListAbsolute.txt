@@ -68,3 +68,14 @@ F:\RBC\Train\Train\obj\Debug\Train.ShowMsg.ShowMsgForm.resources
 D:\RBC\Train\Train\bin\Debug\Train.exe.config
 D:\RBC\Train\Train\obj\Debug\Train.exe
 D:\RBC\Train\Train\obj\Debug\Train.pdb
+F:\wrj\RBC\Train\Train\bin\Debug\Train.exe.config
+F:\wrj\RBC\Train\Train\bin\Debug\Train.exe
+F:\wrj\RBC\Train\Train\bin\Debug\Train.pdb
+F:\wrj\RBC\Train\Train\obj\Debug\Train.csprojAssemblyReference.cache
+F:\wrj\RBC\Train\Train\obj\Debug\Train.MainForm.resources
+F:\wrj\RBC\Train\Train\obj\Debug\Train.Properties.Resources.resources
+F:\wrj\RBC\Train\Train\obj\Debug\Train.ShowMsg.ShowMsgForm.resources
+F:\wrj\RBC\Train\Train\obj\Debug\Train.csproj.GenerateResource.cache
+F:\wrj\RBC\Train\Train\obj\Debug\Train.csproj.CoreCompileInputs.cache
+F:\wrj\RBC\Train\Train\obj\Debug\Train.exe
+F:\wrj\RBC\Train\Train\obj\Debug\Train.pdb

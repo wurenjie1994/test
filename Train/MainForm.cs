@@ -90,7 +90,14 @@ namespace Train
                 m136.SetPacket0or1(trainDynamic.GetPacket0());
                 SendToRBC(m136);
             }
-            if(sender == Message155ToolStripMenuItem)
+            if (sender == Message150ToolStripMenuItem)
+            {
+                Message150 m150 = new Message150();
+                if (trainDynamic == null) return;
+                m150.SetPacket0or1(trainDynamic.GetPacket0());
+                SendToRBC(m150);
+            }
+            if (sender == Message155ToolStripMenuItem)
             {
                 Message155 m155 = new Message155();
                 SendToRBC(m155);
@@ -358,6 +365,8 @@ namespace Train
                     if (recvData == null) continue;
                     if (isISDNIFConnected)
                     {
+                        isISDNIFConnected = !XmlParser.IsDisconnectRecved(recvData);
+                        if (!isISDNIFConnected) continue; // received disconnect indication;
                         recvData = XmlParser.RecvData(recvData);
                     }
                     else
@@ -373,7 +382,7 @@ namespace Train
                     ListViewContent lvc = new ListViewContent(DateTime.Now, arm.NID_MESSAGE, _CommType.RBC, arm);
                     this.BeginInvoke(updateListView, lvRecvMsg, recvMsgQueue, lvc);
                 }
-                catch (Exception) { }
+                catch (Exception e) { }
             }
         }
         private void ListView_MouseDoubleClick(object sender, MouseEventArgs e)
