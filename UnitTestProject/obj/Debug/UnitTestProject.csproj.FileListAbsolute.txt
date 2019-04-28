@@ -19,3 +19,6 @@ F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.csproj.CoreCompileInp
 F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.csproj.CopyComplete
 F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.dll
 F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.pdb
+F:\RBC\Train\UnitTestProject\bin\Debug\MySql.Data.dll
+F:\RBC\Train\UnitTestProject\bin\Debug\Google.Protobuf.dll
+F:\RBC\Train\UnitTestProject\bin\Debug\BouncyCastle.Crypto.dll

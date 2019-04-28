@@ -123,8 +123,8 @@ namespace Train
                         int len = byteToSend.Length;
                         b[1] = (byte)len;
                         b[0] = (byte)(len >> 8);
-                        train_rbc.SendMsg(b);
-                        train_rbc.SendMsg(byteToSend);
+                        train_rbc.SendMsg(b); //先发送数据的长度
+                        train_rbc.SendMsg(byteToSend);  //再发送实际的数据
                     }
                     break;
             }
@@ -140,8 +140,8 @@ namespace Train
                 case _CommType.RBC:
                     if (train_rbc != null)
                     {
-                        byte[] recv = train_rbc.RecvMsg();
-                        if (recv.Length == 2) return null;  //msglen,discard
+                        byte[] recv = train_rbc.RecvMsg(2); //先接收待接收数据的长度
+                        recv = train_rbc.RecvMsg((recv[0] << 8 )| recv[1]); //再接收实际数据
                         return recv;
                     }
                     break;

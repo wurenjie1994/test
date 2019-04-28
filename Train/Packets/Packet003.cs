@@ -82,22 +82,8 @@ namespace Train.Packets
             V_NVUNFIT = resultArray[10];
             V_NVREL = resultArray[11];
             D_NVROLL = resultArray[12];
-            if (resultArray[13] == 1)
-            {
-                Q_NVSRBKTRG = true;
-            }
-            else
-            {
-                Q_NVSRBKTRG = false;
-            }
-            if (resultArray[14] == 1)
-            {
-                Q_NVEMRRLS = true;
-            }
-            else
-            {
-                Q_NVEMRRLS = false;
-            }
+            Q_NVSRBKTRG = resultArray[13] == 1;
+            Q_NVEMRRLS = resultArray[14] == 1;
             V_NVALLOWOVTRP = resultArray[15];
             V_NVSUPOVTRP = resultArray[16];
             D_NVOVTRP = resultArray[17];
@@ -105,23 +91,11 @@ namespace Train.Packets
             D_NVPOTRP = resultArray[19];
             M_NVCONTACT = resultArray[20];
             T_NVCONTACT = resultArray[21];
-            if (resultArray[22] == 1)
-            {
-                M_NVDERUN = true;
-            }
-            else
-            {
-                M_NVDERUN = false;
-            }
+            M_NVDERUN = resultArray[22] == 1;
             D_NVSTFF = resultArray[23];
-            if (resultArray[24] == 1)
-            {
-                Q_NVDRIVER_ADHES = true;
-            }
-            else
-            {
-                Q_NVDRIVER_ADHES = false;
-            }
+            Q_NVDRIVER_ADHES = resultArray[24] == 1;
+
         }
+
     }
 }

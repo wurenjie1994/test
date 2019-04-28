@@ -19,10 +19,23 @@ namespace Train.MessageHandlers
             //系统版本，收到此消息后车载设备应认为通信会话已经建立 
             if (msgId == 32)     
             {
+                //如果版本不一致
+                if (!CheckVersion((Message032)am))
+                {
+                    //发送M154 版本不兼容
+                    SendMsg(new Message154(), _CommType.RBC);
+                    //发送M156 通信会话结束
+                    SendMsg(new Message156(), _CommType.RBC);
+                    return true;
+                }
                 //车载设备应发送消息159：通信会话已建立（含车载设备电话号码:Packet003Train）
                 Message159 m159 = new Message159();
                 m159.SetAlternativePacket(new Packet003Train());
                 SendMsg(m159, _CommType.RBC);
+                //接着发送M157：SoM位置报告（含位置信息：Packet000）
+                Message157 m157 = new Message157();
+                m157.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
+                SendMsg(m157, _CommType.RBC);
                 return true;
             }
             //通信会话开始，这是由RBC 发起的
@@ -48,12 +61,29 @@ namespace Train.MessageHandlers
             //接受列车
             if (msgId == 41)
             {
-                Message146 m146 = new Message146();
-                m146.T_TRAIN2 = am.T_TRAIN;
-                SendMsg(m146, _CommType.RBC);
+                if (am.M_ACK)
+                {
+                    Message146 m146 = new Message146();
+                    m146.T_TRAIN2 = am.T_TRAIN;
+                    SendMsg(m146, _CommType.RBC);
+                }
+                //按SoM（任务开始）流程图，在收到M41后要发送M129
+                Message129 m129 = new Message129();
+                m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
+                SendMsg(m129, _CommType.RBC);
                 return true;
             }
             return false;
+        }
+        /// <summary>
+        /// 检查RBC版本是否与车载版本一致
+        /// </summary>
+        /// <param name="m32"></param>
+        /// <returns>true if consistent,else false</returns>
+        public bool CheckVersion(Message032 m32)
+        {
+            int SysVersion = m32.GetVersion();
+            return true;
         }
     }
 }

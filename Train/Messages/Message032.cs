@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Train.Packets;
 using Train.Utilities;
 
@@ -46,6 +45,10 @@ namespace Train.Messages
         public override int GetMessageID()
         {
             return MESSAGEID;
+        }
+        public int GetVersion()
+        {
+            return M_VERSION;
         }
     }
 }

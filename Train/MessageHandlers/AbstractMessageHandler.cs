@@ -19,15 +19,18 @@ namespace Train.MessageHandlers
 
         private static CommSession_MH mhCommSession = new CommSession_MH();
         private static EB_MH mhEB = new EB_MH();
-        private static Version_MH mhVersion = new Version_MH();
+        private static General_MH mhVersion = new General_MH();
+        private static MA_MH mhMa = new MA_MH();
+        private static LocReport_MH mhLocReport = new LocReport_MH();
         private static UltimateHandler_MH mhUltimateHandler = new UltimateHandler_MH();
 
-        private static MainForm mainForm;
+        protected static MainForm mainForm;
         //设置责任链
         public static void Init(MainForm mf)
         {
             mainForm = mf;
             mhCommSession.SetNext(mhEB).SetNext(mhVersion)
+                .SetNext(mhMa).SetNext(mhLocReport)
                 .SetNext(mhUltimateHandler).SetNext(null);
         }
         //处理接收到的报文
@@ -43,6 +46,12 @@ namespace Train.MessageHandlers
             {
                 mainForm.SendToRBC(asm);
             }
+        }
+        public void SendAck(AbstractRecvMessage arm)
+        {
+            Message146 m146 = new Message146();
+            m146.T_TRAIN2 = arm.T_TRAIN;
+            SendMsg(m146, _CommType.RBC);
         }
     }
 }

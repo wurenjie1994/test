@@ -61,5 +61,35 @@ namespace UnitTestProject
             }
             MessageBox.Show(arm.ToString());
         }
+
+        [TestMethod]
+        public void TestBuffer()
+        {
+            byte[] buffer = new byte[100];
+            for (int i = 0; i < 20; i++)
+                buffer[i] =(byte)i;
+            int left = 15;
+            Array.Copy(buffer, left, buffer, 0, left);
+            string s="";
+            for (int i = 0; i < 20; i++)
+                s += buffer[i] + ", ";
+            MessageBox.Show(s);
+        }
+
+        [TestMethod]
+        public void TestDatabase()
+        {
+            Database db = new Database();
+            db.Connect();
+        }
+        [TestMethod]
+        public void TestEnum()
+        {
+            object obj = _ControlLevel.CTCS_2;
+            if (obj is _ControlLevel)
+                MessageBox.Show(obj.ToString());
+            obj = new RadioButton();
+            MessageBox.Show(obj.ToString());
+        }
     }
 }

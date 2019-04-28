@@ -17,7 +17,7 @@ namespace Train.Messages
         const int MESSAGEID = 129;
                  
         AbstractPacket ap01;        //信息包0/1，必须设置
-        Packet011 p11 = new Packet011();
+        static Packet011 p11 = new Packet011();
 
         private int BitArrayLEN = 74;
 

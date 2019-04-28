@@ -22,9 +22,14 @@ namespace Train.Utilities
             }
             return bitArray;
         }
-        //截取BitArray
+        /// <summary>
+        /// 将bitArray从start位置开始，复制length长度
+        /// </summary>
+        /// <returns>复制的BitArray</returns>
         public static BitArray SubBitArray(BitArray bitArray,int start,int length)
         {
+            if (start + length >= bitArray.Length)
+                throw new ArgumentException("start+length>bitArray.Length");
             BitArray bit = new BitArray(length);
             for (int i = 0; i < length; i++)
             {
@@ -105,6 +110,11 @@ namespace Train.Utilities
             }
             position += length;
         }
+        /// <summary>
+        /// 将bitArray中数据填充到字节数组sendData中
+        /// </summary>
+        /// <param name="sendData"></param>
+        /// <param name="bitArray"></param>
         public static void ToByte(byte[] sendData, BitArray bitArray)
         {
             int pos = 0;

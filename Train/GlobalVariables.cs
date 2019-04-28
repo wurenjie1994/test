@@ -5,17 +5,30 @@ using System.Threading.Tasks;
 
 namespace Train
 {
-    public enum _WorkMode
+    /// <summary>
+    /// 车载设备工作模式
+    /// </summary>
+    //参考7.4.1.75 M_MODE字段取值
+    public enum _M_MODE
     {
-        FS=0,///完全监控模式
-        CO=1,//引导模式
-        OS=2,//目视行车模式
-        SH=3,//调车模式
-        SL=5,//休眠模式
-        SB=6,//待机模式
-        IS=10,//隔离模式
-        TR=7,//冒进防护模式
-        PT=8,//冒进后防护模式
+        /// <summary>完全监控模式</summary>
+        FS = 0, 
+        /// <summary>引导模式</summary>
+        CO = 1,
+        /// <summary>目视行车模式</summary>
+        OS = 2,         //通号用SR表示
+        /// <summary>调车模式</summary>
+        SH = 3,
+        /// <summary>休眠模式</summary>
+        SL = 5,        //通号用SN表示
+        /// <summary>待机模式</summary>
+        SB = 6,
+        /// <summary>隔离模式</summary>
+        IS = 10,
+        /// <summary>冒进防护模式</summary>
+        TR = 7,
+        /// <summary>冒进后防护模式</summary>
+        PT = 8,
     }
     public enum _ControlLevel
     {
@@ -61,7 +74,7 @@ namespace Train
         DriveDirection driveDirection;
         double steerValue;
         bool eBStatus;
-        _WorkMode workMode;
+        _M_MODE workMode;
         _ControlLevel controlLevel;
 
         public bool CabActive
@@ -116,7 +129,7 @@ namespace Train
             }
         }
 
-        public _WorkMode WorkMode
+        public _M_MODE WorkMode
         {
             get
             {

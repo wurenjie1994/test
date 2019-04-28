@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using MySql.Data.MySqlClient;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Train.Data
 {
@@ -39,6 +40,26 @@ namespace Train.Data
                 bg.Nid_bg = i;
                 bg.Position = i * 100;
                 BaliseGroup.BgList.Add(bg);
+            }
+        }
+        MySqlConnection conn;
+        public void Connect()
+        {
+            String connectionString = "server=localhost;user id=wrj;password=1234;database=test";
+            conn = new MySqlConnection(connectionString);
+            try
+            {
+                conn.Open();
+                MessageBox.Show("连接成功！");
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+            finally
+            {
+                conn.Close();
             }
         }
     }

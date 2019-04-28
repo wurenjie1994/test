@@ -19,6 +19,7 @@ namespace Train.Utilities
         NetworkStream networkStream;
         const int BUFFER_SIZE = 1024;
         byte[] buffer = new byte[BUFFER_SIZE];
+        int lastReadLeftBytes;      //上次读取时多余的字节的数量（即发生了粘包）
 
         public Client(string localIP,int localPort, string remoteIP,int remotePort)
         {
@@ -54,6 +55,28 @@ namespace Train.Utilities
             }
             return recvBytes;
         }
+        /// <summary>
+        /// 接收到n个字节后返回
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public byte[] RecvMsg(int n)
+        {
+            byte[] recvBytes = new byte[n];
+            int offset = lastReadLeftBytes;
+            while (offset < n)
+            {
+                int len = networkStream.Read(buffer, offset, n - offset);
+                offset += len;
+            }
+            Array.Copy(buffer, recvBytes, n);
+            if (offset > n)  //接收到多余的字节
+            {
+                lastReadLeftBytes = offset - n;
+                Array.Copy(buffer, n, buffer, 0, lastReadLeftBytes); //将多余的字节保存在buffer中
+            }
+            return recvBytes;
+        }
 
         public void Connect()
         {
@@ -72,7 +95,8 @@ namespace Train.Utilities
                 //如果距离上次断开通信还未经过2MSL时间，则会报错：
                 //通常每个套接字地址只能使用一次，ErrorCode：10048
                 Thread.Sleep(1000); //2分钟
-                MessageBox.Show(se.Message+"\r\nErrorCode"+se.ErrorCode,"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show(se.Message+"\r\nErrorCode"+se.ErrorCode,
+                    "错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
         }
         public void Disconnect()

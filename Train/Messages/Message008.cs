@@ -8,11 +8,12 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——列车数据确认
+    /// </summary>
     public class Message008:AbstractRecvMessage
     {
-        /// <summary>
-        /// 地到车——列车数据确认
-        /// </summary>
+
         const int MESSAGEID = 8;
         uint T_TRAIN2;
 
@@ -32,14 +33,8 @@ namespace Train.Messages
             NID_MESSAGE = resultArray[0];
             L_MESSAGE = resultArray[1];
             T_TRAIN=(uint)(resultArray[2]);
-            if (resultArray[3] == 1)
-            {
-                M_ACK = true;
-            }
-            else
-            {
-                M_ACK = false;
-            }
+            M_ACK = resultArray[3] == 1;
+
             NID_LRBG = resultArray[4];
             T_TRAIN2 = Convert.ToUInt32(resultArray[5]);
         }

@@ -20,6 +20,7 @@ namespace Train.MessageHandlers
         /// <returns></returns>
         public override bool Solve(AbstractRecvMessage am)
         {
+            //应该记录这种异常情况
             return true;
         }
     

@@ -13,6 +13,7 @@ using Train.Messages;
 using Train.Packets;
 using Train.XmlResolve;
 using Train.Data;
+using Train.MessageHandlers;
 
 namespace Train
 {
@@ -31,6 +32,7 @@ namespace Train
             Database.Init();
             StartTrain();
             StartComm();
+            rbWorkMode_CheckedChanged(rbSB, null);//一开始列车处于SB模式
         }
         #region 菜单项
         private void ConnectTSMI_Click(object sender, EventArgs e)
@@ -63,8 +65,7 @@ namespace Train
             if(sender == Message129ToolStripMenuItem)
             {
                 Message129 m129 = new Message129();
-                if (trainDynamic == null) return;
-                m129.SetPacket0or1(trainDynamic.GetPacket0());
+                m129.SetPacket0or1(TrainDynamics.GetPacket0());
                 //Packet011 are some static configurations,so don't need to set its field here.
                 SendToRBC(m129);
             }
@@ -72,14 +73,14 @@ namespace Train
             {
                 Message132 m132 = new Message132();
                 if (trainDynamic == null) return;
-                m132.SetPacket0or1(trainDynamic.GetPacket0());
+                m132.SetPacket0or1(TrainDynamics.GetPacket0());
                 SendToRBC(m132);
             }
             if (sender == Msg132Packet9ToolStripMenuItem)
             {
                 Message132 m132 = new Message132();
                 if (trainDynamic == null) return;
-                m132.SetPacket0or1(trainDynamic.GetPacket0());
+                m132.SetPacket0or1(TrainDynamics.GetPacket0());
                 m132.SetAlternativePacket(new Packet009());  //设置可选择的信息包9
                 SendToRBC(m132);
             }
@@ -87,14 +88,14 @@ namespace Train
             {
                 Message136 m136 = new Message136();
                 if (trainDynamic == null) return;
-                m136.SetPacket0or1(trainDynamic.GetPacket0());
+                m136.SetPacket0or1(TrainDynamics.GetPacket0());
                 SendToRBC(m136);
             }
             if (sender == Message150ToolStripMenuItem)
             {
                 Message150 m150 = new Message150();
                 if (trainDynamic == null) return;
-                m150.SetPacket0or1(trainDynamic.GetPacket0());
+                m150.SetPacket0or1(TrainDynamics.GetPacket0());
                 SendToRBC(m150);
             }
             if (sender == Message155ToolStripMenuItem)
@@ -111,7 +112,7 @@ namespace Train
             {
                 Message157 m157 = new Message157();
                 if (trainDynamic == null) return;
-                m157.SetPacket0or1(trainDynamic.GetPacket0());
+                m157.SetPacket0or1(TrainDynamics.GetPacket0());
                 SendToRBC(m157);
             }
             if(sender == Msg159NoPacketToolStripMenuItem)
@@ -153,23 +154,45 @@ namespace Train
         private void rbWorkMode_CheckedChanged(object sender, EventArgs e)
         {
             String name = ((RadioButton)sender).Name;
-            foreach(_WorkMode wm in Enum.GetValues(typeof(_WorkMode)))
+            foreach(_M_MODE wm in Enum.GetValues(typeof(_M_MODE)))
                 if (name.Contains(wm.ToString()))
                 {
                     driverConsoler.WorkMode = wm;
                     break;
                 }
         }
-
-        private void rbControlLevel_CheckedChanged(object sender, EventArgs e)
+        //需要在MA_MH中调用这个函数
+        public void rbControlLevel_CheckedChanged(object sender, EventArgs e)
         {
-            String name = ((RadioButton)sender).Name;
+            String name;
+            if (sender is _ControlLevel)
+                name = sender.ToString();
+            else name= ((RadioButton)sender).Name;
             foreach (_ControlLevel cl in Enum.GetValues(typeof(_ControlLevel)))
                 if (name.Contains(cl.ToString()))
                 {
                     driverConsoler.ControlLevel = cl;
+                    //进入C2等级，ATP模式变为SL
+                    if (cl == _ControlLevel.CTCS_2)
+                        rbWorkMode_CheckedChanged(rbSL, null);
                     break;
                 }
+        }
+        //点击此按钮表示关闭驾驶台，列车进入任务结束流程
+        private void btnEoMButton_Click(object sender, EventArgs e)
+        {
+            _M_MODE wm = driverConsoler.WorkMode;
+            //如果当前在冒进模式或冒进后模式，则模式不变
+            if (wm == _M_MODE.PT || wm == _M_MODE.TR)
+                return;
+            driverConsoler.WorkMode = _M_MODE.SB;//进入SB模式
+            if (wm == _M_MODE.SH) //如果在SH模式，则不注销
+                return;
+            //其它情况下，执行注销过程
+            Message150 m150 = new Message150();
+            m150.SetPacket0or1(TrainDynamics.GetPacket0());
+            SendToRBC(m150);
+            //列车手动进入C2等级导致的注销过程由RBC发起，不需要在这里写
         }
 
         private void btnEBButton_Click(object sender, EventArgs e)
@@ -187,6 +210,7 @@ namespace Train
 
         #region 列车运动模块
         private TrainState trainState = new TrainState();
+        public TrainState GetTrainState() { return trainState; }
         private Thread trainDynamicThread;
         private TrainDynamics trainDynamic;
 
@@ -281,6 +305,14 @@ namespace Train
             //列车位置
             this.lblTrainLeftLoc.Text = TrainLocation.LocToString(trainState.TrainLocation.LeftLoc);
             this.lblTrainRightLoc.Text = TrainLocation.LocToString(trainState.TrainLocation.RightLoc);
+
+            UpdatePureText();
+        }
+        public void UpdatePureText()
+        {
+            //纯文本消息
+            while (!General_MH.PureText.IsEmpty())
+                tbPureText.Text += General_MH.PureText.Pop().ToString() + "\r\n";
         }
         public void UpdateVehicleInterfaceFun()
         {
@@ -516,6 +548,7 @@ namespace Train
                 SetConnStatusLabel(toolStripStatusLabel_RBC, value, ref Before_RBCConn);
             }
         }
+
 
         private void timerConnStatus_Tick(object sender, EventArgs e)
         {

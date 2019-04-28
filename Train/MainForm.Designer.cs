@@ -61,6 +61,7 @@
             this.rbDirectionBackward = new System.Windows.Forms.RadioButton();
             this.rbDirectionZero = new System.Windows.Forms.RadioButton();
             this.rbDirectionForward = new System.Windows.Forms.RadioButton();
+            this.btnEoM = new System.Windows.Forms.Button();
             this.btnEBButton = new System.Windows.Forms.Button();
             this.gbTrainState = new System.Windows.Forms.GroupBox();
             this.cbManualAccSpeed = new System.Windows.Forms.CheckBox();
@@ -109,6 +110,7 @@
             this.Msg132Packet9ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Message136ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Msg136NoPacketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Message150ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Message155ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Message156ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Message157ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,7 +134,8 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Message150ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbPureText = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.gbDriverConsoler.SuspendLayout();
             this.gbWorkMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -155,11 +158,12 @@
             this.gbDriverConsoler.Controls.Add(this.gbSteer);
             this.gbDriverConsoler.Controls.Add(this.gbControlLevel);
             this.gbDriverConsoler.Controls.Add(this.gbDriveDirection);
+            this.gbDriverConsoler.Controls.Add(this.btnEoM);
             this.gbDriverConsoler.Controls.Add(this.btnEBButton);
             this.gbDriverConsoler.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.gbDriverConsoler.Location = new System.Drawing.Point(50, 53);
             this.gbDriverConsoler.Name = "gbDriverConsoler";
-            this.gbDriverConsoler.Size = new System.Drawing.Size(458, 356);
+            this.gbDriverConsoler.Size = new System.Drawing.Size(511, 356);
             this.gbDriverConsoler.TabIndex = 2;
             this.gbDriverConsoler.TabStop = false;
             this.gbDriverConsoler.Text = "驾驶室";
@@ -339,7 +343,7 @@
             this.gbSteer.Controls.Add(this.lblNegTen_EndB);
             this.gbSteer.Controls.Add(this.trackBarSteer);
             this.gbSteer.Controls.Add(this.lblSteerValue_EndB);
-            this.gbSteer.Location = new System.Drawing.Point(319, 31);
+            this.gbSteer.Location = new System.Drawing.Point(378, 35);
             this.gbSteer.Name = "gbSteer";
             this.gbSteer.Size = new System.Drawing.Size(127, 305);
             this.gbSteer.TabIndex = 41;
@@ -511,6 +515,16 @@
             this.rbDirectionForward.Text = "向前";
             this.rbDirectionForward.UseVisualStyleBackColor = true;
             this.rbDirectionForward.CheckedChanged += new System.EventHandler(this.rbDirectionChoose_CheckedChanged);
+            // 
+            // btnEoM
+            // 
+            this.btnEoM.Location = new System.Drawing.Point(277, 208);
+            this.btnEoM.Name = "btnEoM";
+            this.btnEoM.Size = new System.Drawing.Size(75, 23);
+            this.btnEoM.TabIndex = 6;
+            this.btnEoM.Text = "任务结束";
+            this.btnEoM.UseVisualStyleBackColor = true;
+            this.btnEoM.Click += new System.EventHandler(this.btnEoMButton_Click);
             // 
             // btnEBButton
             // 
@@ -737,7 +751,7 @@
             this.发送消息ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(820, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(912, 25);
             this.menuStrip1.TabIndex = 13;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -912,7 +926,7 @@
             // Message129ToolStripMenuItem
             // 
             this.Message129ToolStripMenuItem.Name = "Message129ToolStripMenuItem";
-            this.Message129ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message129ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.Message129ToolStripMenuItem.Text = "消息129";
             this.Message129ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
@@ -922,7 +936,7 @@
             this.Msg132NoPacketToolStripMenuItem,
             this.Msg132Packet9ToolStripMenuItem});
             this.Message132ToolStripMenuItem.Name = "Message132ToolStripMenuItem";
-            this.Message132ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message132ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.Message132ToolStripMenuItem.Text = "消息132";
             // 
             // Msg132NoPacketToolStripMenuItem
@@ -944,7 +958,7 @@
             this.Message136ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Msg136NoPacketToolStripMenuItem});
             this.Message136ToolStripMenuItem.Name = "Message136ToolStripMenuItem";
-            this.Message136ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message136ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.Message136ToolStripMenuItem.Text = "消息136";
             // 
             // Msg136NoPacketToolStripMenuItem
@@ -954,17 +968,24 @@
             this.Msg136NoPacketToolStripMenuItem.Text = "不选择";
             this.Msg136NoPacketToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
+            // Message150ToolStripMenuItem
+            // 
+            this.Message150ToolStripMenuItem.Name = "Message150ToolStripMenuItem";
+            this.Message150ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.Message150ToolStripMenuItem.Text = "消息150";
+            this.Message150ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            // 
             // Message155ToolStripMenuItem
             // 
             this.Message155ToolStripMenuItem.Name = "Message155ToolStripMenuItem";
-            this.Message155ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message155ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.Message155ToolStripMenuItem.Text = "消息155";
             this.Message155ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
             // Message156ToolStripMenuItem
             // 
             this.Message156ToolStripMenuItem.Name = "Message156ToolStripMenuItem";
-            this.Message156ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message156ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.Message156ToolStripMenuItem.Text = "消息156";
             this.Message156ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
             // 
@@ -975,7 +996,7 @@
             this.Msg157Packet44ToolStripMenuItem,
             this.Msg157NoPacketToolStripMenuItem});
             this.Message157ToolStripMenuItem.Name = "Message157ToolStripMenuItem";
-            this.Message157ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message157ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.Message157ToolStripMenuItem.Text = "消息157";
             // 
             // Msg157Packet4ToolStripMenuItem
@@ -1005,7 +1026,7 @@
             this.Msg159Packet3ToolStripMenuItem,
             this.Msg159NoPacketToolStripMenuItem});
             this.Message159ToolStripMenuItem.Name = "Message159ToolStripMenuItem";
-            this.Message159ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Message159ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.Message159ToolStripMenuItem.Text = "消息159";
             // 
             // Msg159Packet3ToolStripMenuItem
@@ -1032,7 +1053,7 @@
             this.toolStripStatusLabel_NRBC});
             this.statusStrip1.Location = new System.Drawing.Point(0, 656);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(820, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(912, 22);
             this.statusStrip1.TabIndex = 14;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1078,9 +1099,9 @@
             this.columnHeader3});
             this.lvRecvMsg.FullRowSelect = true;
             this.lvRecvMsg.GridLines = true;
-            this.lvRecvMsg.Location = new System.Drawing.Point(523, 71);
+            this.lvRecvMsg.Location = new System.Drawing.Point(598, 71);
             this.lvRecvMsg.Name = "lvRecvMsg";
-            this.lvRecvMsg.Size = new System.Drawing.Size(256, 154);
+            this.lvRecvMsg.Size = new System.Drawing.Size(273, 154);
             this.lvRecvMsg.TabIndex = 15;
             this.lvRecvMsg.UseCompatibleStateImageBehavior = false;
             this.lvRecvMsg.View = System.Windows.Forms.View.Details;
@@ -1110,9 +1131,9 @@
             this.columnHeader6});
             this.lvSendMsg.FullRowSelect = true;
             this.lvSendMsg.GridLines = true;
-            this.lvSendMsg.Location = new System.Drawing.Point(523, 239);
+            this.lvSendMsg.Location = new System.Drawing.Point(598, 239);
             this.lvSendMsg.Name = "lvSendMsg";
-            this.lvSendMsg.Size = new System.Drawing.Size(256, 154);
+            this.lvSendMsg.Size = new System.Drawing.Size(273, 154);
             this.lvSendMsg.TabIndex = 15;
             this.lvSendMsg.UseCompatibleStateImageBehavior = false;
             this.lvSendMsg.View = System.Windows.Forms.View.Details;
@@ -1131,19 +1152,31 @@
             // 
             this.columnHeader6.Text = "发送给";
             // 
-            // Message150ToolStripMenuItem
+            // tbPureText
             // 
-            this.Message150ToolStripMenuItem.Name = "Message150ToolStripMenuItem";
-            this.Message150ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.Message150ToolStripMenuItem.Text = "消息150";
-            this.Message150ToolStripMenuItem.Click += new System.EventHandler(this.SendMessagetTSMI_Click);
+            this.tbPureText.Location = new System.Drawing.Point(664, 465);
+            this.tbPureText.Multiline = true;
+            this.tbPureText.Name = "tbPureText";
+            this.tbPureText.Size = new System.Drawing.Size(181, 94);
+            this.tbPureText.TabIndex = 17;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(685, 450);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "纯文本消息：";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(820, 678);
+            this.ClientSize = new System.Drawing.Size(912, 678);
+            this.Controls.Add(this.tbPureText);
             this.Controls.Add(this.lvSendMsg);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.lvRecvMsg);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -1287,6 +1320,9 @@
         private System.Windows.Forms.ColumnHeader columnHeader5;
         private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.ToolStripMenuItem Message150ToolStripMenuItem;
+        private System.Windows.Forms.Button btnEoM;
+        private System.Windows.Forms.TextBox tbPureText;
+        private System.Windows.Forms.Label label3;
     }
 }
 

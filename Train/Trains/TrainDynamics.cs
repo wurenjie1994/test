@@ -54,19 +54,19 @@ namespace Train.Trains
         private int numberOfBrake;
         #endregion
         //当前列车运行信息
-        private double currentV = 0;//当前速度
-        private double currentA = 0;//当前加速度
+        private double currentV = 0;//当前速度，单位：m/s
+        private double currentA = 0;//当前加速度，单位：m/s^2
         private double currentS1 = 0;//当前右车头距离，单位：米
         private double currentS0 = 0;//当前左车头距离
         private double prevS1, prevS0; //100ms前的位置
         private double displacement = 0; //总位移
-        public double delT = 0.1;//时间步长
+        public double delT = 0.1;//时间步长，单位：秒
 
         public  const double LINE_LENGTH = 80 * 1000;//线路总长度,80km
         private double deltaS = 0;
 
         private BaliseGroup lrbg=BaliseGroup.BgList[0];
-        private Packet000 p0 = new Packet000();
+        private static Packet000 p0 = new Packet000();
 
         public TrainDynamics()
         {
@@ -218,7 +218,7 @@ namespace Train.Trains
             if (p0.M_LEVEL == 1)
                 p0.NID_STM = 123;//自己设的一个值
         }
-        public Packet000 GetPacket0()
+        public static Packet000 GetPacket0()
         {
             return p0;
         }

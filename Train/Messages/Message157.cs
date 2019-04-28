@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Train.Packets;
 using Train.Utilities;
 using Train.Data;
@@ -19,8 +17,8 @@ namespace Train.Messages
         int Q_STATUS;               //2bit
         AbstractPacket ap01;        //信息包0/1
         AbstractPacket ap;          //可选择的信息包
-
-         int BitArrayLEN = 8+10+32+24+2;
+                                                //当ATP出现应答器一致性错误或者无线一致性错误时，应在消息157中包含信息包4
+        int BitArrayLEN = 8+10+32+24+2;
 
         public override byte[] Resolve()
         {
@@ -33,18 +31,11 @@ namespace Train.Messages
             NID_MESSAGE = MESSAGEID;
             L_MESSAGE = BitArrayLEN / 8 + (BitArrayLEN % 8 == 0 ? 0 : 1);
             int[] intArray = new int[] { 8, 10, 32, 24, 2 };
-            int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE,Q_STATUS };
+            int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE,(int)T_TRAIN, NID_ENGINE,Q_STATUS };
             int pos = 0;
             for (int i = 0; i < intArray.Length; i++)
             {
-                if (i == 2)
-                {
-                    Bits.ConvergeBitArray(bitArray, T_TRAIN, ref pos, intArray[i]);
-                }
-                else
-                {
-                    Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
-                }
+                Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
             }
             for (int i = 0; i < bit01.Length; i++)
             {

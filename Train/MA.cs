@@ -5,7 +5,9 @@ using Train.Packets;
 
 namespace Train
 {
-
+    /// <summary>
+    /// 用来进行列车MA运算的类
+    /// </summary>
     public class MA
     {
         double vLOA, tLOA;

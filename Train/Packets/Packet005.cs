@@ -8,7 +8,7 @@ using Train.Utilities;
 namespace Train.Packets
 {
     /// <summary>
-    /// 地到车——链接
+    /// 地到车——链接，应答器组的链接信息
     /// </summary>
     public class Packet005:AbstractPacket
     {

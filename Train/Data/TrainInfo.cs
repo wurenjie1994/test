@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Train.Packets;
 
 namespace Train
 {
@@ -22,8 +21,9 @@ namespace Train
         private static List<int> nID_STMList = new List<int>();
         private static List<ulong> nID_RADIOList = new List<ulong>();
         private static List<int> m_TRACTION = new List<int>();
-
-
+        //RBC会给车发送信息包3，包含了一些配置参数，
+        //但目前可能用不到，所以就先保存在p3中
+        public static Packet003 p3;
 
         #region getters/setters
 

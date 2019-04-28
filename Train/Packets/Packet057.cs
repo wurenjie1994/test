@@ -37,5 +37,7 @@ namespace Train.Packets
             T_TIMEOUTRQST = resultArray[4];
             T_CYCRQST = resultArray[5];
         }
+        public int GetTcycRqst() { return T_CYCRQST; }
+
     }
 }

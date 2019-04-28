@@ -8,11 +8,11 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——位置参照点调整后的MA
+    /// </summary>
     public class Message033:AbstractRecvMessage
     {
-        /// <summary>
-        /// 地到车——位置参照点调整后的MA
-        /// </summary>
         const int MESSAGEID = 33;
         int ID;
         int Q_SCALE;                //2bit
