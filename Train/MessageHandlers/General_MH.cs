@@ -11,11 +11,12 @@ namespace Train.MessageHandlers
     /// <summary>
     /// 主要用来处理Message24及其中所带的信息包
     /// </summary>
-    class General_MH:AbstractMessageHandler
+    class General_MH: AbstractMessageHandler
     {
         //存放p72信息包中的纯文本信息，并在主界面上显示
         static CircularQueue<ShowPureText> pureText = new CircularQueue<ShowPureText>();
         public static CircularQueue<ShowPureText> PureText{get{return pureText;}}
+        public General_MH(MessageHandler mh) : base(mh) { }
 
         public override bool Solve(AbstractRecvMessage arm)
         {
@@ -61,11 +62,11 @@ namespace Train.MessageHandlers
 
         private void PH(Packet057 p57)
         {
-            MA_MH.p57 = p57;//交由MA_MH类处理
+            mh.MhMa.p57 = p57;//交由MA_MH类处理
         }
         private void PH(Packet058 p58)
         {
-            LocReport_MH.p58 = p58;
+            mh.MhLocReport.p58 = p58;//交由LocReport_MH类处理
         }
         private void PH(Packet072 p72)
         {
@@ -78,7 +79,7 @@ namespace Train.MessageHandlers
             if (p42.Q_RBC == false) //终止通信会话
             {
                 Message156 m156 = new Message156();//断开通信连接
-                SendMsg(m156, _CommType.RBC);
+                SendMsg(m156);
             }
             else //建立通信会话
             {
@@ -91,7 +92,7 @@ namespace Train.MessageHandlers
             TrainInfo.p3 = p3;  //将p3信息保存在TrainInfo中
             Message129 m129 = new Message129();
             m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
-            SendMsg(m129, _CommType.RBC);
+            SendMsg(m129);
         }
     }
     /// <summary>

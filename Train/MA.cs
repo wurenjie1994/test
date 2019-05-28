@@ -6,7 +6,7 @@ using Train.Packets;
 namespace Train
 {
     /// <summary>
-    /// 用来进行列车MA运算的类
+    /// 用来进行列车MA运算的类，每收到一个MA消息（M03，M33等）都重新生成一个MA实例
     /// </summary>
     public class MA
     {
@@ -43,9 +43,9 @@ namespace Train
         {
             maStartTime = System.DateTime.Now;
         }
-        public void SetStartLoc(double dis)
+        public void SetStartLoc(double loc)
         {
-            maStartLoc = dis;
+            maStartLoc = loc;
         }
         public void GetValueFrom(Packet015 p15)
         {

@@ -46,6 +46,10 @@ namespace Train.Utilities
                 res[i++] = second[j++];
             return res;
         }
+        /// <summary>
+        /// 将bitArray中从position位置开始的length个bit转换为一个int。
+        /// 按大端方式
+        /// </summary>
         public static int ToInt(BitArray bitArray, ref int position, int length)
         {
             int result = 0;
@@ -58,7 +62,7 @@ namespace Train.Utilities
             position += length;
             return result;
         }
-        public static long ToInt(BitArray bitArray, ref int position, int length, int x)
+        public static long ToLong(BitArray bitArray, ref int position, int length)
         {
             long result = 0;
             for (int i = 0; i < length; i++)

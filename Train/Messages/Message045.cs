@@ -41,14 +41,7 @@ namespace Train.Messages
                 M_ACK = false;
             }
             NID_LRBG = resultArray[4];
-            if (resultArray[5] == 1)
-            {
-                Q_ORIENTATION = true;
-            }
-            else
-            {
-                Q_ORIENTATION = false;
-            }
+            Q_ORIENTATION = resultArray[5] == 1;
         }
         public override int GetMessageID()
         {

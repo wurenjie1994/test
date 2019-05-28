@@ -9,8 +9,9 @@ namespace Train.Data
 {
     public class Database
     {
-        public static void Init()
+        public void Init()
         {
+            Connect();
             InitTrainInfo();
             InitBaliseGroup();
         }
@@ -32,25 +33,37 @@ namespace Train.Data
 
         }
 
-        public static void InitBaliseGroup()
+        public void InitBaliseGroup()
         {
-            for(int i = 0; i < 20; i++)
+            MySqlCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "select Name,BaliseNum,Kilo,Type,`Use`,PS1,PS2 from down_balise;";//use 是mysql中关键字，使用时要用反引号``括起来
+            //cmd.ExecuteNonQuery();        //用于增删改
+            MySqlDataReader data = cmd.ExecuteReader();   //用于查找
+            List<Balise> list = Trains.TrainDynamics.DownBgList;
+            while (data.Read())
             {
-                BaliseGroup bg = new BaliseGroup();
-                bg.Nid_bg = i;
-                bg.Position = i * 100;
-                BaliseGroup.BgList.Add(bg);
+                Balise balise = new Balise();
+                balise.BaliseName=data.GetString(0);
+                balise.BaliseNumber = data.GetString(1);
+                string[] kilo = data.GetString(2).Split('+');
+                balise.Position = Convert.ToInt32(kilo[0].Trim('k', 'K')) * 1000 + Convert.ToInt32(kilo[1]);
+                balise.IsSourced = "有源".Equals(data[3]);
+                balise.Usage = (data[4] == DBNull.Value) ? null : data.GetString(4);
+                balise.Remark1 = (data[5] == DBNull.Value) ? null : data.GetString(5);
+                balise.Remark2 = (data[6] == DBNull.Value) ? null : data.GetString(6);
+                list.Add(balise);
             }
+            data.Close();
         }
         MySqlConnection conn;
         public void Connect()
         {
-            String connectionString = "server=localhost;user id=wrj;password=1234;database=test";
+            String connectionString = "server=127.0.0.1;uid=wrj;pwd=1234;database=test";
             conn = new MySqlConnection(connectionString);
             try
             {
                 conn.Open();
-                MessageBox.Show("连接成功！");
+                MessageBox.Show("数据库连接成功！");
             }
             catch (MySqlException ex)
             {
@@ -59,8 +72,14 @@ namespace Train.Data
             }
             finally
             {
-                conn.Close();
+                //conn.Close();
             }
         }
+        public void Close()
+        {
+            if (conn != null)
+                conn.Close();
+        }
+
     }
 }

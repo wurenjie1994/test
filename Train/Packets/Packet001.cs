@@ -32,7 +32,12 @@ namespace Train.Packets
 
         public override BitArray Resolve()
         {
-            BitArray bitArray = new BitArray(161);
+            L_PACKET = 8 + 13 + 2 + 24 + 24 + 15 + 2 + 2 + 15 + 15 + 2 + 7 + 2 + 4 + 3;
+            if (Q_LENGTH == 1 || Q_LENGTH == 2)
+                L_PACKET += 15;
+            if (M_LEVEL == 1)
+                L_PACKET += 8;
+            BitArray bitArray = new BitArray(L_PACKET);
             int[] intArray = new int[] { 8, 13, 2, 24, 24, 15, 2, 2, 15, 15, 2, 15, 7, 2, 4, 3, 8 };
             int[] DataArray = new int[] { NID_PACKET, L_PACKET, Q_SCALE, NID_LRBG, NID_PRVBG,
                 D_LRBG, Q_DIRLRBG, Q_DLRBG, L_DOUBTOVER, L_DOUBTUNDER, Q_LENGTH,

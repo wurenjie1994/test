@@ -8,47 +8,40 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 车到地——紧急停车确认
+    /// </summary>
     public class Message147 : AbstractSendMessage
     {
-        /// <summary>
-        /// 车到地——紧急停车确认
-        /// </summary>
         const int MESSAGEID = 147;
-        int ID01;
-
         int NID_EM;                 //4bit
-        int Q_EMERGENCYSTOP;        //2bit（可选）
-        AbstractPacket ap01;        //可选择的信息包0/1
+        int Q_EMERGENCYSTOP;        //2bit（可选）（通号有这个字段）
+        AbstractPacket ap01;        //信息包0/1
 
-        const int BitArrayLEN = 248;
-        const int byteLEN = BitArrayLEN / 8;
+        int BitArrayLEN = 74+4+2;
 
         public override byte[] Resolve()
         {
+            BitArray bit01 = ap01.Resolve();
+            BitArrayLEN += bit01.Length;
             BitArray bitArray = new BitArray(BitArrayLEN);
+
+            L_MESSAGE = BitArrayLEN / 8 + (BitArrayLEN % 8 == 0 ? 0 : 1);
+            NID_MESSAGE = MESSAGEID;
             int[] intArray = new int[] { 8, 10, 32, 24, 4, 2 };
-            int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE, NID_EM, Q_EMERGENCYSTOP };
+            int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, (int)T_TRAIN, NID_ENGINE, NID_EM, Q_EMERGENCYSTOP };
             int pos = 0;
             for (int i = 0; i < intArray.Length; i++)
             {
-                if (i == 2)
-                {
-                    Bits.ConvergeBitArray(bitArray, T_TRAIN, ref pos, intArray[i]);
-                }
-                else
-                {
-                    Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
-                }
-            }
-            ap01 = AbstractPacket.GetPacket(ID01);
-            BitArray bit = ap01.Resolve();
-            for (int i = 0; i < bit.Length; i++)
-            {
-                bitArray[pos] = bit[i];
-                pos++;
+                Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
             }
 
-            byte[] sendData = new byte[byteLEN];
+            for (int i = 0; i < bit01.Length; i++)
+            {
+                bitArray[pos++] = bit01[i];
+            }
+         
+            byte[] sendData = new byte[L_MESSAGE];
             Bits.ToByte(sendData, bitArray);
 
             return sendData;

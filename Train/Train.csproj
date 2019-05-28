@@ -51,10 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communication.cs" />
-    <Compile Include="Data\BaliseGroup.cs" />
+    <Compile Include="Data\Balise.cs" />
     <Compile Include="Data\Database.cs" />
     <Compile Include="Data\TrainInfo.cs" />
     <Compile Include="MessageHandlers\AbstractMessageHandler.cs" />
+    <Compile Include="MessageHandlers\MessageHandler.cs" />
     <Compile Include="MessageHandlers\CommSession_MH.cs" />
     <Compile Include="MessageHandlers\EB_MH.cs" />
     <Compile Include="MessageHandlers\LocReport_MH.cs" />
@@ -68,6 +69,12 @@
     </Compile>
     <Compile Include="ShowMsg\ShowMsgForm.Designer.cs">
       <DependentUpon>ShowMsgForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Trains\SetLocForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Trains\SetLocForm.Designer.cs">
+      <DependentUpon>SetLocForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Utilities\CircularQueue.cs" />
     <Compile Include="Utilities\Client.cs" />
@@ -180,6 +187,9 @@
     <EmbeddedResource Include="ShowMsg\ShowMsgForm.resx">
       <DependentUpon>ShowMsgForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Trains\SetLocForm.resx">
+      <DependentUpon>SetLocForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -195,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Schema\CreateTable.sql" />
+    <Content Include="Schema\down_balise.sql" />
     <Content Include="XmlResolve\ConnAck.xml" />
     <Content Include="XmlResolve\ConnReq.xml" />
     <Content Include="XmlResolve\RecvData.xml" />

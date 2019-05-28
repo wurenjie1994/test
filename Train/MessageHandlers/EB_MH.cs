@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Train.Messages;
 
 namespace Train.MessageHandlers
 {
     /// <summary>
-    /// 处理与紧急停车相关的消息
+    /// 处理与紧急停车相关的消息，列车冒进防护
     /// </summary>
-    class EB_MH : AbstractMessageHandler
+    public class EB_MH : AbstractMessageHandler
     {
         Dictionary<int, AbstractRecvMessage> dictEB = new Dictionary<int, AbstractRecvMessage>();
+        public EB_MH(MessageHandler mh) : base(mh) { }
+
         public override bool Solve(AbstractRecvMessage arm)
         {
             int msgId = arm.GetMessageID();
@@ -18,18 +21,29 @@ namespace Train.MessageHandlers
             if (msgId == 15)
             {
                 MH((Message015)arm);
+                mainForm.TrainDynamic.DictEB = dictEB;
                 return true;
             }
             //无条件紧急停车
             if (msgId == 16)
             {
                 MH((Message016)arm);
+                mainForm.TrainDynamic.DictEB = dictEB;
                 return true;
             }
             //取消紧急停车
             if (msgId==18)
             {
                 MH((Message018)arm);
+                mainForm.TrainDynamic.DictEB = dictEB;
+                return true;
+            }
+            //确认退出冒进防护模式
+            if (msgId == 6)
+            {
+                if (arm.M_ACK) SendAck(arm);
+                //退出PT模式，但不知道该进入什么模式，那就假设是SB模式吧！
+                mainForm.BeginInvoke(new EventHandler(mainForm.rbWorkMode_CheckedChanged), _M_MODE.SB, null);
                 return true;
             }
             return false;
@@ -45,12 +59,13 @@ namespace Train.MessageHandlers
                 m147.SetNID_EM(nid_em);
                 m147.SetQ_ES(1);  //考虑有条件紧急停车 使用值1
                 m147.SetAbstractPacket(null);
-                SendMsg(m147, _CommType.RBC);
+                SendMsg(m147);
             }
         }
         private void MH(Message016 m16)
         {
             int nid_em = m16.GetNID_EM();
+            if (dictEB.ContainsKey(nid_em)) dictEB.Remove(nid_em);
             dictEB.Add(nid_em, m16);
             //发送紧急停车确认消息147
             if (m16.M_ACK)
@@ -59,8 +74,11 @@ namespace Train.MessageHandlers
                 m147.SetNID_EM(nid_em);
                 m147.SetQ_ES(2);  //无条件紧急停车 使用值2
                 m147.SetAbstractPacket(null);
-                SendMsg(m147, _CommType.RBC);
+                SendMsg(m147);
             }
+            //列车进入TR模式（注意要使用异步调用，防止发生阻塞）
+            mainForm.BeginInvoke(new EventHandler(mainForm.rbWorkMode_CheckedChanged),_M_MODE.TR, null);
+            //发送M136消息（这个消息应该是周期发送的，所以这里不需要再发送）
         }
         private void MH(Message018 m18)
         {
@@ -69,9 +87,7 @@ namespace Train.MessageHandlers
             //发送确认消息146
             if (m18.M_ACK)
             {
-                Message146 m146 = new Message146();
-                m146.T_TRAIN2 = m18.T_TRAIN;
-                SendMsg(m146, _CommType.RBC);
+                SendAck(m18);
             }
         }
     }

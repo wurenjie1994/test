@@ -8,11 +8,11 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——有条件紧急停车
+    /// </summary>
     public class Message015:AbstractRecvMessage
     {
-        /// <summary>
-        /// 地到车——有条件紧急停车
-        /// </summary>
         const int MESSAGEID = 15;
 
         int NID_EM;                 //4bit
@@ -37,14 +37,7 @@ namespace Train.Messages
             NID_MESSAGE = resultArray[0];
             L_MESSAGE = resultArray[1];
             T_TRAIN=(uint)(resultArray[2]);
-            if (resultArray[3] == 1)
-            {
-                M_ACK = true;
-            }
-            else
-            {
-                M_ACK = false;
-            }
+            M_ACK = resultArray[3] == 1;
             NID_LRBG = resultArray[4];
             NID_EM = resultArray[5];
             Q_SCALE = resultArray[6];

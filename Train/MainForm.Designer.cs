@@ -95,14 +95,6 @@
             this.状态设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.列车位置设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.故障注入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.列车打滑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.无应答器故障ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.倒溜ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.列车空转ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.零速设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.零速ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.非零速ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.发送消息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Message129ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Message132ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,6 +117,8 @@
             this.toolStripStatusLabel_RBC = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel_NRBC = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel_ISDNIF = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerConnStatus = new System.Windows.Forms.Timer(this.components);
             this.lvRecvMsg = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -136,6 +130,8 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tbPureText = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblTrainLrbg = new System.Windows.Forms.Label();
             this.gbDriverConsoler.SuspendLayout();
             this.gbWorkMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -684,7 +680,9 @@
             // 
             // gbTrainLocation
             // 
+            this.gbTrainLocation.Controls.Add(this.label4);
             this.gbTrainLocation.Controls.Add(this.label2);
+            this.gbTrainLocation.Controls.Add(this.lblTrainLrbg);
             this.gbTrainLocation.Controls.Add(this.lblTrainRightLoc);
             this.gbTrainLocation.Controls.Add(this.lblTrainLeftLoc);
             this.gbTrainLocation.Controls.Add(this.label1);
@@ -747,7 +745,6 @@
             this.通信ToolStripMenuItem,
             this.状态设置ToolStripMenuItem,
             this.故障注入ToolStripMenuItem,
-            this.ToolStripMenuItem,
             this.发送消息ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -760,6 +757,7 @@
             this.初始化ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.通信初始化ToolStripMenuItem,
             this.列车初始化ToolStripMenuItem});
+            this.初始化ToolStripMenuItem.Enabled = false;
             this.初始化ToolStripMenuItem.Name = "初始化ToolStripMenuItem";
             this.初始化ToolStripMenuItem.Size = new System.Drawing.Size(56, 21);
             this.初始化ToolStripMenuItem.Text = "初始化";
@@ -772,6 +770,7 @@
             // 
             // 列车初始化ToolStripMenuItem
             // 
+            this.列车初始化ToolStripMenuItem.Enabled = false;
             this.列车初始化ToolStripMenuItem.Name = "列车初始化ToolStripMenuItem";
             this.列车初始化ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.列车初始化ToolStripMenuItem.Text = "列车初始化";
@@ -844,69 +843,13 @@
             this.列车位置设置ToolStripMenuItem.Name = "列车位置设置ToolStripMenuItem";
             this.列车位置设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.列车位置设置ToolStripMenuItem.Text = "列车位置设置";
+            this.列车位置设置ToolStripMenuItem.Click += new System.EventHandler(this.列车位置设置ToolStripMenuItem_Click);
             // 
             // 故障注入ToolStripMenuItem
             // 
-            this.故障注入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.列车打滑ToolStripMenuItem,
-            this.无应答器故障ToolStripMenuItem,
-            this.倒溜ToolStripMenuItem,
-            this.列车空转ToolStripMenuItem,
-            this.零速设置ToolStripMenuItem});
             this.故障注入ToolStripMenuItem.Name = "故障注入ToolStripMenuItem";
             this.故障注入ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.故障注入ToolStripMenuItem.Text = "故障注入";
-            // 
-            // 列车打滑ToolStripMenuItem
-            // 
-            this.列车打滑ToolStripMenuItem.Name = "列车打滑ToolStripMenuItem";
-            this.列车打滑ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.列车打滑ToolStripMenuItem.Text = "列车打滑";
-            // 
-            // 无应答器故障ToolStripMenuItem
-            // 
-            this.无应答器故障ToolStripMenuItem.Name = "无应答器故障ToolStripMenuItem";
-            this.无应答器故障ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.无应答器故障ToolStripMenuItem.Text = "无应答器故障";
-            // 
-            // 倒溜ToolStripMenuItem
-            // 
-            this.倒溜ToolStripMenuItem.Name = "倒溜ToolStripMenuItem";
-            this.倒溜ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.倒溜ToolStripMenuItem.Text = "倒溜";
-            // 
-            // 列车空转ToolStripMenuItem
-            // 
-            this.列车空转ToolStripMenuItem.Name = "列车空转ToolStripMenuItem";
-            this.列车空转ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.列车空转ToolStripMenuItem.Text = "列车空转";
-            // 
-            // 零速设置ToolStripMenuItem
-            // 
-            this.零速设置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.零速ToolStripMenuItem,
-            this.非零速ToolStripMenuItem});
-            this.零速设置ToolStripMenuItem.Name = "零速设置ToolStripMenuItem";
-            this.零速设置ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.零速设置ToolStripMenuItem.Text = "零速设置";
-            // 
-            // 零速ToolStripMenuItem
-            // 
-            this.零速ToolStripMenuItem.Name = "零速ToolStripMenuItem";
-            this.零速ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.零速ToolStripMenuItem.Text = "零速";
-            // 
-            // 非零速ToolStripMenuItem
-            // 
-            this.非零速ToolStripMenuItem.Name = "非零速ToolStripMenuItem";
-            this.非零速ToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
-            this.非零速ToolStripMenuItem.Text = "非零速";
-            // 
-            // ToolStripMenuItem
-            // 
-            this.ToolStripMenuItem.Name = "ToolStripMenuItem";
-            this.ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
-            this.ToolStripMenuItem.Text = "报文信息";
             // 
             // 发送消息ToolStripMenuItem
             // 
@@ -1050,7 +993,9 @@
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel_RBC,
             this.toolStripStatusLabel2,
-            this.toolStripStatusLabel_NRBC});
+            this.toolStripStatusLabel_NRBC,
+            this.toolStripStatusLabel3,
+            this.toolStripStatusLabel_ISDNIF});
             this.statusStrip1.Location = new System.Drawing.Point(0, 656);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(912, 22);
@@ -1082,6 +1027,19 @@
             this.toolStripStatusLabel_NRBC.Name = "toolStripStatusLabel_NRBC";
             this.toolStripStatusLabel_NRBC.Size = new System.Drawing.Size(56, 17);
             this.toolStripStatusLabel_NRBC.Text = "通信断开";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(120, 17);
+            this.toolStripStatusLabel3.Text = "与ISDNIF通信状态：";
+            // 
+            // toolStripStatusLabel_ISDNIF
+            // 
+            this.toolStripStatusLabel_ISDNIF.BackColor = System.Drawing.Color.Red;
+            this.toolStripStatusLabel_ISDNIF.Name = "toolStripStatusLabel_ISDNIF";
+            this.toolStripStatusLabel_ISDNIF.Size = new System.Drawing.Size(56, 17);
+            this.toolStripStatusLabel_ISDNIF.Text = "通信断开";
             // 
             // timerConnStatus
             // 
@@ -1157,6 +1115,7 @@
             this.tbPureText.Location = new System.Drawing.Point(664, 465);
             this.tbPureText.Multiline = true;
             this.tbPureText.Name = "tbPureText";
+            this.tbPureText.ReadOnly = true;
             this.tbPureText.Size = new System.Drawing.Size(181, 94);
             this.tbPureText.TabIndex = 17;
             // 
@@ -1168,6 +1127,24 @@
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 0;
             this.label3.Text = "纯文本消息：";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(35, 101);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "LRBG：";
+            // 
+            // lblTrainLrbg
+            // 
+            this.lblTrainLrbg.AutoSize = true;
+            this.lblTrainLrbg.Location = new System.Drawing.Point(92, 101);
+            this.lblTrainLrbg.Name = "lblTrainLrbg";
+            this.lblTrainLrbg.Size = new System.Drawing.Size(11, 12);
+            this.lblTrainLrbg.TabIndex = 0;
+            this.lblTrainLrbg.Text = "0";
             // 
             // MainForm
             // 
@@ -1266,14 +1243,6 @@
         private System.Windows.Forms.ToolStripMenuItem 状态设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 列车位置设置ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 故障注入ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 列车打滑ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 无应答器故障ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 倒溜ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 列车空转ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 零速设置ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 零速ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 非零速ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_RBC;
@@ -1323,6 +1292,10 @@
         private System.Windows.Forms.Button btnEoM;
         private System.Windows.Forms.TextBox tbPureText;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ISDNIF;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lblTrainLrbg;
     }
 }
 

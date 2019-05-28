@@ -2,52 +2,45 @@
 using System.Collections;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Train.Packets;
 using Train.Utilities;
 using Train.Data;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 车到地——请求调车模式
+    /// </summary>
     public class Message130 : AbstractSendMessage
     {
-        /// <summary>
-        /// 车到地——请求调车模式
-        /// </summary>
+
         const int MESSAGEID = 130;
-        int ID01;
+        AbstractPacket ap01;        //信息包0/1
 
-        AbstractPacket ap01;        //可选择的信息包0/1
-
-        const int BitArrayLEN = 240;
-        const int byteLEN = BitArrayLEN / 8;
+        int BitArrayLEN = 74;
 
         public override byte[] Resolve()
         {
+            BitArray bit01 = ap01.Resolve();
+            BitArrayLEN += bit01.Length;
             BitArray bitArray = new BitArray(BitArrayLEN);
+
+            L_MESSAGE = BitArrayLEN / 8 + (BitArrayLEN % 8 == 0 ? 0 : 1);
+            NID_MESSAGE = MESSAGEID;
+
             int[] intArray = new int[] { 8, 10, 32, 24 };
-            int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, 0, NID_ENGINE };
+            int[] DataArray = new int[] { NID_MESSAGE, L_MESSAGE, (int)T_TRAIN, NID_ENGINE };
             int pos = 0;
             for (int i = 0; i < intArray.Length; i++)
             {
-                if (i == 2)
-                {
-                    Bits.ConvergeBitArray(bitArray, T_TRAIN, ref pos, intArray[i]);
-                }
-                else
-                {
-                    Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
-                }
+                Bits.ConvergeBitArray(bitArray, DataArray[i], ref pos, intArray[i]);
             }
-            ap01 = AbstractPacket.GetPacket(ID01);
-            BitArray bit = ap01.Resolve();
-            for (int i = 0; i < bit.Length; i++)
+            for (int i = 0; i < bit01.Length; i++)
             {
-                bitArray[pos] = bit[i];
-                pos++;
+                bitArray[pos++] = bit01[i];
             }
 
-            byte[] sendData = new byte[byteLEN];
+            byte[] sendData = new byte[L_MESSAGE];
             Bits.ToByte(sendData, bitArray);
 
             return sendData;
@@ -55,6 +48,10 @@ namespace Train.Messages
         public override int GetMessageID()
         {
             return MESSAGEID;
+        }
+        public void SetPacket0or1(AbstractPacket p01)
+        {
+            ap01 = p01;
         }
     }
 }

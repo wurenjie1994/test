@@ -14,7 +14,6 @@ namespace Train.Messages
         /// 地到车——授权调车模式
         /// </summary>
         const int MESSAGEID = 28;
-        int ID;
         uint T_TRAIN2;
         AbstractPacket ap;          //可选择的信息包
 
@@ -45,8 +44,10 @@ namespace Train.Messages
             NID_LRBG = resultArray[4];
             T_TRAIN2 = Convert.ToUInt32(resultArray[5]);
 
-            ap = AbstractPacket.GetPacket(ID);
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
+            pos = 0;
+            int ID = Bits.ToInt(bitArray, ref pos, 8); //NID_PACKET
+            ap = AbstractPacket.GetPacket(ID);
             ap.Resolve(bitArray);
         }
         public override int GetMessageID()

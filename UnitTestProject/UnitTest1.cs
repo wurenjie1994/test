@@ -18,10 +18,8 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethod1()
         {
-            AbstractMessageHandler.Init(new MainForm());
             byte[] b = new byte[1024];
             b[0] = 16;
-            AbstractMessageHandler.Handling(AbstractRecvMessage.GetMessage(b));
             MessageBox.Show(DateTime.Now.ToString());
             MessageBox.Show("MessageBox Test");
         }
@@ -46,7 +44,7 @@ namespace UnitTestProject
         {
             AbstractPacket ap = new Packet003();
             Type t = ap.GetType();
-            Database.Init();
+            new Database().Init();
             AbstractSendMessage arm = new Message129();
             ((Message129)arm).SetPacket0or1(new Packet000());
             arm.Resolve();
@@ -81,6 +79,7 @@ namespace UnitTestProject
         {
             Database db = new Database();
             db.Connect();
+            db.InitBaliseGroup();
         }
         [TestMethod]
         public void TestEnum()
@@ -90,6 +89,22 @@ namespace UnitTestProject
                 MessageBox.Show(obj.ToString());
             obj = new RadioButton();
             MessageBox.Show(obj.ToString());
+        }
+        [TestMethod]
+        public void Test2()
+        {
+            Balise balise = new Balise();
+            balise.BaliseNumber = "040-1-04-018-1";
+            string kilo = "43k+32";
+            string[] f = kilo.Split('+');
+            MessageBox.Show(f[0].Trim('k', 'K') + "  :" + f[1]);
+        }
+        [TestMethod]
+        public void TestDynamic()
+        {
+            MA_MH mhMa = new MA_MH(null);
+            mhMa.Solve(new Message003());
+            mhMa.Solve(new Message033());
         }
     }
 }

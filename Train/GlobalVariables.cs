@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Train.Data;
 
 namespace Train
 {
@@ -73,7 +74,7 @@ namespace Train
         bool cabActive;
         DriveDirection driveDirection;
         double steerValue;
-        bool eBStatus;
+        bool eBStatus;      //从驾驶台实施的紧急制动（即点击EB按钮）
         _M_MODE workMode;
         _ControlLevel controlLevel;
 
@@ -272,7 +273,8 @@ namespace Train
     {
         private double leftLoc;  //列车左端位置，以米为单位
         private double rightLoc;//列车右端位置
-
+        private Balise lrbg; //最近相关应答器组
+        private bool isSetLoc;  //如在SetLocForm中设置了列车位置，则此标识为true
         public static String LocToString(double loc)
         {
             return String.Format("K{0}+{1:f2}", (int)(loc / 1000), loc % 1000);
@@ -301,6 +303,32 @@ namespace Train
             set
             {
                 rightLoc = value;
+            }
+        }
+
+        public Balise Lrbg
+        {
+            get
+            {
+                return lrbg;
+            }
+
+            set
+            {
+                lrbg = value;
+            }
+        }
+
+        public bool IsSetLoc
+        {
+            get
+            {
+                return isSetLoc;
+            }
+
+            set
+            {
+                isSetLoc = value;
             }
         }
     }

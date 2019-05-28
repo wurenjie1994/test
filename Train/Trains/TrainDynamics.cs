@@ -4,6 +4,7 @@ using System.Text;
 using System.Xml;
 using Train.Data;
 using Train.Packets;
+using Train.Messages;
 
 namespace Train.Trains
 {
@@ -65,12 +66,31 @@ namespace Train.Trains
         public  const double LINE_LENGTH = 80 * 1000;//线路总长度,80km
         private double deltaS = 0;
 
-        private BaliseGroup lrbg=BaliseGroup.BgList[0];
+        //假设应答器是按照距离从小到大排序后放在List中的
+        private static List<Balise> downBgList = new List<Balise>();//下行线应答器列表
+        public static List<Balise> DownBgList { get { return downBgList; } }
+        private Balise lrbg=new Balise();
         private static Packet000 p0 = new Packet000();
+        
+        private volatile MA ma;     //用来进行MA运算
+        //在MA_MH中设置
+        public MA Ma
+        {
+            set
+            {
+                ma = value;
+                double pos = lrbg == null ? 0 : lrbg.Position;
+                ma.SetStartLoc(currentS1-pos);      //假设列车沿下行正向行驶（即向右行驶）
+                ma.SetStartTime();
+            }
+        }
+
+        private volatile Dictionary<int, AbstractRecvMessage> dictEB;    //用来存放接收到的紧急停车消息
+        public Dictionary<int, AbstractRecvMessage> DictEB { set { dictEB = value; } }  //在EB_MH中设置
 
         public TrainDynamics()
         {
-            InitialTrainDynamics();
+             InitialTrainDynamics();
         }
         //初始化列车
         public void InitialTrainDynamics()
@@ -116,7 +136,8 @@ namespace Train.Trains
             organization = (XmlElement)root.SelectSingleNode("/VehicleConfig/Organization");
             locomotiveNumber = int.Parse(organization.Attributes["locomotivenumber"].Value);
             trailerNumber = int.Parse(organization.Attributes["trailernumber"].Value);
-            totalLength = int.Parse(organization.Attributes["totalLength"].Value);
+            //列车长度信息再TrainInfo类中
+            //totalLength = int.Parse(organization.Attributes["totalLength"].Value);
 
             traction = (XmlElement)root.SelectSingleNode("/VehicleConfig/Traction");//牵引力
             numberOfTraction = int.Parse(traction.Attributes["number"].Value);
@@ -145,31 +166,62 @@ namespace Train.Trains
         }
 
         //外部其他模块调用本模块的函数
-        //传出：速度、加速度、经过路程
         public void OperatingVehicle(bool isLeftHead, DriverConsolerState driverConsoler,TrainState trainState)
         {
             bool EBStatus = driverConsoler.EBStatus;
+            CalEBStatus(ref EBStatus);
             bool FullServiceStatus = false, FastBrake = false;
             bool b1 =trainState.BManualSpeed, b2=trainState.BManualAccSpeed;
             DriveDirection driveDirection = driverConsoler.DriveDirection;
             double steerValue =(driverConsoler.SteerValue/10.0);
-            double distance=CountTrain(EBStatus, FullServiceStatus, FastBrake, isLeftHead, b1,b2,currentV,currentA, driveDirection, steerValue);
+            double distance=CountTrain(EBStatus, FullServiceStatus, FastBrake, isLeftHead, b1,b2,trainState.Speed,trainState.AccSpeed, driveDirection, steerValue);
             #region 计算列车位置
             prevS0 = currentS0;
             prevS1 = currentS1;
-              CalTrainLocation(distance);
+            CalTrainLocation(distance);
+            if (ma != null)
+            {
+                ma.Run(distance);       //进行MA运算
+            }
+
             {
                 trainState.Speed = currentV;
                 trainState.AccSpeed = currentA;
-                trainState.TrainLocation.LeftLoc = currentS0;
-                trainState.TrainLocation.RightLoc = currentS1;
+                if (trainState.TrainLocation.IsSetLoc)
+                {
+                    currentS0 = trainState.TrainLocation.LeftLoc;
+                    currentS1 = trainState.TrainLocation.RightLoc;
+                    CalLrbg(true);
+                    trainState.TrainLocation.IsSetLoc = false;      //reset this variable
+                }else
+                {
+                    trainState.TrainLocation.LeftLoc = currentS0;
+                    trainState.TrainLocation.RightLoc = currentS1;
+                    CalLrbg(false);
+                }
+                trainState.TrainLocation.Lrbg = lrbg;
                 trainState.BrakeStatus = EBStatus || (steerValue < 0);
                 trainState.EBStatus = EBStatus;
             }
             #endregion
             FillPacket0(driverConsoler);
         }
-
+        //根据列车是否越过MA范围，或者接收到EB消息来判断是否要紧急制动
+        private void CalEBStatus(ref bool EBStatus)
+        {
+            if (ma != null && ma.GetEB())
+            {
+                EBStatus = true;
+                if (Math.Abs(currentV) < 1e-6)  //列车速度减到0
+                    ma = null;      //使MA无效
+            }
+            if (dictEB != null && dictEB.Count > 0)
+            {
+                EBStatus = true;
+                if (Math.Abs(currentV) < 1e-6)  //列车速度减到0
+                    dictEB.Clear();      //清空已有的紧急消息
+            }
+        }
         private void CalTrainLocation(double distance)
         {
             currentS0 += distance;
@@ -187,20 +239,41 @@ namespace Train.Trains
                 return;
             }
         }
-       
+        /// <summary>
+        /// 如果列车位置被重新设置了，则需要重新计算LRBG
+        /// </summary>
+        /// <param name="isSetLoc">true表示列车位置在SetLocForm中被重新设置了</param>
+        private void CalLrbg(bool isSetLoc)
+        {
+            Balise next = lrbg;
+            if (isSetLoc)
+            {
+                foreach (Balise bg in downBgList)
+                {
+                    if (bg.N_pig > 1) continue;//只考虑应答器组内第一个应答器
+                    if (bg.Position > currentS1)
+                        break;
+                    else next = bg; 
+                }
+                lrbg = next;
+            }
+            else
+            {
+                //假定BgList中应答器组按地理位置升序排序
+                foreach (Balise bg in downBgList)
+                {
+                    if (bg.N_pig > 1) continue;//只考虑应答器组内第一个应答器
+                    if (bg.Position > lrbg.Position)
+                    {
+                        next = bg; break;
+                    }
+                }
+                if (next.Position < currentS1) lrbg = next;
+            }
+        }
         //填充packet0各字段信息
         private void FillPacket0(DriverConsolerState driverConsoler)
-        {
-            BaliseGroup next = lrbg;
-            //假定BgList中应答器组按地理位置升序排序
-            foreach(BaliseGroup bg in BaliseGroup.BgList)
-            {
-                if(bg.Position>lrbg.Position)
-                {
-                    next = bg;break;
-                }
-            }
-            if (next.Position < currentS1) lrbg = next;
+        {           
 
             p0.Q_SCALE = 1;// meter
             p0.NID_LRBG = (lrbg.Nid_c << 14) | (lrbg.Nid_bg);

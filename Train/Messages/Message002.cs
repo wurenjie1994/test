@@ -14,7 +14,6 @@ namespace Train.Messages
         /// 地到车——目视行车模式授权
         /// </summary>
         public const int MESSAGEID = 2;
-        int ID;
 
         int Q_SCALE;                //2bit
         int D_SR;                   //15bit
@@ -36,20 +35,15 @@ namespace Train.Messages
             NID_MESSAGE = resultArray[0];
             L_MESSAGE = resultArray[1];
             T_TRAIN=(uint)(resultArray[2]);
-            if (resultArray[3] == 1)
-            {
-                M_ACK = true;
-            }
-            else
-            {
-                M_ACK = false;
-            }
+            M_ACK = resultArray[3] == 1;
             NID_LRBG = resultArray[4];
             Q_SCALE = resultArray[5];
             D_SR = resultArray[6];
 
-            ap = AbstractPacket.GetPacket(ID);
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
+            pos = 0;
+            int ID = Bits.ToInt(bitArray, ref pos, 8); //NID_PACKET
+            ap = AbstractPacket.GetPacket(ID);
             ap.Resolve(bitArray);
         }
         public override int GetMessageID()

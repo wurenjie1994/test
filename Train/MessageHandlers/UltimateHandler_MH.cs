@@ -12,7 +12,7 @@ namespace Train.MessageHandlers
     /// </summary>
     class UltimateHandler_MH : AbstractMessageHandler
     {
-
+        public UltimateHandler_MH(MessageHandler mh) : base(mh) { }
         /// <summary>
         /// 总是返回true
         /// </summary>

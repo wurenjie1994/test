@@ -19,36 +19,29 @@ namespace Train.Packets
         int D_RBCTR;            //15bit
         int NID_C;              //10bit
         int NID_RBC;            //14bit
-        UInt64 NID_RADIO;       //64bit
+        ulong NID_RADIO;       //64bit
         bool Q_SLEEPSESSION;    //1bit
 
         public override void Resolve(BitArray bitArray)
         {
-            int[] intArray = new int[] { 8, 2, 13, 2, 15, 10, 14, 64, 1 };
+            int[] intArray = new int[] { 8, 2, 13, 2, 15, 10, 14};
             int Len = intArray.Length;
-            long[] resultArray = new long[Len];
+            int[] resultArray = new int[Len];
             int i = 0, pos = 0;
             for (i = 0; i < Len; i++)
             {
-                resultArray[i] = Bits.ToInt(bitArray, ref pos, intArray[i], 0);
+                resultArray[i] = Bits.ToInt(bitArray, ref pos, intArray[i]);
             }
+            NID_PACKET = resultArray[0];
+            Q_DIR = resultArray[1];
+            L_PACKET = resultArray[2];
+            Q_SCALE = resultArray[3];
+            D_RBCTR = resultArray[4];
+            NID_C = resultArray[5];
+            NID_RBC = resultArray[6];
 
-            NID_PACKET = Convert.ToInt32(resultArray[0]);
-            Q_DIR = Convert.ToInt32(resultArray[1]);
-            L_PACKET = Convert.ToInt32(resultArray[2]);
-            Q_SCALE = Convert.ToInt32(resultArray[3]);
-            D_RBCTR = Convert.ToInt32(resultArray[4]);
-            NID_C = Convert.ToInt32(resultArray[5]);
-            NID_RBC = Convert.ToInt32(resultArray[6]);
-            NID_RADIO = Convert.ToUInt64(resultArray[7]);
-            if (resultArray[8] == 1)
-            {
-                Q_SLEEPSESSION = true;
-            }
-            else
-            {
-                Q_SLEEPSESSION = false;
-            }
+            NID_RADIO = (ulong)Bits.ToLong(bitArray, ref pos, 64);
+            Q_SLEEPSESSION = bitArray[pos++];           
         }
     }
 }

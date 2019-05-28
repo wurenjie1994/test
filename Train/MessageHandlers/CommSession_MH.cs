@@ -10,9 +10,9 @@ namespace Train.MessageHandlers
     /// <summary>
     /// 通信会话相关
     /// </summary>
-    class CommSession_MH:AbstractMessageHandler
+    class CommSession_MH: AbstractMessageHandler
     {
-
+        public CommSession_MH(MessageHandler mh):base(mh){}
         public override bool Solve(AbstractRecvMessage am)
         {
             int msgId = am.GetMessageID();
@@ -23,19 +23,19 @@ namespace Train.MessageHandlers
                 if (!CheckVersion((Message032)am))
                 {
                     //发送M154 版本不兼容
-                    SendMsg(new Message154(), _CommType.RBC);
+                    SendMsg(new Message154());
                     //发送M156 通信会话结束
-                    SendMsg(new Message156(), _CommType.RBC);
+                    SendMsg(new Message156());
                     return true;
                 }
                 //车载设备应发送消息159：通信会话已建立（含车载设备电话号码:Packet003Train）
                 Message159 m159 = new Message159();
                 m159.SetAlternativePacket(new Packet003Train());
-                SendMsg(m159, _CommType.RBC);
+                SendMsg(m159);
                 //接着发送M157：SoM位置报告（含位置信息：Packet000）
                 Message157 m157 = new Message157();
                 m157.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
-                SendMsg(m157, _CommType.RBC);
+                SendMsg(m157);
                 return true;
             }
             //通信会话开始，这是由RBC 发起的
@@ -43,19 +43,19 @@ namespace Train.MessageHandlers
             {
                 //车载设备应发送消息：通信会话已建立（不必发送车载设备电话号码）
                 Message159 m159 = new Message159();
-                SendMsg(m159, _CommType.RBC);
+                SendMsg(m159);
                 return true;
             }
             //通信会话结束确认
             if (msgId == 39)
             {
-                Communication.Disconnect(_CommType.RBC);
+                Communication.Disconnect(mh.CommType);
                 return true;
             }
             //拒绝列车
             if(msgId == 40)
             {
-                Communication.Disconnect(_CommType.RBC);
+                Communication.Disconnect(mh.CommType);
                 return true;
             }
             //接受列车
@@ -63,14 +63,12 @@ namespace Train.MessageHandlers
             {
                 if (am.M_ACK)
                 {
-                    Message146 m146 = new Message146();
-                    m146.T_TRAIN2 = am.T_TRAIN;
-                    SendMsg(m146, _CommType.RBC);
+                    SendAck(am);
                 }
                 //按SoM（任务开始）流程图，在收到M41后要发送M129
                 Message129 m129 = new Message129();
                 m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
-                SendMsg(m129, _CommType.RBC);
+                SendMsg(m129);
                 return true;
             }
             return false;

@@ -9,15 +9,15 @@ using Train.Packets;
 namespace Train.MessageHandlers
 {
     /// <summary>
-    /// 处理发送位置报告
+    /// 处理发送列车位置报告
     /// </summary>
-    class LocReport_MH : AbstractMessageHandler
+    public class LocReport_MH : AbstractMessageHandler
     {
-        public static Packet058 p58;
+        public Packet058 p58;
         int timer = 0;
         Thread thread = null;
 
-        public LocReport_MH()
+        public LocReport_MH(MessageHandler mh):base(mh)
         {
             thread = new Thread(new ThreadStart(SendLocReport));
             thread.IsBackground = true;
@@ -45,7 +45,7 @@ namespace Train.MessageHandlers
                 {
                     Message136 m136 = new Message136();
                     m136.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
-                    SendMsg(m136, _CommType.RBC);
+                    SendMsg(m136);
                     timer = 0;//定时器清零
                 }
                 Thread.Sleep(1000);

@@ -81,3 +81,4 @@ F:\wrj\RBC\Train\Train\obj\Debug\Train.exe
 F:\wrj\RBC\Train\Train\obj\Debug\Train.pdb
 F:\RBC\Train\Train\bin\Debug\Google.Protobuf.dll
 F:\RBC\Train\Train\bin\Debug\BouncyCastle.Crypto.dll
+F:\RBC\Train\Train\obj\Debug\Train.Trains.SetLocForm.resources

@@ -23,23 +23,23 @@ namespace Train.Packets
 
         public override void Resolve(BitArray bitArray)
         {
-            int[] intArray = new int[] { 8, 2, 13, 1, 10, 14, 64, 1 };
+            int[] intArray = new int[] { 8, 2, 13, 1, 10, 14 };
             int Len = intArray.Length;
-            long[] resultArray = new long[Len];
-            int i = 0, pos = 0;
-            for (i = 0; i < Len; i++)
+            int[] resultArray = new int[Len];
+            int pos = 0;
+            for (int i = 0; i < Len; i++)
             {
-                resultArray[i] = Bits.ToInt(bitArray, ref pos, intArray[i], 0);
+                resultArray[i] = Bits.ToInt(bitArray, ref pos, intArray[i]);
             }
 
-            NID_PACKET = Convert.ToInt32(resultArray[0]);
-            Q_DIR = Convert.ToInt32(resultArray[1]);
-            L_PACKET = Convert.ToInt32(resultArray[2]);
+            NID_PACKET = resultArray[0];
+            Q_DIR = resultArray[1];
+            L_PACKET = resultArray[2];
             Q_RBC = resultArray[3] == 1;
-            NID_C = Convert.ToInt32(resultArray[4]);
-            NID_RBC = Convert.ToInt32(resultArray[5]);
-            NID_RADIO = (ulong)resultArray[6];
-            Q_SLEEPSESSION = resultArray[7] == 1;
+            NID_C = resultArray[4];
+            NID_RBC = resultArray[5];
+            NID_RADIO = (ulong)Bits.ToLong(bitArray,ref pos,64);
+            Q_SLEEPSESSION = bitArray[pos++];
         }
     }
 }
