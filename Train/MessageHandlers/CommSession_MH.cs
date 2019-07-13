@@ -32,6 +32,7 @@ namespace Train.MessageHandlers
                 Message159 m159 = new Message159();
                 m159.SetAlternativePacket(new Packet003Train());
                 SendMsg(m159);
+                System.Threading.Thread.Sleep(100);
                 //接着发送M157：SoM位置报告（含位置信息：Packet000）
                 Message157 m157 = new Message157();
                 m157.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
@@ -66,9 +67,9 @@ namespace Train.MessageHandlers
                     SendAck(am);
                 }
                 //按SoM（任务开始）流程图，在收到M41后要发送M129
-                Message129 m129 = new Message129();
-                m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
-                SendMsg(m129);
+                //Message129 m129 = new Message129();
+                //m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
+                //SendMsg(m129);
                 return true;
             }
             return false;

@@ -82,3 +82,13 @@ F:\wrj\RBC\Train\Train\obj\Debug\Train.pdb
 F:\RBC\Train\Train\bin\Debug\Google.Protobuf.dll
 F:\RBC\Train\Train\bin\Debug\BouncyCastle.Crypto.dll
 F:\RBC\Train\Train\obj\Debug\Train.Trains.SetLocForm.resources
+D:\RBC\Train\Train\bin\Debug\Train.exe
+D:\RBC\Train\Train\bin\Debug\Train.pdb
+D:\RBC\Train\Train\bin\Debug\Google.Protobuf.dll
+D:\RBC\Train\Train\bin\Debug\BouncyCastle.Crypto.dll
+D:\RBC\Train\Train\obj\Debug\Train.csprojResolveAssemblyReference.cache
+D:\RBC\Train\Train\obj\Debug\Train.MainForm.resources
+D:\RBC\Train\Train\obj\Debug\Train.Properties.Resources.resources
+D:\RBC\Train\Train\obj\Debug\Train.ShowMsg.ShowMsgForm.resources
+D:\RBC\Train\Train\obj\Debug\Train.Trains.SetLocForm.resources
+D:\RBC\Train\Train\obj\Debug\Train.csproj.GenerateResource.Cache

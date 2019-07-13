@@ -76,7 +76,9 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.gbTrainLocation = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.lblTrainLrbg = new System.Windows.Forms.Label();
             this.lblTrainRightLoc = new System.Windows.Forms.Label();
             this.lblTrainLeftLoc = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -130,8 +132,6 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tbPureText = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblTrainLrbg = new System.Windows.Forms.Label();
             this.gbDriverConsoler.SuspendLayout();
             this.gbWorkMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -296,12 +296,10 @@
             // rbCabNone
             // 
             this.rbCabNone.AutoSize = true;
-            this.rbCabNone.Checked = true;
             this.rbCabNone.Location = new System.Drawing.Point(29, 49);
             this.rbCabNone.Name = "rbCabNone";
             this.rbCabNone.Size = new System.Drawing.Size(29, 16);
             this.rbCabNone.TabIndex = 1;
-            this.rbCabNone.TabStop = true;
             this.rbCabNone.Text = "0";
             this.rbCabNone.UseVisualStyleBackColor = true;
             this.rbCabNone.CheckedChanged += new System.EventHandler(this.rbCabChoose_CheckedChanged);
@@ -320,10 +318,12 @@
             // rbCabA
             // 
             this.rbCabA.AutoSize = true;
+            this.rbCabA.Checked = true;
             this.rbCabA.Location = new System.Drawing.Point(28, 29);
             this.rbCabA.Name = "rbCabA";
             this.rbCabA.Size = new System.Drawing.Size(47, 16);
             this.rbCabA.TabIndex = 0;
+            this.rbCabA.TabStop = true;
             this.rbCabA.Text = "CabA";
             this.rbCabA.UseVisualStyleBackColor = true;
             this.rbCabA.CheckedChanged += new System.EventHandler(this.rbCabChoose_CheckedChanged);
@@ -693,6 +693,15 @@
             this.gbTrainLocation.TabStop = false;
             this.gbTrainLocation.Text = "位置信息：";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(35, 101);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "LRBG：";
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -701,6 +710,15 @@
             this.label2.Size = new System.Drawing.Size(35, 12);
             this.label2.TabIndex = 0;
             this.label2.Text = "B端：";
+            // 
+            // lblTrainLrbg
+            // 
+            this.lblTrainLrbg.AutoSize = true;
+            this.lblTrainLrbg.Location = new System.Drawing.Point(92, 101);
+            this.lblTrainLrbg.Name = "lblTrainLrbg";
+            this.lblTrainLrbg.Size = new System.Drawing.Size(11, 12);
+            this.lblTrainLrbg.TabIndex = 0;
+            this.lblTrainLrbg.Text = "0";
             // 
             // lblTrainRightLoc
             // 
@@ -1068,7 +1086,7 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "时间";
-            this.columnHeader1.Width = 96;
+            this.columnHeader1.Width = 133;
             // 
             // columnHeader2
             // 
@@ -1100,7 +1118,7 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "时间";
-            this.columnHeader4.Width = 96;
+            this.columnHeader4.Width = 137;
             // 
             // columnHeader5
             // 
@@ -1127,24 +1145,6 @@
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 0;
             this.label3.Text = "纯文本消息：";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(35, 101);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(41, 12);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "LRBG：";
-            // 
-            // lblTrainLrbg
-            // 
-            this.lblTrainLrbg.AutoSize = true;
-            this.lblTrainLrbg.Location = new System.Drawing.Point(92, 101);
-            this.lblTrainLrbg.Name = "lblTrainLrbg";
-            this.lblTrainLrbg.Size = new System.Drawing.Size(11, 12);
-            this.lblTrainLrbg.TabIndex = 0;
-            this.lblTrainLrbg.Text = "0";
             // 
             // MainForm
             // 

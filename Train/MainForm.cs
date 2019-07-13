@@ -19,11 +19,11 @@ namespace Train
 {
     public partial class MainForm : Form
     {
-        private DriverConsolerState driverConsoler = DriverConsolerState.GetNULL();
+        private DriverConsolerState driverConsoler = DriverConsolerState.GetDriverConsolerA();
         private CircularQueue<ListViewContent> recvMsgQueue = new CircularQueue<ListViewContent>();
         private CircularQueue<ListViewContent> sendMsgQueue = new CircularQueue<ListViewContent>();
-        private bool isISDNIFConnected = false;//to mark the status of connection with ISDNIF 
-        private bool isRBCConnected = false;
+        private volatile bool isISDNIFConnected = false;//to mark the status of connection with ISDNIF 
+        private volatile bool isRBCConnected = false;
         Database database = new Database();
         public MainForm()
         {
@@ -60,9 +60,10 @@ namespace Train
             {
                 Communication.Disconnect(_CommType.RBC);
                 isISDNIFConnected = false;
+                isRBCConnected = false;
             }
             else if (sender == disNRBCToolStripMenuItem) Communication.Disconnect(_CommType.NRBC);
-            MessageBox.Show("要经过2MSL时间（约2分钟）后才能再次发起连接！");
+            //MessageBox.Show("要经过2MSL时间（约2分钟）后才能再次发起连接！");
         }
 
 
@@ -391,6 +392,7 @@ namespace Train
         {
             string fileName = System.IO.Directory.GetCurrentDirectory() + "\\CommConfig.ini";
             Communication.Init(fileName);
+            updateListView += UpdateListView;
             StartRecvMsgModule(_CommType.RBC);
         }
 
@@ -416,7 +418,6 @@ namespace Train
         private MessageHandler nrbcMsgHandler = new MessageHandler(_CommType.NRBC);
         public void StartRecvMsgModule(_CommType commType)
         {
-            updateListView += UpdateListView;
             rbcMsgHandler.Init(this);
             nrbcMsgHandler.Init(this);
             if (commType == _CommType.NRBC && fromNRBCThread == null)
@@ -463,7 +464,11 @@ namespace Train
                     if (isISDNIFConnected)
                     {
                         isISDNIFConnected = !XmlParser.IsDisconnectRecved(recvData);
-                        if (!isISDNIFConnected) continue; // received disconnect indication;
+                        if (!isISDNIFConnected) // received disconnect indication;
+                        {
+                            isRBCConnected = false;
+                            continue; 
+                        }
                         recvData = XmlParser.RecvData(recvData);
                     }
                     else
@@ -522,6 +527,7 @@ namespace Train
                 }
             }
             listView.EndUpdate();
+            return; //不加这个return的话，方法会连续执行两次，不知道原因是什么
         }
         private ListViewItem GetItem(ListViewContent lvc)
         {

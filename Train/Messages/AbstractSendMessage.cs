@@ -12,10 +12,12 @@ namespace Train.Messages
     /// </summary>
     public abstract class AbstractSendMessage
     {
+        private static readonly DateTime BASE_TIME = new DateTime(2019, 7, 1);
         private int nID_MESSAGE; //8bit
         private int l_MESSAGE; //10bit
         private static int nID_ENGINE = TrainInfo.NID_ENGINE;//24bit
-        private  uint t_TRAIN; //车载设备发送消息的时间戳，32bit
+        //车载设备发送消息的时间戳，32bit,unit is 10ms
+        private uint t_TRAIN = ((uint)(DateTime.Now.Subtract(BASE_TIME).TotalMilliseconds/10)); 
         private uint t_TRAIN2;//被确认消息的时间戳，32bit
 
         public  int NID_MESSAGE
@@ -35,11 +37,7 @@ namespace Train.Messages
         }
         public uint T_TRAIN
         {
-            get
-            {
-                t_TRAIN = ((uint)(DateTime.Now.Subtract(DateTime.MinValue).TotalSeconds));
-                return t_TRAIN;
-            }
+            get { return t_TRAIN; }
         }
 
         public uint T_TRAIN2
@@ -66,6 +64,9 @@ namespace Train.Messages
             PropertyInfo[] p = t.GetProperties();
             foreach (PropertyInfo fi in p)
             {
+                //除了这3个类的其他类不显示T_TRAIN2
+                if (fi.Name.Equals("T_TRAIN2") && !((this is Message137) || (this is Message138) || (this is Message146)))
+                    continue;
                 s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
             }
             s += "NID_ENGINE:" + NID_ENGINE + "\r\n";

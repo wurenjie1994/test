@@ -22,3 +22,15 @@ F:\wrj\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.pdb
 F:\RBC\Train\UnitTestProject\bin\Debug\MySql.Data.dll
 F:\RBC\Train\UnitTestProject\bin\Debug\Google.Protobuf.dll
 F:\RBC\Train\UnitTestProject\bin\Debug\BouncyCastle.Crypto.dll
+D:\RBC\Train\UnitTestProject\bin\Debug\UnitTestProject.dll
+D:\RBC\Train\UnitTestProject\bin\Debug\UnitTestProject.pdb
+D:\RBC\Train\UnitTestProject\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\RBC\Train\UnitTestProject\bin\Debug\Train.exe
+D:\RBC\Train\UnitTestProject\bin\Debug\MySql.Data.dll
+D:\RBC\Train\UnitTestProject\bin\Debug\Google.Protobuf.dll
+D:\RBC\Train\UnitTestProject\bin\Debug\BouncyCastle.Crypto.dll
+D:\RBC\Train\UnitTestProject\bin\Debug\Train.pdb
+D:\RBC\Train\UnitTestProject\bin\Debug\zh-Hans\Microsoft.VisualStudio.QualityTools.UnitTestFramework.resources.dll
+D:\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.csprojResolveAssemblyReference.cache
+D:\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.dll
+D:\RBC\Train\UnitTestProject\obj\Debug\UnitTestProject.pdb

@@ -14,20 +14,20 @@ namespace Train.Packets
     {
         int NID_PACKET=0;         //8bit
         int L_PACKET=8+13+2+24+15+2+2+15+15+2+7+2+4+3;           //13bit
-        public int Q_SCALE;            //2bit
-        public int NID_LRBG;           //24bit
-        public int D_LRBG;             //15bit
-        public int Q_DIRLRBG;          //2bit
-        public int Q_DLRBG;            //2bit
-        public int L_DOUBTOVER;        //15bit
-        public int L_DOUBTUNDER;       //15bit
-        public int Q_LENGTH;           //2bit
-        public int L_TRAININT;         //15bit
-        public int V_TRAIN;            //7bit
-        public int Q_DIRTRAIN;         //2bit
-        public int M_MODE;             //4bit
-        public int M_LEVEL;            //3bit
-        public int NID_STM;            //8bit
+        public int Q_SCALE =2 ;            //2bit
+        public int NID_LRBG = -1;           //24bit
+        public int D_LRBG = -1;             //15bit
+        public int Q_DIRLRBG = 2;          //2bit
+        public int Q_DLRBG = 2;            //2bit
+        public int L_DOUBTOVER = -1;        //15bit
+        public int L_DOUBTUNDER = -1;       //15bit
+        public int Q_LENGTH = 2;           //2bit
+        public int L_TRAININT = -1;         //15bit
+        public int V_TRAIN = -1;            //7bit
+        public int Q_DIRTRAIN = 2;         //2bit
+        public int M_MODE = -1;             //4bit
+        public int M_LEVEL = -1;            //3bit
+        public int NID_STM = -1;            //8bit
 
         public override BitArray Resolve()
         {
