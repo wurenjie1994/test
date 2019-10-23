@@ -8,7 +8,7 @@ namespace Train.Utilities
 {
     public class CircularQueue<T>
     {
-        private const int _capacity = 100+1;
+        private const int _capacity = 10+1;
         private T[] _queue = new T[_capacity];
         private int _front=0, _rear = 0;
 
@@ -43,7 +43,7 @@ namespace Train.Utilities
         public T IndexOf(int index)
         {
             if (index >= Size()) return default(T);
-            return _queue[_front + index];
+            return _queue[(_front + index)%_capacity];
         }
         public IEnumerator<T> GetEnumerator()
         {

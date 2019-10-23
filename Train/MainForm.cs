@@ -58,6 +58,7 @@ namespace Train
         {
             if (sender == disRBCToolStripMenuItem)
             {
+                SendMsg(new Message156(), _CommType.RBC);
                 Communication.Disconnect(_CommType.RBC);
                 isISDNIFConnected = false;
                 isRBCConnected = false;
@@ -377,7 +378,7 @@ namespace Train
         public void UpdateVehicleInterfaceFun()
         {
             updateVehicleInterface += UpdateVehicleInterface;
-            while (true)
+            while (Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
             {
                 this.BeginInvoke(updateVehicleInterface);
                 Thread.Sleep(100);
@@ -492,6 +493,7 @@ namespace Train
         {
             ListView listView = (ListView)sender;
             int index = listView.SelectedItems[0].Index;
+            
             if(sender == lvRecvMsg)
             {
                 AbstractRecvMessage arm = recvMsgQueue.IndexOf(index).Arm;
