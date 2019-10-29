@@ -12,9 +12,7 @@ namespace Train.Packets
     /// </summary>
     public class Packet044:AbstractPacket
     {
-        int NID_PACKET;         //8bit
         int Q_DIR;              //2bit
-        int L_PACKET;           //13bit
         int NID_XUSER;          //9bit
         //其他信息（取决于NID_XUSER）
 

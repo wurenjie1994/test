@@ -12,9 +12,7 @@ namespace Train.Packets
     /// </summary>
     public class Packet138:AbstractPacket
     {
-        int NID_PACKET;         //8bit
         int Q_DIR;              //2bit
-        int L_PACKET;           //13bit
         int Q_SCALE;            //2bit
         int D_STARTREVERSE;     //15bit
         int L_REVERSEAREA;      //15bit

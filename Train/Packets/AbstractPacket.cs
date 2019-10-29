@@ -8,6 +8,38 @@ namespace Train.Packets
 {
     public abstract class AbstractPacket
     {
+        private int nID_PACKET; //8bit
+        private int l_PACKET;           //13bit
+
+        public int NID_PACKET
+        {
+            get
+            {
+                return nID_PACKET;
+            }
+
+            set
+            {
+                nID_PACKET = value;
+            }
+        }
+
+        public int L_PACKET
+        {
+            get
+            {
+                return l_PACKET;
+            }
+
+            set
+            {
+                l_PACKET = value;
+            }
+        }
+
+
+
+
         /// <summary>
         /// 地到车信息包需要覆盖此方法
         /// </summary>
@@ -59,9 +91,9 @@ namespace Train.Packets
                     object tmp = fi.GetValue(this);
                     if (tmp == null) s += "null array";
                     else if (fi.FieldType == typeof(int[]))
-                        s += string.Join(",", tmp as int[]);
+                        s += (tmp as int[]).Length==0?"[]": string.Join(",", tmp as int[]);
                     else if (fi.FieldType == typeof(bool[]))
-                        s += string.Join(",", tmp as bool[]);
+                        s += (tmp as bool[]).Length == 0 ? "[]" : string.Join(",", tmp as bool[]);
                 }
                 else if(fi.FieldType == typeof(List<int>))
                 {

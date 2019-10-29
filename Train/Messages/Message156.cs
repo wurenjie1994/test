@@ -15,10 +15,11 @@ namespace Train.Messages
     public class Message156: AbstractSendMessage
     {
         const int MESSAGEID = 156;
-        const int BitArrayLEN = 74;
+        
 
         public override byte[] Resolve()
         {
+            const int BitArrayLEN = 74;
             BitArray bitArray = new BitArray(BitArrayLEN);
             int[] intArray = new int[] { 8, 10, 32, 24 };
             NID_MESSAGE = MESSAGEID;

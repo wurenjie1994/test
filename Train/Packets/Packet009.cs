@@ -12,9 +12,13 @@ namespace Train.Packets
     /// </summary>
     public class Packet009 : AbstractPacket
     {
-        int NID_PACKET=9;         //8bit
-        int L_PACKET=45;           //13bit
         int NID_LTRBG;          //24bit
+
+        public Packet009()
+        {
+            NID_PACKET = 9;
+            L_PACKET = 45;
+        }
 
         public override BitArray Resolve()
         {

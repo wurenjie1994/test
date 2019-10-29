@@ -12,9 +12,7 @@ namespace Train.Packets
     /// </summary>
     public class Packet003:AbstractPacket
     {
-        int NID_PACKET;         //8bit信息包编号
         int Q_DIR;              //2bit传输数据的有效性方向
-        int L_PACKET;           //13bit信息包长度
         int Q_SCALE;            //2bit距离/长度信息单位的限定词
         int D_VALIDNV;          //15bit至配置参数生效地点的距离
         int N_ITER;             //5bit数据包中跟随该变量的数组的重复次数

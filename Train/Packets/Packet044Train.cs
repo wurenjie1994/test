@@ -12,8 +12,6 @@ namespace Train.Packets
     /// </summary>
     public class Packet044Train : AbstractPacket
     {
-        int NID_PACKET;         //8bit
-        int L_PACKET;           //13bit
         int NID_XUSER;          //9bit
         //其他数据（取决于NID_XUSER）
 

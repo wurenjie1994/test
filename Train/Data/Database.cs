@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Train.Utilities;
 
 namespace Train.Data
 {
@@ -11,6 +12,7 @@ namespace Train.Data
     {
         public void Init()
         {
+            ReadIniFile();
             Connect();
             InitTrainInfo();
             InitBaliseGroup();
@@ -19,7 +21,7 @@ namespace Train.Data
         {
             TrainInfo.TrainID = 0x123456;
             TrainInfo.L_TRAIN = 140;//设为140米
-            TrainInfo.NID_ENGINE = 10020632;
+            //TrainInfo.NID_ENGINE = 10020632;
             TrainInfo.NID_XUSER = 123;
             TrainInfo.NID_OPERATIONAL = 0x12345678;
             TrainInfo.NC_TRAIN = 0;
@@ -55,20 +57,35 @@ namespace Train.Data
             }
             data.Close();
         }
+
+        public void ReadIniFile()
+        {
+            string fileName = System.IO.Directory.GetCurrentDirectory() + "\\CommConfig.ini";
+            IniFile file = new IniFile(fileName);
+            if (file.ExistINIFile())
+            {
+                connectionString = file.IniReadValue("DataBase", "connstr");
+            }
+            else
+            {
+                throw new Exception("通信配置文件不存在，请确认配置文件路径是否正确");
+            }
+        }
+
         MySqlConnection conn;
+        String connectionString;
+
         public void Connect()
         {
-            String connectionString = "server=127.0.0.1;uid=wrj;pwd=1234;database=test";
             conn = new MySqlConnection(connectionString);
             try
             {
                 conn.Open();
-                MessageBox.Show("数据库连接成功！");
+                //MessageBox.Show("数据库连接成功！");
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
             finally
             {

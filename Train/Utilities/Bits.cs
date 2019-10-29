@@ -28,7 +28,7 @@ namespace Train.Utilities
         /// <returns>复制的BitArray</returns>
         public static BitArray SubBitArray(BitArray bitArray,int start,int length)
         {
-            if (start + length >= bitArray.Length)
+            if (start + length > bitArray.Length)
                 throw new ArgumentException("start+length>bitArray.Length");
             BitArray bit = new BitArray(length);
             for (int i = 0; i < length; i++)

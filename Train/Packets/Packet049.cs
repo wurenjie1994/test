@@ -12,9 +12,7 @@ namespace Train.Packets
     /// </summary>
     public class Packet049:AbstractPacket
     {
-        int NID_PACKET;         //8bit
         int Q_DIR;              //2bit
-        int L_PACKET;           //13bit
         int N_ITER;             //5bit
         bool[] Q_NEWCOUNTRY;    //1bit
         int[] NID_C;            //10bit

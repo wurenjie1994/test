@@ -12,8 +12,6 @@ namespace Train.Packets
     /// </summary>
     public class Packet000:AbstractPacket
     {
-        int NID_PACKET=0;         //8bit
-        int L_PACKET=8+13+2+24+15+2+2+15+15+2+7+2+4+3;           //13bit
         public int Q_SCALE =2 ;            //2bit
         public int NID_LRBG = -1;           //24bit
         public int D_LRBG = -1;             //15bit
@@ -28,6 +26,13 @@ namespace Train.Packets
         public int M_MODE = -1;             //4bit
         public int M_LEVEL = -1;            //3bit
         public int NID_STM = -1;            //8bit
+
+        public Packet000()
+        {
+            NID_PACKET = 0;
+            L_PACKET = 8 + 13 + 2 + 24 + 15 + 2 + 2 + 15 + 15 + 2 + 7 + 2 + 4 + 3;
+        }
+
 
         public override BitArray Resolve()
         {

@@ -31,7 +31,7 @@ namespace Train
         }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            //database.Init();
+            database.Init();
             StartTrain();
             StartComm();
             rbWorkMode_CheckedChanged(rbSB, null);//一开始列车处于SB模式
@@ -60,8 +60,8 @@ namespace Train
             {
                 SendMsg(new Message156(), _CommType.RBC);
                 Communication.Disconnect(_CommType.RBC);
-                isISDNIFConnected = false;
-                isRBCConnected = false;
+                //isISDNIFConnected = false;
+                //isRBCConnected = false;
             }
             else if (sender == disNRBCToolStripMenuItem) Communication.Disconnect(_CommType.NRBC);
             //MessageBox.Show("要经过2MSL时间（约2分钟）后才能再次发起连接！");
@@ -497,12 +497,12 @@ namespace Train
             if(sender == lvRecvMsg)
             {
                 AbstractRecvMessage arm = recvMsgQueue.IndexOf(index).Arm;
-                new ShowMsgForm(arm.ToString());
+                new ShowMsgForm("Message"+arm.GetMessageID(),arm.ToString());
             }
             if (sender == lvSendMsg)
             {
                 AbstractSendMessage asm = sendMsgQueue.IndexOf(index).Asm;
-                new ShowMsgForm(asm.ToString());
+                new ShowMsgForm("Message" + asm.GetMessageID(), asm.ToString());
             }
         }
 

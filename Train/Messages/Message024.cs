@@ -34,12 +34,12 @@ namespace Train.Messages
             T_TRAIN = (uint)(resultArray[2]);
             M_ACK = resultArray[3] == 1;
             NID_LRBG = resultArray[4];
+            //获取还未被解析的数据
+            bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
             //由于填充数据一定小于8bit，所以当
             //bitArray长度大于等于8时就认为还有信息包需要解析
             while (bitArray.Length >= 8)  
             {
-                //获取还未被解析的数据
-                bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
                 pos = 0;
                 int ID = Bits.ToInt(bitArray, ref pos, 8); //NID_PACKET
                 pos += 2;   //地对车信息包Q_DIR信息
@@ -48,6 +48,8 @@ namespace Train.Messages
                 ap.Resolve(bitArray);
                 apList.Add(ap);
                 pos = pktLen;//已解析的数据长度
+                //获取还未被解析的数据
+                bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
             }
             
         }

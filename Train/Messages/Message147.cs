@@ -18,10 +18,10 @@ namespace Train.Messages
         int Q_EMERGENCYSTOP;        //2bit（可选）（通号有这个字段）
         AbstractPacket ap01;        //信息包0/1
 
-        int BitArrayLEN = 74+4+2;
 
         public override byte[] Resolve()
         {
+            int BitArrayLEN = 74 + 4 + 2;
             BitArray bit01 = ap01.Resolve();
             BitArrayLEN += bit01.Length;
             BitArray bitArray = new BitArray(BitArrayLEN);

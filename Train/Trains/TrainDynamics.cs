@@ -97,13 +97,13 @@ namespace Train.Trains
         {
             string currentDirectory = System.IO.Directory.GetCurrentDirectory();
             currentDirectory = currentDirectory + "\\VehicleConfig.xml";
-             GetParamersFromXML(currentDirectory);
+             GetParamtersFromXML(currentDirectory);
             CaculateWeight();
             totalLength = 1000 * TrainInfo.L_TRAIN;
            currentS1 = currentS0 + totalLength / 1000;
         }
         //初始化时从XML中读取列车配置参数信息
-        private void GetParamersFromXML(string InfoPath)
+        private void GetParamtersFromXML(string InfoPath)
         {
             XmlDocument xmlDoc = new XmlDocument();//读取XML中车辆配置信息
             XmlElement root = null, locomotive = null, antennaLoc=null,trailer = null,

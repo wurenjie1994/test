@@ -8,11 +8,11 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——请求缩短MA
+    /// </summary>
     public class Message009 : AbstractRecvMessage
     {
-        /// <summary>
-        /// 地到车——请求缩短MA
-        /// </summary>
         const int MESSAGEID = 9;
         Packet015 p15 = new Packet015();
         AbstractPacket ap;          //可选择的信息包
@@ -33,21 +33,14 @@ namespace Train.Messages
             NID_MESSAGE = resultArray[0];
             L_MESSAGE = resultArray[1];
             T_TRAIN=(uint)(resultArray[2]);
-            if (resultArray[3] == 1)
-            {
-                M_ACK = true;
-            }
-            else
-            {
-                M_ACK = false;
-            }
+            M_ACK = resultArray[3] == 1;
             NID_LRBG = resultArray[4];
 
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
             p15.Resolve(bitArray);
+            pos = p15.GetPacketLength();
             int ID = 80;
             ap = AbstractPacket.GetPacket(ID);
-            pos = p15.GetPacketLength();
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
             ap.Resolve(bitArray);
         }

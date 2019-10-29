@@ -19,10 +19,9 @@ namespace Train.Messages
         AbstractPacket ap01;        //信息包0/1，必须设置
         static Packet011 p11 = new Packet011();
 
-        private int BitArrayLEN = 74;
-
         public override byte[] Resolve()
         {
+            int BitArrayLEN = 74;
             BitArray bit01 = ap01.Resolve();
             BitArray bit = p11.Resolve();
             BitArrayLEN += bit01.Length + bit.Length;

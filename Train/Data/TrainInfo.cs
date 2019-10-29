@@ -10,7 +10,7 @@ namespace Train
     {
         private static int trainID;
         private static int l_TRAIN = 140;
-        private static int nID_ENGINE=10020632;
+        private static int nID_ENGINE;
         private static int nID_XUSER;
         private static int nID_OPERATIONAL;    //在地对车信息包140中，RBC会给列车分配车次号
         private static int nC_TRAIN=0; //default

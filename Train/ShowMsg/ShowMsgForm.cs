@@ -12,9 +12,10 @@ namespace Train.ShowMsg
 {
     public partial class ShowMsgForm : Form
     {
-        public ShowMsgForm(String msg)
+        public ShowMsgForm(String caption,String msg)
         {
             InitializeComponent();
+            this.Text = caption;
             this.tbMsg.Text = msg;
             this.Show();
         }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
+using Train.Packets;
 
 namespace Train.Messages
 {
@@ -83,7 +85,23 @@ namespace Train.Messages
             FieldInfo[] f = t.GetFields(BindingFlags.Instance | BindingFlags.NonPublic);
             foreach (FieldInfo fi in f)
             {
-                s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
+                if(fi.FieldType == typeof(List<AbstractPacket>))
+                {
+                    s += "\r\n" + fi.Name + ":\r\n";
+                    List<AbstractPacket> tmp = (List<AbstractPacket>)fi.GetValue(this);
+                    if(tmp != null && tmp.Count >= 1)
+                    {
+                        foreach(AbstractPacket ap in tmp)
+                        {
+                            s += "Packet" + String.Format("{0:D3}", ap.NID_PACKET)+":";
+                            s += ap.ToString() + "\r\n";
+                        }
+                    }
+                }
+                else
+                {
+                    s += fi.Name + ":" + fi.GetValue(this) + "\r\n";
+                }
             }
             return s;
         }

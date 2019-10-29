@@ -13,10 +13,14 @@ namespace Train.Packets
     /// </summary>
     public class Packet003Train : AbstractPacket
     {
-        int NID_PACKET=3;         //8bit
-        int L_PACKET=8+13+5;           //13bit
         int N_ITER;             //5bit
         List<ulong> NID_RADIO;      //64bit
+
+        public Packet003Train()
+        {
+            NID_PACKET = 3;
+            L_PACKET = 8 + 13 + 5;
+        }
 
         public override BitArray Resolve()
         {

@@ -6,18 +6,17 @@ using Train.Data;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 车到地——通信会话已建立
+    /// </summary>
     public class Message159: AbstractSendMessage
     {
-        /// <summary>
-        /// 车到地——通信会话已建立
-        /// </summary>
         const int MESSAGEID = 159;
         AbstractPacket ap;          //可选择的信息包
 
-        int BitArrayLEN = 8 + 10 + 32 + 24;
-
         public override byte[] Resolve()
         {
+            int BitArrayLEN = 8 + 10 + 32 + 24;
             BitArray bit = null;
             if (ap != null) bit = ap.Resolve();
             if (bit != null) BitArrayLEN += bit.Length;

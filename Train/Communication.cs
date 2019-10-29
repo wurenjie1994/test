@@ -45,6 +45,9 @@ namespace Train
                 rbcRemotePort = file.IniReadValue("Port", "RBCPort");
                 train_nrbcLocalPort = file.IniReadValue("Port", "Train_NRBCPort");
                 nrbcRemotePort = file.IniReadValue("Port", "NRBCPort");
+                // CTCS ID
+                string trainId = file.IniReadValue("CTCSID", "TrainId");
+                TrainInfo.NID_ENGINE = Convert.ToInt32(trainId);
             }
             else
             {
@@ -75,7 +78,7 @@ namespace Train
                 case _CommType.RBC:
                     if (train_rbc != null)
                     {
-                        if(train_rbc.Connected()==false)//if three-way hands not established
+                        if(train_rbc.Connected()==false)//if three-way handshake not established
                             train_rbc.Connect();
                         byte[] toSend = XmlParser.ConnReq(ctcsid);
                         SendMsg(toSend, commType);

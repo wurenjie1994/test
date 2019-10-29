@@ -11,7 +11,7 @@ namespace Train.XmlResolve
     {
         static XmlDocument senddoc = new XmlDocument();
         static XmlDocument recvdoc = new XmlDocument();
-        static string path = @"D:\RBC\Train\Train\XmlResolve";
+        static string path = System.IO.Directory.GetCurrentDirectory()+"\\..\\..\\XmlResolve";
         public static byte[] SendData(byte[] msg)
         {
             senddoc.Load(path+"\\SendData.xml");

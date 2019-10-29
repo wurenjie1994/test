@@ -12,9 +12,7 @@ namespace Train.Packets
     /// </summary>
     public class Packet071:AbstractPacket
     {
-        int NID_PACKET;         //8bit
         int Q_DIR;              //2bit
-        int L_PACKET;           //13bit
         int Q_SCALE;            //2bit
         int D_ADHESION;         //15bit
         int L_ADHESION;         //15bit

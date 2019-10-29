@@ -19,7 +19,6 @@ namespace Train.Packets
          * 
          * 为简单起见，很多无用信息就没有解析，只解析有用的信息。
          */
-        int NID_PACKET;//8bit
         int L_TEXT;     //8bit，文本信息长度，每个中文字符占2个字符长度（通号）
         string X_TEXT;//8bit，文本信息，中文字符采用GB18030编码（通号）
 

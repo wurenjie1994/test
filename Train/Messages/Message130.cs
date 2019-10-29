@@ -17,10 +17,11 @@ namespace Train.Messages
         const int MESSAGEID = 130;
         AbstractPacket ap01;        //信息包0/1
 
-        int BitArrayLEN = 74;
+        
 
         public override byte[] Resolve()
         {
+            int BitArrayLEN = 74;
             BitArray bit01 = ap01.Resolve();
             BitArrayLEN += bit01.Length;
             BitArray bitArray = new BitArray(BitArrayLEN);

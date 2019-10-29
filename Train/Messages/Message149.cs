@@ -18,10 +18,9 @@ namespace Train.Messages
         const int MESSAGEID = 149;
         AbstractPacket ap01;        //可选择的信息包0/1
 
-        int BitArrayLEN = 74;
-
         public override byte[] Resolve()
         {
+            int BitArrayLEN = 74;
             BitArray bit01 = ap01.Resolve();
             BitArrayLEN += bit01.Length;
             NID_MESSAGE = MESSAGEID;

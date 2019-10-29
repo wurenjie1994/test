@@ -12,9 +12,7 @@ namespace Train.Packets
     /// </summary>
     public class Packet066:AbstractPacket
     {
-        int NID_PACKET;         //8bit
         int Q_DIR;              //2bit
-        int L_PACKET;           //13bit
         int NID_TSR;            //8bit
 
         public override void Resolve(BitArray bitArray)

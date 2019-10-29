@@ -19,10 +19,9 @@ namespace Train.Messages
         AbstractPacket ap01;        //信息包0/1
         AbstractPacket ap;          //可选择的信息包
 
-        int BitArrayLEN = 74;
-
         public override byte[] Resolve()
         {
+            int BitArrayLEN = 74;
             BitArray bit01 = ap01.Resolve();
             BitArray bit = (ap==null?null:ap.Resolve());
             BitArrayLEN += bit01.Length + (bit == null ? 0 : bit.Length);

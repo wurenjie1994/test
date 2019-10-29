@@ -12,9 +12,8 @@ namespace Train.Packets
     /// </summary>
     public class Packet057:AbstractPacket
     {
-        int NID_PACKET;         //8bit
         int Q_DIR;              //2bit
-        int L_PACKET;           //13bit
+        
         int T_MAR;              //8bit
         int T_TIMEOUTRQST;      //10bit
         int T_CYCRQST;          //8bit

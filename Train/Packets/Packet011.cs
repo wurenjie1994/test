@@ -12,8 +12,6 @@ namespace Train.Packets
     /// </summary>
     public class Packet011:AbstractPacket
     {
-        int NID_PACKET=11;         //8bit
-        int L_PACKET=8+13+32+15+12+7+8+7+2+5+5;           //13bit
         long NID_OPERATIONAL;   //32bit
         int NC_TRAIN;           //15bit
         int L_TRAIN;            //12bit
@@ -25,6 +23,12 @@ namespace Train.Packets
         int N_ITER2;            //5bit
         List<int> M_TRACTION;       //8bit
         List<int> NID_STM;          //8bit
+
+        public Packet011()
+        {
+            NID_PACKET = 11;
+            L_PACKET = 8 + 13 + 32 + 15 + 12 + 7 + 8 + 7 + 2 + 5 + 5;
+        }
 
         public override BitArray Resolve()
         {
