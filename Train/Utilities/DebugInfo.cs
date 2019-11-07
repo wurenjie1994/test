@@ -47,17 +47,17 @@ namespace Train.Utilities
             Debug.Assert(condition, message);
         }
 
-        public static bool Exits(string path)
+        public static bool Exists(string path)
         {          
             return File.Exists(path);
         }
-        private static string GetFilePath(string baseName,string postfix)
+        private static string GetFilePath(string baseName,string suffix)
         {
             DateTime dt = DateTime.Now;
             string dtStr = dt.Year.ToString();
             dtStr += string.Format("{0:D2}{1:D2}{2:D2}{3:D2}{4:D2}", dt.Month,
                 dt.Day, dt.Hour, dt.Minute, dt.Second);
-            return dir + "\\" + baseName + "_" +dtStr+"."+ postfix;
+            return dir + "\\" + baseName + "_" +dtStr+"."+ suffix;
         }
     }
 }

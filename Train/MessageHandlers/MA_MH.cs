@@ -105,6 +105,8 @@ namespace Train.MessageHandlers
         {
             while(Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
             {
+                if (!mainForm.IsRBCConnected)
+                    p57 = null;
                 //列车还未收到p57包时，不需要周期判断MA请求
                 if (p57 == null)
                 {

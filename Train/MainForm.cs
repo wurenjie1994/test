@@ -24,6 +24,7 @@ namespace Train
         private CircularQueue<ListViewContent> sendMsgQueue = new CircularQueue<ListViewContent>();
         private volatile bool isISDNIFConnected = false;//to mark the status of connection with ISDNIF 
         private volatile bool isRBCConnected = false;
+        public bool IsRBCConnected { get { return isRBCConnected; } }
         Database database = new Database();
         public MainForm()
         {

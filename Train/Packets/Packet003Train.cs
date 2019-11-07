@@ -16,14 +16,16 @@ namespace Train.Packets
         int N_ITER;             //5bit
         List<ulong> NID_RADIO;      //64bit
 
+        private const int BASE_LEN = 8 + 13 + 5;
+
         public Packet003Train()
         {
             NID_PACKET = 3;
-            L_PACKET = 8 + 13 + 5;
         }
 
         public override BitArray Resolve()
         {
+            L_PACKET = BASE_LEN;
             Fill();
             L_PACKET += N_ITER * 64;
             BitArray bitArray = new BitArray(L_PACKET);

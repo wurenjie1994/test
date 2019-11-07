@@ -33,6 +33,8 @@ namespace Train.MessageHandlers
         {
             while (Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
             {
+                if (!mainForm.IsRBCConnected)
+                    p58 = null;
                 //列车还未收到p58包时，不需要周期判断发送位置报告
                 if (p58 == null)
                 {
@@ -41,7 +43,7 @@ namespace Train.MessageHandlers
                 }
                 //目前先只考虑T_CYCLOC参数
                 //基于M_LOC的判断后续再添加
-                if (timer > p58.GetTcycLoc())
+                if (timer >= p58.GetTcycLoc())
                 {
                     Message136 m136 = new Message136();
                     m136.SetPacket0or1(Trains.TrainDynamics.GetPacket0());

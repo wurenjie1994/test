@@ -24,14 +24,16 @@ namespace Train.Packets
         List<int> M_TRACTION;       //8bit
         List<int> NID_STM;          //8bit
 
+        private const int BASE_LEN = 8 + 13 + 32 + 15 + 12 + 7 + 8 + 7 + 2 + 5 + 5;
+
         public Packet011()
         {
             NID_PACKET = 11;
-            L_PACKET = 8 + 13 + 32 + 15 + 12 + 7 + 8 + 7 + 2 + 5 + 5;
         }
 
         public override BitArray Resolve()
         {
+            L_PACKET = BASE_LEN;
             Fill(); //must invoke this method first!
             L_PACKET +=  (N_ITER1+N_ITER2)* 8;
 

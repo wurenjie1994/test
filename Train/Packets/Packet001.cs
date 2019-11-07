@@ -28,15 +28,16 @@ namespace Train.Packets
         public int M_LEVEL;            //3bit
         public int NID_STM;            //8bit
 
+        private const int BASE_LEN = 8 + 13 + 2 + 24 + 24 + 15 + 2 + 2 + 15 + 15 + 2 + 7 + 2 + 4 + 3;
+
         public Packet001()
         {
             NID_PACKET = 1;
-            L_PACKET = 8 + 13 + 2 + 24 + 24 + 15 + 2 + 2 + 15 + 15 + 2 + 7 + 2 + 4 + 3;
         }
 
         public override BitArray Resolve()
         {
-            
+            L_PACKET = BASE_LEN;
             if (Q_LENGTH == 1 || Q_LENGTH == 2)
                 L_PACKET += 15;
             if (M_LEVEL == 1)

@@ -48,7 +48,7 @@ namespace Train.Utilities
         }
         /// <summary>
         /// 将bitArray中从position位置开始的length个bit转换为一个int。
-        /// 按大端方式
+        /// 按大端方式,高位补0
         /// </summary>
         public static int ToInt(BitArray bitArray, ref int position, int length)
         {
@@ -122,10 +122,23 @@ namespace Train.Utilities
         public static void ToByte(byte[] sendData, BitArray bitArray)
         {
             int pos = 0;
-            for (int i = 0; pos < bitArray.Length; i++)
+            for (int i = 0; pos+8 <= bitArray.Length; i++)
             {
                 sendData[i] = Convert.ToByte(Bits.ToInt(bitArray, ref pos, 8));
             }
+            if (pos >= bitArray.Length)
+                return;
+            // calculate the left bits.
+            int rest = 0;
+            for(int i = 0; i < 8; i++)
+            {
+                rest <<= 1;
+                if (pos < bitArray.Length)
+                {
+                    rest += bitArray[pos++] ? 1 : 0;
+                }
+            }
+            sendData[sendData.Length - 1] = Convert.ToByte(rest);
         }
     }
 }

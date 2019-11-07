@@ -37,6 +37,8 @@ namespace Train.Data
 
         public void InitBaliseGroup()
         {
+            if (conn.State != System.Data.ConnectionState.Open)
+                return;
             MySqlCommand cmd = conn.CreateCommand();
             cmd.CommandText = "select Name,BaliseNum,Kilo,Type,`Use`,PS1,PS2 from down_balise;";//use 是mysql中关键字，使用时要用反引号``括起来
             //cmd.ExecuteNonQuery();        //用于增删改
