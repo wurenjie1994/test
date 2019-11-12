@@ -5,6 +5,7 @@ using System.Threading;
 using Train.Packets;
 using Train.Messages;
 using System.Windows.Forms;
+using Train.Utilities;
 
 namespace Train.MessageHandlers
 {
@@ -60,9 +61,13 @@ namespace Train.MessageHandlers
                 Type type = ap.GetType();
                 if (type == typeof(Packet041)) PH((Packet041)ap);
                 else if (type == typeof(Packet015)) PH((Packet015)ap);
+                else if (type == typeof(Packet021)) PH((Packet021)ap);
+                else if (type == typeof(Packet027)) PH((Packet027)ap);
+                else if (type == typeof(Packet068)) PH((Packet068)ap);
+                else if (type == typeof(Packet005)) PH((Packet005)ap);
                 else
                 {
-                    MessageBox.Show("Unhandled Packet in Message003:" + type.ToString());
+                    DebugInfo.WriteToFile("Unhandled Packet in Message003:" + type.ToString(),"MA_MH");
                 }
             }
         }
@@ -80,6 +85,23 @@ namespace Train.MessageHandlers
             t.IsBackground = true;
             t.Start(p41);
         }
+        void PH(Packet021 p21)
+        {
+
+        }
+        void PH(Packet027 p27)
+        {
+
+        }
+        void PH(Packet068 p68)
+        {
+
+        }
+        void PH(Packet005 p5)
+        {
+
+        }
+
         //处理ATP等级转换C2->C3 或 C3->C2
         public void HandleC2C3Switch(object obj)//必须用object作为形参类型
         {

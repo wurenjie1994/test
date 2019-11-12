@@ -60,7 +60,7 @@ namespace Train.Packets
                 Bits.ConvergeBitArray(bitArray, M_TRACTION[i], ref pos, 8);
             }
             Bits.ConvergeBitArray(bitArray, N_ITER2, ref pos, 5);
-            for (int i = 0; i < N_ITER1; i++)
+            for (int i = 0; i < N_ITER2; i++)
             {
                 Bits.ConvergeBitArray(bitArray, NID_STM[i], ref pos, 8);
             }

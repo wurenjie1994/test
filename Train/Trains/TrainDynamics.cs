@@ -278,14 +278,14 @@ namespace Train.Trains
             p0.Q_SCALE = 1;// meter
             p0.NID_LRBG = (lrbg.Nid_c << 14) | (lrbg.Nid_bg);
             p0.D_LRBG = lrbg.Position==0?0:(int)(currentS1 - lrbg.Position);
-            p0.Q_DIRLRBG = 2; //相对于LRBG方向的列车朝向，设为未知
-            p0.Q_DLRBG = 2;//估计列车前端位于LRBG哪一侧，设为未知
+            p0.Q_DIRLRBG = 1; //相对于LRBG方向的列车朝向，设为未知
+            p0.Q_DLRBG = 1;//估计列车前端位于LRBG哪一侧，设为未知
             p0.L_DOUBTOVER = 1;//低限
             p0.L_DOUBTUNDER = 1;//高限
             p0.Q_LENGTH = 2;//设为由司机确认的列车完整性
             p0.L_TRAININT = totalLength / 1000;
             p0.V_TRAIN = (int)(currentV * 3.6 / 5);
-            p0.Q_DIRTRAIN = 2;  //相对于LRBG方向的列车运行方向，设为未知
+            p0.Q_DIRTRAIN = 1;  //相对于LRBG方向的列车运行方向，设为未知
             p0.M_MODE = (int)driverConsoler.WorkMode;  //车载设备工作模式
             p0.M_LEVEL = (int)driverConsoler.ControlLevel;
             if (p0.M_LEVEL == 1)

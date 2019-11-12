@@ -13,7 +13,7 @@ namespace Train.Messages
     /// </summary>
     public class Message015:AbstractRecvMessage
     {
-        const int MESSAGEID = 15;
+        public const int MESSAGEID = 15;
 
         int NID_EM;                 //4bit
         int Q_SCALE;                //2bit

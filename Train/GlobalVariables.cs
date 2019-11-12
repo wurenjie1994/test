@@ -75,8 +75,8 @@ namespace Train
         DriveDirection driveDirection;
         double steerValue;
         bool eBStatus;      //从驾驶台实施的紧急制动（即点击EB按钮）
-        _M_MODE workMode;
-        _ControlLevel controlLevel;
+        _M_MODE workMode = _M_MODE.SB;
+        _ControlLevel controlLevel = _ControlLevel.CTCS_2;
 
         public bool CabActive
         {

@@ -25,7 +25,7 @@ namespace Train.Packets
         public int Q_DIRTRAIN = 2;         //2bit
         public int M_MODE = -1;             //4bit
         public int M_LEVEL = -1;            //3bit
-        public int NID_STM = -1;            //8bit
+        public int NID_STM = 1;            //8bit
 
         private const int BASE_LEN = 8 + 13 + 2 + 24 + 15 + 2 + 2 + 15 + 15 + 2 + 7 + 2 + 4 + 3;
 

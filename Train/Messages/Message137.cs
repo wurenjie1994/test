@@ -14,10 +14,9 @@ namespace Train.Messages
     /// </summary>
     public class Message137 : AbstractSendMessage
     {
-        const int MESSAGEID = 137;
+        public const int MESSAGEID = 137;
         AbstractPacket ap01;        //信息包0/1
 
-        
         public override byte[] Resolve()
         {
             int BitArrayLEN = 74 + 32;

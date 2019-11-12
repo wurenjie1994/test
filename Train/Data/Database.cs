@@ -26,12 +26,12 @@ namespace Train.Data
             TrainInfo.NID_OPERATIONAL = 0x12345678;
             TrainInfo.NC_TRAIN = 0;
             TrainInfo.V_MAXTRAIN = 70;// 70*5 km/h
-            TrainInfo.M_LOADINGGAUGE = 0x01;
-            TrainInfo.M_AXLELOAD = 10;
+            TrainInfo.M_LOADINGGAUGE = 0x00;
+            TrainInfo.M_AXLELOAD = 40 * 2;
             TrainInfo.M_AIRTIGHT = 0;
-            TrainInfo.NID_STMList.Add(1);//假定STM编号为1
+            TrainInfo.NID_STMList.Add(3);//假定STM编号为3, CTCS-2
             TrainInfo.NID_RADIOList.Add(0x1234567890123456);//假定值
-            TrainInfo.M_TRACTION.Add(0x12);//假定值
+            // TrainInfo.M_TRACTION.Add(0x12);//假定值
 
         }
 

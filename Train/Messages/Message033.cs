@@ -14,7 +14,7 @@ namespace Train.Messages
     /// </summary>
     public class Message033:AbstractRecvMessage
     {
-        const int MESSAGEID = 33;
+        public const int MESSAGEID = 33;
         int Q_SCALE;                //2bit
         int D_REF;                  //16bit
         Packet015 p15 = new Packet015();

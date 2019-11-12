@@ -14,9 +14,7 @@ namespace Train.Messages
     /// </summary>
     public class Message155: AbstractSendMessage
     {
-        const int MESSAGEID = 155;
-
-        
+        public const int MESSAGEID = 155;
 
         public override byte[] Resolve()
         {

@@ -8,12 +8,13 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——确认前方轨道空闲
+    /// </summary>
     public class Message034:AbstractRecvMessage
     {
-        /// <summary>
-        /// 地到车——确认前方轨道空闲
-        /// </summary>
-        const int MESSAGEID = 34;
+       
+        public const int MESSAGEID = 34;
 
         int Q_SCALE;                //2bit
         int D_REF;                  //16bit

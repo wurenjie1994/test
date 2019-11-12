@@ -14,7 +14,7 @@ namespace Train.Messages
     public class Message008:AbstractRecvMessage
     {
 
-        const int MESSAGEID = 8;
+        public const int MESSAGEID = 8;
         uint T_TRAIN2;
 
         public override void Resolve(byte[] recvData)

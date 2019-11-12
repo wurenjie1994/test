@@ -8,12 +8,12 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——授权调车模式
+    /// </summary>
     public class Message028:AbstractRecvMessage
-    {
-        /// <summary>
-        /// 地到车——授权调车模式
-        /// </summary>
-        const int MESSAGEID = 28;
+    {      
+        public const int MESSAGEID = 28;
         uint T_TRAIN2;
         AbstractPacket ap;          //可选择的信息包
 

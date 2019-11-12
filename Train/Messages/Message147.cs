@@ -13,11 +13,10 @@ namespace Train.Messages
     /// </summary>
     public class Message147 : AbstractSendMessage
     {
-        const int MESSAGEID = 147;
+        public const int MESSAGEID = 147;
         int NID_EM;                 //4bit
         int Q_EMERGENCYSTOP;        //2bit（可选）（通号有这个字段）
         AbstractPacket ap01;        //信息包0/1
-
 
         public override byte[] Resolve()
         {

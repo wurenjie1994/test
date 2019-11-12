@@ -14,7 +14,8 @@ namespace Train.XmlResolve
         static string path = System.IO.Directory.GetCurrentDirectory()+"\\..\\..\\XmlResolve";
         public static byte[] SendData(byte[] msg)
         {
-            senddoc.Load(path+"\\SendData.xml");
+            if("".Equals(senddoc.BaseURI))
+                senddoc.Load(path+"\\SendData.xml");
              String str = Convert.ToBase64String(msg);
             XmlElement root = senddoc.DocumentElement;
             XmlElement sadata = (XmlElement)senddoc.SelectSingleNode("requests/datas/data/sadata");

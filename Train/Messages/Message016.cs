@@ -14,7 +14,7 @@ namespace Train.Messages
     public class Message016:AbstractRecvMessage
     {
 
-        const int MESSAGEID = 16;
+        public const int MESSAGEID = 16;
         int NID_EM;                 //4bit
 
         public override void Resolve(byte[] recvData)

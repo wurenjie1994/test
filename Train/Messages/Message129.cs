@@ -14,7 +14,7 @@ namespace Train.Messages
     /// </summary>
     public class Message129: AbstractSendMessage
     {
-        const int MESSAGEID = 129;
+        public const int MESSAGEID = 129;
                  
         AbstractPacket ap01;        //信息包0/1，必须设置
         static Packet011 p11 = new Packet011();

@@ -8,12 +8,13 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——拒绝调车模式
+    /// </summary>
     public class Message027:AbstractRecvMessage
     {
-        /// <summary>
-        /// 地到车——拒绝调车模式
-        /// </summary>
-        const int MESSAGEID = 27;
+
+        public const int MESSAGEID = 27;
         uint T_TRAIN2;
 
         public override void Resolve(byte[] recvData)

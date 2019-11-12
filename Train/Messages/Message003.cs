@@ -11,7 +11,7 @@ namespace Train.Messages
     /// </summary>
     public class Message003:AbstractRecvMessage
     {
-        const int MESSAGEID = 3;
+        public const int MESSAGEID = 3;
         Packet015 p15 = new Packet015();
         //可选择的信息包，可能有多个
         List<AbstractPacket> apList=new List<AbstractPacket>();

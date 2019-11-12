@@ -13,7 +13,7 @@ namespace Train.Messages
     /// </summary>
     public class Message009 : AbstractRecvMessage
     {
-        const int MESSAGEID = 9;
+        public const int MESSAGEID = 9;
         Packet015 p15 = new Packet015();
         AbstractPacket ap;          //可选择的信息包
 

@@ -15,7 +15,7 @@ namespace Train.Messages
     public class Message149: AbstractSendMessage
     {
 
-        const int MESSAGEID = 149;
+        public const int MESSAGEID = 149;
         AbstractPacket ap01;        //可选择的信息包0/1
 
         public override byte[] Resolve()

@@ -14,7 +14,7 @@ namespace Train.Messages
     /// </summary>
     public class Message136 : AbstractSendMessage
     {
-        const int MESSAGEID = 136;
+        public const int MESSAGEID = 136;
 
         AbstractPacket ap01;        //信息包0/1
         AbstractPacket ap;          //可选择的信息包

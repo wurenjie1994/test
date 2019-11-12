@@ -1130,11 +1130,12 @@
             // 
             // tbPureText
             // 
-            this.tbPureText.Location = new System.Drawing.Point(664, 465);
+            this.tbPureText.Location = new System.Drawing.Point(598, 464);
             this.tbPureText.Multiline = true;
             this.tbPureText.Name = "tbPureText";
             this.tbPureText.ReadOnly = true;
-            this.tbPureText.Size = new System.Drawing.Size(181, 94);
+            this.tbPureText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbPureText.Size = new System.Drawing.Size(273, 118);
             this.tbPureText.TabIndex = 17;
             // 
             // label3

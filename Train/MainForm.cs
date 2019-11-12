@@ -14,6 +14,7 @@ using Train.Packets;
 using Train.XmlResolve;
 using Train.Data;
 using Train.MessageHandlers;
+using System.IO;
 
 namespace Train
 {
@@ -469,7 +470,7 @@ namespace Train
                         if (!isISDNIFConnected) // received disconnect indication;
                         {
                             isRBCConnected = false;
-                            continue; 
+                            continue;
                         }
                         recvData = XmlParser.RecvData(recvData);
                     }
@@ -487,7 +488,12 @@ namespace Train
                     ListViewContent lvc = new ListViewContent(DateTime.Now, arm.NID_MESSAGE, _CommType.RBC, arm);
                     this.BeginInvoke(updateListView, lvRecvMsg, recvMsgQueue, lvc);
                 }
-                catch (Exception e) { }
+                catch (IOException ioe) { }
+                catch (Exception e)
+                {
+                    if(!(e is NullReferenceException))
+                        DebugInfo.WriteToFile(e.ToString(), "RBCRecvEx");
+                }
             }
         }
         private void ListView_MouseDoubleClick(object sender, MouseEventArgs e)

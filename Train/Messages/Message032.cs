@@ -12,7 +12,7 @@ namespace Train.Messages
     /// </summary>
     public class Message032:AbstractRecvMessage
     {
-        const int MESSAGEID = 32;
+        public const int MESSAGEID = 32;
         int M_VERSION;              //7bit
 
         public override void Resolve(byte[] recvData)

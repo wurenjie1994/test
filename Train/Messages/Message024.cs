@@ -13,7 +13,7 @@ namespace Train.Messages
     public class Message024:AbstractRecvMessage
     {
 
-        const int MESSAGEID = 24;
+        public const int MESSAGEID = 24;
         //可选择的信息包，可能有多个
         List<AbstractPacket> apList = new List<AbstractPacket>();         
 

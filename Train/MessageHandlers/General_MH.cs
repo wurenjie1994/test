@@ -92,7 +92,7 @@ namespace Train.MessageHandlers
             TrainInfo.p3 = p3;  //将p3信息保存在TrainInfo中
             Message129 m129 = new Message129();
             m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
-            SendMsg(m129);
+           // SendMsg(m129);
         }
     }
     /// <summary>

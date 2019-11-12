@@ -27,6 +27,8 @@ namespace Train.Packets
         int[] NC_DIFF_BASE;
         int[] V_DIFF_BASE;
 
+        int N_ITER2;
+
         public override void Resolve(BitArray bitArray)
         {
             int[] intArray = new int[] { 8, 2, 13, 2, 15, 7, 1 };
@@ -43,14 +45,7 @@ namespace Train.Packets
             Q_SCALE = resultArray[3];
             D_STATIC_BASE = resultArray[4];
             V_STATIC_BASE = resultArray[5];
-            if (resultArray[6] == 1)
-            {
-                Q_FRONT_BASE = true;
-            }
-            else
-            {
-                Q_FRONT_BASE = false;
-            }
+            Q_FRONT_BASE = resultArray[6] == 1;
 
             N_ITER_BASE = Bits.ToInt(bitArray, ref pos, 5);
             NC_DIFF_BASE = new int[N_ITER_BASE];
@@ -60,12 +55,15 @@ namespace Train.Packets
                 NC_DIFF_BASE[i] = Bits.ToInt(bitArray, ref pos, 4);
                 V_DIFF_BASE[i] = Bits.ToInt(bitArray, ref pos, 7);
             }
-            N_ITER_BASE = Bits.ToInt(bitArray, ref pos, 5);
-            D_STATIC = new int[N_ITER_BASE];
-            V_STATIC = new int[N_ITER_BASE];
-            Q_FRONT = new bool[N_ITER_BASE];
-            N_ITER = new int[N_ITER_BASE];
-            for (i = 0; i < N_ITER_BASE; i++)
+            N_ITER2 = Bits.ToInt(bitArray, ref pos, 5);
+            D_STATIC = new int[N_ITER2];
+            V_STATIC = new int[N_ITER2];
+            Q_FRONT = new bool[N_ITER2];
+            N_ITER = new int[N_ITER2];
+
+            NC_DIFF = new int[N_ITER2][];
+            V_DIFF = new int[N_ITER2][];
+            for (i = 0; i < N_ITER2; i++)
             {
                 D_STATIC[i] = Bits.ToInt(bitArray, ref pos, 15);
                 V_STATIC[i] = Bits.ToInt(bitArray, ref pos, 7);

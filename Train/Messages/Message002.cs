@@ -8,11 +8,11 @@ using Train.Utilities;
 
 namespace Train.Messages
 {
+    /// <summary>
+    /// 地到车——目视行车模式授权
+    /// </summary>
     public class Message002:AbstractRecvMessage
     {
-        /// <summary>
-        /// 地到车——目视行车模式授权
-        /// </summary>
         public const int MESSAGEID = 2;
 
         int Q_SCALE;                //2bit

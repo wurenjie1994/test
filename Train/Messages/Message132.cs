@@ -14,13 +14,11 @@ namespace Train.Messages
     /// </summary>
     public class Message132 : AbstractSendMessage
     {
-        const int MESSAGEID = 132;
+        public const int MESSAGEID = 132;
 
         bool Q_TRACKDEL;            //1bit
         AbstractPacket ap01;        //可选择的信息包0/1
         AbstractPacket ap;          //可选择的信息包
-
-        
 
         public override byte[] Resolve()
         {
