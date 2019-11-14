@@ -26,9 +26,9 @@ namespace Train.Data
         private string remark1;     //备注1
         private string remark2;     //备注2，该应答器属于哪个站
         
-        //这三项从baliseNumber中得到
-        private int nid_bg;     //应答器组编号
-        private int nid_c;          //地区号，应统一赋值
+        //这三项从baliseNumber中得到,全1表示位置未知
+        private int nid_bg = 0x3fff;     //应答器组编号
+        private int nid_c = 0x3ff;          //地区号，应统一赋值
         private int n_pig=0;     //应答器组内编号，0表示这是一个单应答器组
 
         private static List<Balise> bgList = new List<Balise>();
@@ -42,6 +42,11 @@ namespace Train.Data
             nid_bg = (Convert.ToInt32(sa[2]) << 8) | (Convert.ToInt32(sa[3]) & 0xff);
             if (sa.Length >= 5)
                 n_pig = Convert.ToInt32(sa[4]);
+        }
+
+        public int Nid_lrbg
+        {
+            get { return (nid_c << 14) | nid_bg; }
         }
 
         public int Nid_bg

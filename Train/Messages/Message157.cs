@@ -19,7 +19,6 @@ namespace Train.Messages
         AbstractPacket ap;          //可选择的信息包
                                                 //当ATP出现应答器一致性错误或者无线一致性错误时，应在消息157中包含信息包4
        
-
         public override byte[] Resolve()
         {
             int BitArrayLEN = 8 + 10 + 32 + 24 + 2;
@@ -28,7 +27,7 @@ namespace Train.Messages
             BitArrayLEN += (bit01 == null ? 0 : bit01.Length) + (bit == null ? 0 : bit.Length);
             BitArray bitArray = new BitArray(BitArrayLEN);
 
-            Q_STATUS = 1; //设置SoM位置报告状态为
+            Q_STATUS = 2; //设置SoM位置报告状态为1
             NID_MESSAGE = MESSAGEID;
             L_MESSAGE = BitArrayLEN / 8 + (BitArrayLEN % 8 == 0 ? 0 : 1);
             int[] intArray = new int[] { 8, 10, 32, 24, 2 };

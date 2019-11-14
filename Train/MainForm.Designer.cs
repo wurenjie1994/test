@@ -132,6 +132,7 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tbPureText = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.版本不兼容ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gbDriverConsoler.SuspendLayout();
             this.gbWorkMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -865,6 +866,8 @@
             // 
             // 故障注入ToolStripMenuItem
             // 
+            this.故障注入ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.版本不兼容ToolStripMenuItem});
             this.故障注入ToolStripMenuItem.Name = "故障注入ToolStripMenuItem";
             this.故障注入ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.故障注入ToolStripMenuItem.Text = "故障注入";
@@ -1145,7 +1148,14 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 0;
-            this.label3.Text = "纯文本消息：";
+            this.label3.Text = "纯文本信息：";
+            // 
+            // 版本不兼容ToolStripMenuItem
+            // 
+            this.版本不兼容ToolStripMenuItem.Name = "版本不兼容ToolStripMenuItem";
+            this.版本不兼容ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.版本不兼容ToolStripMenuItem.Text = "版本不兼容";
+            this.版本不兼容ToolStripMenuItem.Click += new System.EventHandler(this.版本不兼容ToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -1297,6 +1307,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel_ISDNIF;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblTrainLrbg;
+        private System.Windows.Forms.ToolStripMenuItem 版本不兼容ToolStripMenuItem;
     }
 }
 

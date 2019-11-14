@@ -106,19 +106,24 @@ namespace Train.MessageHandlers
         public void HandleC2C3Switch(object obj)//必须用object作为形参类型
         {
             Packet041 p41 = (Packet041)obj;
-            TrainState startState = mainForm.GetTrainState();
+            TrainState trainState = mainForm.GetTrainState();
+            double startLoc = trainState.TrainLocation.RightLoc;
             int d_leveltr = p41.GetDLevelTr();
+            DebugInfo.WriteToFile("startLoc = " + startLoc + ",d_leveltr = " + d_leveltr, "C2-C3");
             //假设列车沿下行正向行驶
-            while((startState.TrainLocation.RightLoc-d_leveltr)<0)
+            while((trainState.TrainLocation.RightLoc - startLoc) < d_leveltr)
             {
                 //让列车继续运行，直到列车前端越过等级转换点
+                Thread.Sleep(10);
             }
-            if(p41.GetMLevelTr()==1)//switch to C2
+            DebugInfo.WriteToFile("rightLoc = " + trainState.TrainLocation.RightLoc, "C2-C3");
+            if (p41.GetMLevelTr()==1)//switch to C2
             {
                 mainForm.BeginInvoke(new EventHandler(mainForm.rbControlLevel_CheckedChanged),_ControlLevel.CTCS_2, null);
             }else if (p41.GetMLevelTr() == 3)//switch to C3
             {
                 mainForm.BeginInvoke(new EventHandler(mainForm.rbControlLevel_CheckedChanged), _ControlLevel.CTCS_3, null);
+                mainForm.BeginInvoke(new EventHandler(mainForm.rbWorkMode_CheckedChanged), _M_MODE.FS, null);
             }
         }
 

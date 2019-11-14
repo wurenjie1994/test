@@ -69,6 +69,8 @@ namespace Train
             driveDirection = dcs.driveDirection;
             steerValue = dcs.steerValue;
             eBStatus = dcs.eBStatus;
+            workMode = dcs.workMode;
+            controlLevel = dcs.controlLevel;
             return this;
         }
         bool cabActive;

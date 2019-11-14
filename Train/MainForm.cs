@@ -26,7 +26,10 @@ namespace Train
         private volatile bool isISDNIFConnected = false;//to mark the status of connection with ISDNIF 
         private volatile bool isRBCConnected = false;
         public bool IsRBCConnected { get { return isRBCConnected; } }
+        private bool isVersionCompatible = true;
+        public bool IsVersionCompatible { get { return isVersionCompatible; } }
         Database database = new Database();
+
         public MainForm()
         {
             InitializeComponent();
@@ -73,6 +76,12 @@ namespace Train
         private void 列车位置设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new Trains.SetLocForm(trainState.TrainLocation).Show();
+        }
+
+        private void 版本不兼容ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            isVersionCompatible = ! isVersionCompatible;
+            版本不兼容ToolStripMenuItem.Checked = ! isVersionCompatible;
         }
 
 
@@ -367,7 +376,7 @@ namespace Train
             this.lblTrainLeftLoc.Text = TrainLocation.LocToString(trainState.TrainLocation.LeftLoc);
             this.lblTrainRightLoc.Text = TrainLocation.LocToString(trainState.TrainLocation.RightLoc);
             Balise balise = trainState.TrainLocation.Lrbg;
-            this.lblTrainLrbg.Text =balise==null?"0\r\n0":balise .BaliseName + "\r\n" + balise.BaliseNumber;
+            this.lblTrainLrbg.Text =balise==null?"0\r\n0":balise .BaliseName + "\r\n" + balise.BaliseNumber+"\r\n"+balise.Nid_lrbg;
 
             UpdatePureText();
         }

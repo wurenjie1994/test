@@ -42,8 +42,8 @@ namespace Train.MessageHandlers
             if (msgId == 6)
             {
                 if (arm.M_ACK) SendAck(arm);
-                //退出PT模式，但不知道该进入什么模式，那就假设是SB模式吧！
-                mainForm.BeginInvoke(new EventHandler(mainForm.rbWorkMode_CheckedChanged), _M_MODE.SB, null);
+                //退出PT模式，但不知道该进入什么模式，那就假设是OS模式吧！
+                mainForm.BeginInvoke(new EventHandler(mainForm.rbWorkMode_CheckedChanged), _M_MODE.OS, null);
                 return true;
             }
             return false;
@@ -53,14 +53,11 @@ namespace Train.MessageHandlers
             int nid_em = m15.GetNID_EM();
             dictEB.Add(nid_em, m15);
             //发送紧急停车确认消息147
-            if (m15.M_ACK)
-            {
-                Message147 m147 = new Message147();
-                m147.SetNID_EM(nid_em);
-                m147.SetQ_ES(1);  //考虑有条件紧急停车 使用值1
-                m147.SetAbstractPacket(null);
-                SendMsg(m147);
-            }
+            Message147 m147 = new Message147();
+            m147.SetNID_EM(nid_em);
+            m147.SetQ_ES(1);  //考虑有条件紧急停车 使用值1
+            m147.SetAbstractPacket(Trains.TrainDynamics.GetPacket0());
+            SendMsg(m147);
         }
         private void MH(Message016 m16)
         {
@@ -68,14 +65,11 @@ namespace Train.MessageHandlers
             if (dictEB.ContainsKey(nid_em)) dictEB.Remove(nid_em);
             dictEB.Add(nid_em, m16);
             //发送紧急停车确认消息147
-            if (m16.M_ACK)
-            {
-                Message147 m147 = new Message147();
-                m147.SetNID_EM(nid_em);
-                m147.SetQ_ES(2);  //无条件紧急停车 使用值2
-                m147.SetAbstractPacket(null);
-                SendMsg(m147);
-            }
+            Message147 m147 = new Message147();
+            m147.SetNID_EM(nid_em);
+            m147.SetQ_ES(2);  //无条件紧急停车 使用值2
+            m147.SetAbstractPacket(Trains.TrainDynamics.GetPacket0());
+            SendMsg(m147);
             //列车进入TR模式（注意要使用异步调用，防止发生阻塞）
             mainForm.BeginInvoke(new EventHandler(mainForm.rbWorkMode_CheckedChanged),_M_MODE.TR, null);
             //发送M136消息（这个消息应该是周期发送的，所以这里不需要再发送）
