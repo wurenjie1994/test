@@ -9,7 +9,7 @@ namespace Train.Data
     /// <summary>
     /// 表示应答器信息的类
     /// </summary>
-    public class Balise
+    public class Balise:IComparable<Balise>
     {
         //
         private string baliseName;      //应答器名称
@@ -33,7 +33,7 @@ namespace Train.Data
 
         private static List<Balise> bgList = new List<Balise>();
 
-        private void GetInfoFromBaliseNumber()
+        private void ResolveInfoFromBaliseNumber()
         {
             string[] sa = baliseNumber.Split('-');
             if (sa == null || sa.Length < 4)
@@ -42,6 +42,17 @@ namespace Train.Data
             nid_bg = (Convert.ToInt32(sa[2]) << 8) | (Convert.ToInt32(sa[3]) & 0xff);
             if (sa.Length >= 5)
                 n_pig = Convert.ToInt32(sa[4]);
+        }
+
+        /// <summary>
+        /// implements IComparable interface
+        /// </summary>
+        /// <param name="balise"></param>
+        /// <returns></returns>
+        public int CompareTo(Balise balise)
+        {
+            // ascending
+            return position.CompareTo(balise.position);
         }
 
         public int Nid_lrbg
@@ -101,7 +112,7 @@ namespace Train.Data
             set
             {
                 baliseNumber = value;
-                GetInfoFromBaliseNumber();
+                ResolveInfoFromBaliseNumber();
             }
         }
         public bool IsSourced

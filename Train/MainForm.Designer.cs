@@ -54,6 +54,9 @@
             this.lblNegTen_EndB = new System.Windows.Forms.Label();
             this.trackBarSteer = new System.Windows.Forms.TrackBar();
             this.lblSteerValue_EndB = new System.Windows.Forms.Label();
+            this.gbLine = new System.Windows.Forms.GroupBox();
+            this.rbDown = new System.Windows.Forms.RadioButton();
+            this.rbUp = new System.Windows.Forms.RadioButton();
             this.gbControlLevel = new System.Windows.Forms.GroupBox();
             this.rbCTCS_2 = new System.Windows.Forms.RadioButton();
             this.rbCTCS_3 = new System.Windows.Forms.RadioButton();
@@ -97,6 +100,7 @@
             this.状态设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.列车位置设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.故障注入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.版本不兼容ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.发送消息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Message129ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Message132ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,12 +136,14 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tbPureText = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.版本不兼容ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tbTextInfo = new System.Windows.Forms.TextBox();
+            this.rbSN = new System.Windows.Forms.RadioButton();
             this.gbDriverConsoler.SuspendLayout();
             this.gbWorkMode.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.gbSteer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSteer)).BeginInit();
+            this.gbLine.SuspendLayout();
             this.gbControlLevel.SuspendLayout();
             this.gbDriveDirection.SuspendLayout();
             this.gbTrainState.SuspendLayout();
@@ -153,6 +159,7 @@
             this.gbDriverConsoler.Controls.Add(this.gbWorkMode);
             this.gbDriverConsoler.Controls.Add(this.groupBox1);
             this.gbDriverConsoler.Controls.Add(this.gbSteer);
+            this.gbDriverConsoler.Controls.Add(this.gbLine);
             this.gbDriverConsoler.Controls.Add(this.gbControlLevel);
             this.gbDriverConsoler.Controls.Add(this.gbDriveDirection);
             this.gbDriverConsoler.Controls.Add(this.btnEoM);
@@ -173,12 +180,13 @@
             this.gbWorkMode.Controls.Add(this.rbSL);
             this.gbWorkMode.Controls.Add(this.rbPT);
             this.gbWorkMode.Controls.Add(this.rbTR);
+            this.gbWorkMode.Controls.Add(this.rbSN);
             this.gbWorkMode.Controls.Add(this.rbIS);
             this.gbWorkMode.Controls.Add(this.rbSH);
             this.gbWorkMode.Controls.Add(this.rbFS);
             this.gbWorkMode.Location = new System.Drawing.Point(22, 151);
             this.gbWorkMode.Name = "gbWorkMode";
-            this.gbWorkMode.Size = new System.Drawing.Size(188, 96);
+            this.gbWorkMode.Size = new System.Drawing.Size(235, 96);
             this.gbWorkMode.TabIndex = 43;
             this.gbWorkMode.TabStop = false;
             this.gbWorkMode.Text = "工作模式";
@@ -433,6 +441,39 @@
             this.lblSteerValue_EndB.TabIndex = 50;
             this.lblSteerValue_EndB.Text = "0";
             // 
+            // gbLine
+            // 
+            this.gbLine.Controls.Add(this.rbDown);
+            this.gbLine.Controls.Add(this.rbUp);
+            this.gbLine.Location = new System.Drawing.Point(172, 253);
+            this.gbLine.Name = "gbLine";
+            this.gbLine.Size = new System.Drawing.Size(85, 77);
+            this.gbLine.TabIndex = 38;
+            this.gbLine.TabStop = false;
+            this.gbLine.Text = "上行下行";
+            // 
+            // rbDown
+            // 
+            this.rbDown.AutoSize = true;
+            this.rbDown.Location = new System.Drawing.Point(28, 53);
+            this.rbDown.Name = "rbDown";
+            this.rbDown.Size = new System.Drawing.Size(47, 16);
+            this.rbDown.TabIndex = 0;
+            this.rbDown.Text = "下行";
+            this.rbDown.UseVisualStyleBackColor = true;
+            this.rbDown.CheckedChanged += new System.EventHandler(this.rbLine_CheckedChanged);
+            // 
+            // rbUp
+            // 
+            this.rbUp.AutoSize = true;
+            this.rbUp.Location = new System.Drawing.Point(28, 22);
+            this.rbUp.Name = "rbUp";
+            this.rbUp.Size = new System.Drawing.Size(47, 16);
+            this.rbUp.TabIndex = 0;
+            this.rbUp.Text = "上行";
+            this.rbUp.UseVisualStyleBackColor = true;
+            this.rbUp.CheckedChanged += new System.EventHandler(this.rbLine_CheckedChanged);
+            // 
             // gbControlLevel
             // 
             this.gbControlLevel.Controls.Add(this.rbCTCS_2);
@@ -525,7 +566,7 @@
             // 
             // btnEBButton
             // 
-            this.btnEBButton.Location = new System.Drawing.Point(212, 287);
+            this.btnEBButton.Location = new System.Drawing.Point(277, 291);
             this.btnEBButton.Name = "btnEBButton";
             this.btnEBButton.Size = new System.Drawing.Size(75, 23);
             this.btnEBButton.TabIndex = 6;
@@ -872,6 +913,13 @@
             this.故障注入ToolStripMenuItem.Size = new System.Drawing.Size(68, 21);
             this.故障注入ToolStripMenuItem.Text = "故障注入";
             // 
+            // 版本不兼容ToolStripMenuItem
+            // 
+            this.版本不兼容ToolStripMenuItem.Name = "版本不兼容ToolStripMenuItem";
+            this.版本不兼容ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.版本不兼容ToolStripMenuItem.Text = "版本不兼容";
+            this.版本不兼容ToolStripMenuItem.Click += new System.EventHandler(this.版本不兼容ToolStripMenuItem_Click);
+            // 
             // 发送消息ToolStripMenuItem
             // 
             this.发送消息ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1078,9 +1126,9 @@
             this.columnHeader3});
             this.lvRecvMsg.FullRowSelect = true;
             this.lvRecvMsg.GridLines = true;
-            this.lvRecvMsg.Location = new System.Drawing.Point(598, 71);
+            this.lvRecvMsg.Location = new System.Drawing.Point(598, 152);
             this.lvRecvMsg.Name = "lvRecvMsg";
-            this.lvRecvMsg.Size = new System.Drawing.Size(273, 154);
+            this.lvRecvMsg.Size = new System.Drawing.Size(243, 154);
             this.lvRecvMsg.TabIndex = 15;
             this.lvRecvMsg.UseCompatibleStateImageBehavior = false;
             this.lvRecvMsg.View = System.Windows.Forms.View.Details;
@@ -1110,9 +1158,9 @@
             this.columnHeader6});
             this.lvSendMsg.FullRowSelect = true;
             this.lvSendMsg.GridLines = true;
-            this.lvSendMsg.Location = new System.Drawing.Point(598, 239);
+            this.lvSendMsg.Location = new System.Drawing.Point(598, 328);
             this.lvSendMsg.Name = "lvSendMsg";
-            this.lvSendMsg.Size = new System.Drawing.Size(273, 154);
+            this.lvSendMsg.Size = new System.Drawing.Size(243, 154);
             this.lvSendMsg.TabIndex = 15;
             this.lvSendMsg.UseCompatibleStateImageBehavior = false;
             this.lvSendMsg.View = System.Windows.Forms.View.Details;
@@ -1121,7 +1169,7 @@
             // columnHeader4
             // 
             this.columnHeader4.Text = "时间";
-            this.columnHeader4.Width = 137;
+            this.columnHeader4.Width = 125;
             // 
             // columnHeader5
             // 
@@ -1133,35 +1181,50 @@
             // 
             // tbPureText
             // 
-            this.tbPureText.Location = new System.Drawing.Point(598, 464);
+            this.tbPureText.Location = new System.Drawing.Point(598, 528);
             this.tbPureText.Multiline = true;
             this.tbPureText.Name = "tbPureText";
             this.tbPureText.ReadOnly = true;
             this.tbPureText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbPureText.Size = new System.Drawing.Size(273, 118);
+            this.tbPureText.Size = new System.Drawing.Size(273, 103);
             this.tbPureText.TabIndex = 17;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(685, 450);
+            this.label3.Location = new System.Drawing.Point(683, 502);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 0;
             this.label3.Text = "纯文本信息：";
             // 
-            // 版本不兼容ToolStripMenuItem
+            // tbTextInfo
             // 
-            this.版本不兼容ToolStripMenuItem.Name = "版本不兼容ToolStripMenuItem";
-            this.版本不兼容ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.版本不兼容ToolStripMenuItem.Text = "版本不兼容";
-            this.版本不兼容ToolStripMenuItem.Click += new System.EventHandler(this.版本不兼容ToolStripMenuItem_Click);
+            this.tbTextInfo.Location = new System.Drawing.Point(598, 26);
+            this.tbTextInfo.Multiline = true;
+            this.tbTextInfo.Name = "tbTextInfo";
+            this.tbTextInfo.ReadOnly = true;
+            this.tbTextInfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbTextInfo.Size = new System.Drawing.Size(273, 103);
+            this.tbTextInfo.TabIndex = 17;
+            // 
+            // rbSN
+            // 
+            this.rbSN.AutoSize = true;
+            this.rbSN.Location = new System.Drawing.Point(189, 20);
+            this.rbSN.Name = "rbSN";
+            this.rbSN.Size = new System.Drawing.Size(35, 16);
+            this.rbSN.TabIndex = 0;
+            this.rbSN.Text = "SN";
+            this.rbSN.UseVisualStyleBackColor = true;
+            this.rbSN.CheckedChanged += new System.EventHandler(this.rbWorkMode_CheckedChanged);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(912, 678);
+            this.Controls.Add(this.tbTextInfo);
             this.Controls.Add(this.tbPureText);
             this.Controls.Add(this.lvSendMsg);
             this.Controls.Add(this.label3);
@@ -1183,6 +1246,8 @@
             this.gbSteer.ResumeLayout(false);
             this.gbSteer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarSteer)).EndInit();
+            this.gbLine.ResumeLayout(false);
+            this.gbLine.PerformLayout();
             this.gbControlLevel.ResumeLayout(false);
             this.gbControlLevel.PerformLayout();
             this.gbDriveDirection.ResumeLayout(false);
@@ -1308,6 +1373,11 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label lblTrainLrbg;
         private System.Windows.Forms.ToolStripMenuItem 版本不兼容ToolStripMenuItem;
+        private System.Windows.Forms.GroupBox gbLine;
+        private System.Windows.Forms.RadioButton rbDown;
+        private System.Windows.Forms.RadioButton rbUp;
+        private System.Windows.Forms.TextBox tbTextInfo;
+        private System.Windows.Forms.RadioButton rbSN;
     }
 }
 

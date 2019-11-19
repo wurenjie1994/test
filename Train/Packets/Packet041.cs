@@ -80,7 +80,8 @@ namespace Train.Packets
             L_ACKLEVELTR_BASE = resultArray[7];
             N_ITER = resultArray[8];
         }
-        //获得距等级转换点的距离
+
+        //获得等级转换点距LRBG的距离
         public int GetDLevelTr()
         {
             //直接取整，影响不大

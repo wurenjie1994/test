@@ -31,5 +31,10 @@ namespace Train.Packets
             L_PACKET = resultArray[2];
             NID_TSR = resultArray[3];
         }
+
+        public int getNidTsr()
+        {
+            return NID_TSR;
+        }
     }
 }

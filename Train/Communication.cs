@@ -17,6 +17,7 @@ namespace Train
         #region 通信参数配置
         //IP
         private static string trainIP;
+        private static string train_nrbcIP;
         private static string rbcIP;
         private static string nrbcIP;
         //Port
@@ -38,6 +39,7 @@ namespace Train
             {
                 //IP
                 trainIP = file.IniReadValue("IP", "TrainIP");
+                train_nrbcIP = file.IniReadValue("IP", "Train_NRBCIP");
                 rbcIP = file.IniReadValue("IP", "RBCIP");
                 nrbcIP = file.IniReadValue("IP", "NRBCIP");
                 //Port
@@ -59,7 +61,7 @@ namespace Train
         {
             ReadIniFile(fileName);
             train_rbc = new Client(trainIP, int.Parse(train_rbcLocalPort), rbcIP, int.Parse(rbcRemotePort));
-            train_nrbc = new Client(trainIP, int.Parse(train_nrbcLocalPort), nrbcIP, int.Parse(nrbcRemotePort));
+            train_nrbc = new Client(train_nrbcIP, int.Parse(train_nrbcLocalPort), nrbcIP, int.Parse(nrbcRemotePort));
         }
 
         public static void Close()
@@ -78,8 +80,8 @@ namespace Train
                 case _CommType.RBC:
                     if (train_rbc != null)
                     {
-                        if(train_rbc.Connected()==false)//if three-way handshake not established
-                            train_rbc.Connect();
+                        // if(train_rbc.Connected()==false)//if three-way handshake not established
+                            train_rbc.Connect(); // if already connected,then dispose this socket pair,and renew one
                         byte[] toSend = XmlParser.ConnReq(ctcsid);
                         SendMsg(toSend, commType);
                     }
@@ -93,6 +95,7 @@ namespace Train
             if (client != null) return client.Connected();
             return false;
         }
+
         public static void Disconnect(_CommType commType)
         {
             switch (commType)
@@ -103,9 +106,9 @@ namespace Train
                 case _CommType.RBC:
                     if (train_rbc != null)
                     {
-                        train_rbc.Connect();
                         byte[] toSend = XmlParser.Disconnect();
                         SendMsg(toSend, commType);
+                        train_rbc.Disconnect();
                     }
                     break;
             }
@@ -138,14 +141,19 @@ namespace Train
             switch (commType)
             {
                 case _CommType.NRBC:
-                    if (train_nrbc != null) return train_nrbc.RecvMsg();
+                    if (train_nrbc != null)
+                    {
+                        byte[] len = train_nrbc.RecvMsg(2);
+                        if (len == null) return null;
+                        return train_nrbc.RecvMsg((len[0] << 8) | len[1]);
+                    }
                     break; 
                 case _CommType.RBC:
                     if (train_rbc != null)
                     {
                         byte[] recv = train_rbc.RecvMsg(2); //先接收待接收数据的长度
-                        recv = train_rbc.RecvMsg((recv[0] << 8 )| recv[1]); //再接收实际数据
-                        return recv;
+                        if (recv == null) return null;
+                        return train_rbc.RecvMsg((recv[0] << 8) | recv[1]); //再接收实际数据
                     }
                     break;
             }

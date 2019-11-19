@@ -17,34 +17,58 @@ namespace Train
         /// <summary>引导模式</summary>
         CO = 1,
         /// <summary>目视行车模式</summary>
-        OS = 2,         //通号用SR表示
+        OS = 2,         // 通号用SR表示
         /// <summary>调车模式</summary>
         SH = 3,
         /// <summary>休眠模式</summary>
-        SL = 5,        //通号用SN表示
+        SL = 5,        
         /// <summary>待机模式</summary>
         SB = 6,
         /// <summary>隔离模式</summary>
-        IS = 10,
+        IS = 10,        // 通号没有这个模式
         /// <summary>冒进防护模式</summary>
         TR = 7,
         /// <summary>冒进后防护模式</summary>
         PT = 8,
+        /// <summary>非C3模式？</summary>
+        SN = 13,      // 通号用SN表示非C3等级下的模式，但规范中没有
     }
+    // 按通号规范修改的值
     public enum _ControlLevel
     {
-        CTCS_0=0,
-        STM=1,
-        CTCS_1=2,
-        CTCS_2=3,
-        CTCS_3=4
+        CTCS_0 = 0,
+      //  STM=1,
+      //  CTCS_1=2,
+        CTCS_2 = 1,
+        CTCS_3 = 3,
+        CTCS_4 = 4
     }
+
+    /// <summary>关于方向的限定词</summary>
+    public enum _DIR:byte
+    {
+        /// <summary>反向</summary>
+        REVERSE = 0,
+        /// <summary>正向</summary>
+        FORWARD = 1,
+        /// <summary>未知</summary>
+        UNKNOWN = 2,
+        /// <summary>未使用</summary>
+        UNUSED = 3
+    }
+
     public enum DriveDirection : byte
     {
         RMF = 0x01,                //RMF（向前）
         ZERO = 0x02,             //0
         RMR = 0x00               //RMR（向后）
     }
+    public enum _Line
+    {
+        UP = 0,     // 上行
+        DOWN = 1    // 下行
+    }
+
     public class DriverConsolerState
     {
         private static DriverConsolerState driverConsolerA = new DriverConsolerState(true );
@@ -71,14 +95,17 @@ namespace Train
             eBStatus = dcs.eBStatus;
             workMode = dcs.workMode;
             controlLevel = dcs.controlLevel;
+            line = dcs.line;
             return this;
         }
+
         bool cabActive;
         DriveDirection driveDirection;
         double steerValue;
         bool eBStatus;      //从驾驶台实施的紧急制动（即点击EB按钮）
         _M_MODE workMode = _M_MODE.SB;
         _ControlLevel controlLevel = _ControlLevel.CTCS_2;
+        _Line line;
 
         public bool CabActive
         {
@@ -155,6 +182,19 @@ namespace Train
             set
             {
                 controlLevel = value;
+            }
+        }
+
+        public _Line Line
+        {
+            get
+            {
+                return line;
+            }
+
+            set
+            {
+                line = value;
             }
         }
     }

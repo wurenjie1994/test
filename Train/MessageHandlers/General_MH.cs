@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Train.Messages;
 using Train.Packets;
@@ -53,27 +54,76 @@ namespace Train.MessageHandlers
                 else if (type == typeof(Packet058)) PH((Packet058)ap);
                 else if (type == typeof(Packet072)) PH((Packet072)ap);
                 else if (type == typeof(Packet003)) PH((Packet003)ap);
+                else if (type == typeof(Packet131)) PH((Packet131)ap);
+                else if (type == typeof(Packet065)) PH((Packet065)ap);
+                else if (type == typeof(Packet066)) PH((Packet066)ap);
                 else
                 {
-                    MessageBox.Show("Unhandled Packet in Message024:" + type.ToString());
+                    DebugInfo.WriteToFile("Unhandled Packet in Message024:" + type.ToString(),"General_MH");
                 }
             }
         }
 
         private void PH(Packet057 p57)
         {
+            // if revd p57 from NRBC , then send M129 automatically
+            if(mh.CommType == _CommType.NRBC)
+            {
+                Message129 m129 = new Message129();
+                m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
+                SendMsg(m129);
+            }
             mh.MhMa.p57 = p57;//交由MA_MH类处理
         }
         private void PH(Packet058 p58)
         {
             mh.MhLocReport.p58 = p58;//交由LocReport_MH类处理
         }
+
+        // TSR
+        public static void PH(Packet065 p65)
+        {
+            StaticSpeedLimits.TSR.Add(new StaticSpeedLimits.TSR(p65));
+        }
+        // TSR cancel
+        public static void PH(Packet066 p66)
+        {
+            StaticSpeedLimits.TSR.Remove(p66.getNidTsr());
+        }
+
+
+        // RBC handover
+        private void PH(Packet131 p131)
+        {
+            //开启一个线程处理
+            Thread t = new Thread(new ParameterizedThreadStart(HandleHandover));
+            t.IsBackground = true;
+            t.Start(p131);
+        }
+
+        private void HandleHandover(object obj)
+        {
+            Packet131 p131 = (Packet131)obj;
+            double dis = p131.GetDrbctr();
+            TextInfo.Add("距离移交点" + dis + "米");
+            JudgeDistance(dis);
+            _CommType neighbor = mh.CommType == _CommType.RBC ? _CommType.NRBC : _CommType.RBC;
+            TextInfo.Add("开始与" + neighbor + "建立通信");
+            if (!Communication.IsConnected(neighbor))
+            {
+                Communication.Connect(neighbor);
+                mainForm.StartRecvMsgModule(neighbor);
+            }
+            mainForm.SendMsg(new Message155(), neighbor);
+        }
+
         private void PH(Packet072 p72)
         {
             if (pureText.IsFull())
                 pureText.DecreaseToHalf();
             pureText.Push(new ShowPureText(p72.GetText(),DateTime.Now));
         }
+
         private void PH(Packet042 p42)
         {
             if (p42.Q_RBC == false) //终止通信会话
@@ -85,14 +135,18 @@ namespace Train.MessageHandlers
             {
 
             }
-            
         }
+
         private void PH(Packet003 p3)
         {
             TrainInfo.p3 = p3;  //将p3信息保存在TrainInfo中
-            Message129 m129 = new Message129();
-            m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
-           // SendMsg(m129);
+            // if not in RBC handover procedure,then send M129
+            if (mh.CommType == _CommType.RBC && mainForm.DriverConsoler.WorkMode != _M_MODE.FS)
+            {
+                Message129 m129 = new Message129();
+                m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
+                SendMsg(m129);
+            }
         }
     }
     /// <summary>

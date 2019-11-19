@@ -12,6 +12,7 @@ namespace Train.MessageHandlers
         private General_MH mhVersion ;
         private MA_MH mhMa ;
         private LocReport_MH mhLocReport ;
+        private Shunt_MH mhShunt;
         private UltimateHandler_MH mhUltimateHandler ;
 
         public static MainForm mainForm;
@@ -30,17 +31,43 @@ namespace Train.MessageHandlers
             mhVersion = new General_MH(this);
             mhMa = new MA_MH(this);
             mhLocReport = new LocReport_MH(this);
+            mhShunt = new Shunt_MH(this);
             mhUltimateHandler = new UltimateHandler_MH(this);
             mhCommSession.SetNext(mhEB).SetNext(mhVersion)
                 .SetNext(mhMa).SetNext(mhLocReport)
+                .SetNext(mhShunt)
                 .SetNext(mhUltimateHandler).SetNext(null);
         }
         //处理接收到的报文
-        public void Handling(Messages.AbstractRecvMessage am)
+        public void Handling(Messages.AbstractRecvMessage arm)
         {
             AbstractMessageHandler amh = mhCommSession;
-            while (!amh.Solve(am))
+            FilterInfo(arm);
+            while (!amh.Solve(arm))
                 amh = amh.GetNext();
+        }
+
+        private void FilterInfo(AbstractRecvMessage arm)
+        {
+            List<Packets.AbstractPacket> list;
+            dynamic dnm = arm;
+            try
+            {
+                list = dnm.GetAlternativePacket();
+            }catch(Exception e)
+            {
+                // Message has no that method,so just return.
+                return;
+            }
+            // no info needed to record
+            if (list == null || list.Count == 0)
+                return;
+            string msg = "received Message" + arm.GetMessageID() + " contained:";
+            foreach(Packets.AbstractPacket ap in list)
+            {
+                msg += "Packet" + ap.NID_PACKET + " ";
+            }
+            Train.Utilities.TextInfo.Add(msg);
         }
 
         public _CommType CommType { get { return commType; } }

@@ -33,7 +33,7 @@ namespace Train.MessageHandlers
         {
             while (Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
             {
-                if (!mainForm.IsRBCConnected)
+                if (!IsConnected())
                     p58 = null;
                 //列车还未收到p58包时，不需要周期判断发送位置报告
                 if (p58 == null)

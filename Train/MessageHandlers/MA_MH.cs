@@ -47,6 +47,7 @@ namespace Train.MessageHandlers
             }
             return false;
         }
+
         //处理M3或M33消息
         void MH(AbstractRecvMessage msg)
         {
@@ -55,7 +56,6 @@ namespace Train.MessageHandlers
             {
                 SendAck(msg);
             }
-            PH(dnm.GetPacket015());
             foreach (AbstractPacket ap in dnm.GetAlternativePacket())
             {
                 Type type = ap.GetType();
@@ -65,9 +65,12 @@ namespace Train.MessageHandlers
                 else if (type == typeof(Packet027)) PH((Packet027)ap);
                 else if (type == typeof(Packet068)) PH((Packet068)ap);
                 else if (type == typeof(Packet005)) PH((Packet005)ap);
+                else if (type == typeof(Packet065)) General_MH.PH((Packet065)ap);
+                else if (type == typeof(Packet066)) General_MH.PH((Packet066)ap);
+                else if (type == typeof(Packet003)) PH((Packet003)ap);
                 else
                 {
-                    DebugInfo.WriteToFile("Unhandled Packet in Message003:" + type.ToString(),"MA_MH");
+                    DebugInfo.WriteToFile("Unhandled Packet in Message003:" + type.ToString(), "MA_MH");
                 }
             }
         }
@@ -78,12 +81,19 @@ namespace Train.MessageHandlers
             ma.GetValueFrom(p15);
             mainForm.TrainDynamic.Ma = ma;
         }
+        private Packet041 p41;
+        // p41 will be received many times
         void PH(Packet041 p41)
         {
-            //开启一个线程处理等级切换
-            Thread t = new Thread(new ParameterizedThreadStart(HandleC2C3Switch));
-            t.IsBackground = true;
-            t.Start(p41);
+            if (this.p41 == null)
+            {
+                this.p41 = p41;  // set value before thread start.
+                //开启一个线程处理等级切换
+                Thread t = new Thread(new ThreadStart(HandleC2C3Switch));
+                t.IsBackground = true;
+                t.Start();
+            }
+            this.p41 = p41;
         }
         void PH(Packet021 p21)
         {
@@ -102,21 +112,17 @@ namespace Train.MessageHandlers
 
         }
 
-        //处理ATP等级转换C2->C3 或 C3->C2
-        public void HandleC2C3Switch(object obj)//必须用object作为形参类型
+        // 在C2->C3等级转换流程中，M3中会包含p3
+        void PH(Packet003 p3)
         {
-            Packet041 p41 = (Packet041)obj;
-            TrainState trainState = mainForm.GetTrainState();
-            double startLoc = trainState.TrainLocation.RightLoc;
-            int d_leveltr = p41.GetDLevelTr();
-            DebugInfo.WriteToFile("startLoc = " + startLoc + ",d_leveltr = " + d_leveltr, "C2-C3");
-            //假设列车沿下行正向行驶
-            while((trainState.TrainLocation.RightLoc - startLoc) < d_leveltr)
-            {
-                //让列车继续运行，直到列车前端越过等级转换点
-                Thread.Sleep(10);
-            }
-            DebugInfo.WriteToFile("rightLoc = " + trainState.TrainLocation.RightLoc, "C2-C3");
+            TrainInfo.p3 = p3;
+        }
+
+        //处理ATP等级转换C2->C3 或 C3->C2
+        private void HandleC2C3Switch()//必须用object作为形参类型
+        {
+            JudgeDistance();
+            TextInfo.Add("开始切换到" + (p41.GetMLevelTr()==1?"CTCS2":"CTCS3") + "等级");
             if (p41.GetMLevelTr()==1)//switch to C2
             {
                 mainForm.BeginInvoke(new EventHandler(mainForm.rbControlLevel_CheckedChanged),_ControlLevel.CTCS_2, null);
@@ -127,12 +133,38 @@ namespace Train.MessageHandlers
             }
         }
 
+        protected void JudgeDistance()
+        {
+            int d_leveltr = p41.GetDLevelTr();
+            int disToRun = d_leveltr - Trains.TrainDynamics.GetPacket0().D_LRBG;
+            TextInfo.Add("LRBG距离等级切换点" + d_leveltr + "m");
+            TrainLocation trainLocation = mainForm.GetTrainState().TrainLocation;
+            double startLoc = trainLocation.LeftLoc;
+            const int ERROR = 1;
+            while (Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
+            {
+                if(p41.GetDLevelTr() != d_leveltr)
+                {
+                    d_leveltr = p41.GetDLevelTr();
+                    TextInfo.Add("LRBG距离等级切换点" + d_leveltr + "m");
+                    disToRun = d_leveltr - Trains.TrainDynamics.GetPacket0().D_LRBG;
+                    startLoc = trainLocation.LeftLoc;
+                }
+                double curLoc = trainLocation.LeftLoc;
+                double disRun = Math.Abs(curLoc - startLoc);
+                if (Math.Abs(disRun - disToRun) < ERROR)
+                    break;
+                Thread.Sleep(10);
+            }
+        }
+
+
         //根据p57包周期发送MA请求的线程
         public void SendMARequest()
         {
             while(Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
             {
-                if (!mainForm.IsRBCConnected)
+                if (!IsConnected())
                     p57 = null;
                 //列车还未收到p57包时，不需要周期判断MA请求
                 if (p57 == null)
@@ -141,18 +173,19 @@ namespace Train.MessageHandlers
                     continue;
                 }
                 //目前先只考虑T_CYCRQST参数
-                if (timer > p57.GetTcycRqst())
+                if (timer == 0 )
                 {
                     Message132 m132 = new Message132();
                     m132.SetTrackdel(false);//未删除线路描述
                     m132.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
                     SendMsg(m132);
-                    timer = 0;//定时器清零
+                    timer = p57.GetTcycRqst();//定时器清零
                 }
                 Thread.Sleep(1000);
-                timer++;
+                timer--;
             }
         }
+
     }
 
 }

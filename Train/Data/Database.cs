@@ -10,13 +10,20 @@ namespace Train.Data
 {
     public class Database
     {
+        const string DOWN_BALISE = "select Name,BaliseNum,Kilo,Type,`Use`,PS1,PS2 from down_balise;";//use 是mysql中关键字，使用时要用反引号``括起来
+        const string UP_BALISE = "select Name,BaliseNum,Kilo,Type,`Use`,PS1,PS2 from up_balise;";
+
         public void Init()
         {
             ReadIniFile();
             Connect();
             InitTrainInfo();
-            InitBaliseGroup();
+            InitBaliseGroup(DOWN_BALISE, Trains.TrainDynamics.DownBgList);
+            Trains.TrainDynamics.DownBgList.Sort();
+            InitBaliseGroup(UP_BALISE, Trains.TrainDynamics.UpBgList);
+            Trains.TrainDynamics.UpBgList.Sort();
         }
+
         public static void InitTrainInfo()
         {
             TrainInfo.TrainID = 0x123456;
@@ -35,15 +42,14 @@ namespace Train.Data
 
         }
 
-        public void InitBaliseGroup()
+        public void InitBaliseGroup(string querySql, List<Balise> list)
         {
             if (conn.State != System.Data.ConnectionState.Open)
                 return;
             MySqlCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "select Name,BaliseNum,Kilo,Type,`Use`,PS1,PS2 from down_balise;";//use 是mysql中关键字，使用时要用反引号``括起来
+            cmd.CommandText = querySql;
             //cmd.ExecuteNonQuery();        //用于增删改
             MySqlDataReader data = cmd.ExecuteReader();   //用于查找
-            List<Balise> list = Trains.TrainDynamics.DownBgList;
             while (data.Read())
             {
                 Balise balise = new Balise();
@@ -55,6 +61,8 @@ namespace Train.Data
                 balise.Usage = (data[4] == DBNull.Value) ? null : data.GetString(4);
                 balise.Remark1 = (data[5] == DBNull.Value) ? null : data.GetString(5);
                 balise.Remark2 = (data[6] == DBNull.Value) ? null : data.GetString(6);
+                if (balise.Remark1 != null && (balise.Remark1.Contains("侧线") || balise.Remark1.Contains("三四线")))
+                    continue;
                 list.Add(balise);
             }
             data.Close();

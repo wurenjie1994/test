@@ -92,3 +92,6 @@ D:\RBC\Train\Train\obj\Debug\Train.Properties.Resources.resources
 D:\RBC\Train\Train\obj\Debug\Train.ShowMsg.ShowMsgForm.resources
 D:\RBC\Train\Train\obj\Debug\Train.Trains.SetLocForm.resources
 D:\RBC\Train\Train\obj\Debug\Train.csproj.GenerateResource.Cache
+D:\Train\Train\bin\Debug\Train.exe.config
+D:\Train\Train\obj\Debug\Train.exe
+D:\Train\Train\obj\Debug\Train.pdb

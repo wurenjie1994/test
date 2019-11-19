@@ -41,11 +41,10 @@ namespace Train.Utilities
         public byte[] RecvMsg()
         {
             byte[] recvBytes = null;
-            while(networkStream == null) Connect();
+            if (networkStream == null) return recvBytes;
             int len = networkStream.Read(buffer, 0, buffer.Length);
             if (len == 0)   //可能是通信已经断开
             {
-                Disconnect();
                 Connect();  //不一定连得上
             }
             if (len > 0)
@@ -62,6 +61,7 @@ namespace Train.Utilities
         /// <returns></returns>
         public byte[] RecvMsg(int n)
         {
+            if (networkStream == null) return null;
             byte[] recvBytes = new byte[n];
             int offset = lastReadLeftBytes;
             while (offset < n)
@@ -85,6 +85,7 @@ namespace Train.Utilities
             {
                 //如果EP已经被使用，则会报错：AddressAlreadyInUse，ErrorCode：10048
                 tcpClient = new TcpClient(localEP);
+                tcpClient.NoDelay = true;
                 //tcpClient.ExclusiveAddressUse = false;// permit reuse port
                 //如果Server端未开启，则会报错：ConnectionRefused，ErrorCode：10061
                 tcpClient.Connect(remoteEP);

@@ -85,7 +85,7 @@
             this.tbMeter.Location = new System.Drawing.Point(118, 131);
             this.tbMeter.Name = "tbMeter";
             this.tbMeter.Size = new System.Drawing.Size(42, 21);
-            this.tbMeter.TabIndex = 0;
+            this.tbMeter.TabIndex = 1;
             // 
             // btnOK
             // 

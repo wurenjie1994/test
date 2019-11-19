@@ -32,11 +32,22 @@ namespace Train.MessageHandlers
                 Message159 m159 = new Message159();
                 m159.SetAlternativePacket(new Packet003Train());
                 SendMsg(m159);
-                //System.Threading.Thread.Sleep(100);
-                //接着发送M157：SoM位置报告（含位置信息：Packet000）
-                Message157 m157 = new Message157();
-                m157.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
-                SendMsg(m157);
+                _M_MODE mode = mainForm.DriverConsoler.WorkMode;
+                // RBC handover and C2->C3 switch should not send M157,instead send M129
+                if (mh.CommType == _CommType.NRBC || mode != _M_MODE.FS
+                    && mode != _M_MODE.SN) 
+                {
+                    //接着发送M157：SoM位置报告（含位置信息：Packet000）
+                    Message157 m157 = new Message157();
+                    m157.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
+                    SendMsg(m157);
+                }
+                else  //处于FS模式而收到M32,说明是在RBC移交过程中
+                {
+                    Message129 m129 = new Message129();
+                    m129.SetPacket0or1(Trains.TrainDynamics.GetPacket0());
+                    SendMsg(m129);
+                }
                 return true;
             }
             //通信会话开始，这是由RBC 发起的
@@ -74,6 +85,7 @@ namespace Train.MessageHandlers
             }
             return false;
         }
+
         /// <summary>
         /// 检查RBC版本是否与车载版本一致
         /// </summary>

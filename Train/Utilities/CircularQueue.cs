@@ -8,9 +8,24 @@ namespace Train.Utilities
 {
     public class CircularQueue<T>
     {
-        private const int _capacity = 100+1;
-        private T[] _queue = new T[_capacity];
+        private const int DEFAULT_CAPACITY = 100 + 1;
+        private int _capacity;
+        private T[] _queue;
         private int _front=0, _rear = 0;
+
+        public CircularQueue()
+        {
+            _capacity = DEFAULT_CAPACITY;
+            _queue = new T[_capacity];
+        }
+
+        public CircularQueue(int capacity)
+        {
+            if (capacity <= 0)
+                throw new InvalidValueException("illegal capacity :" + capacity);
+            _capacity = capacity;
+            _queue =  new T[_capacity];
+        }
 
         public void Push(T item)
         {

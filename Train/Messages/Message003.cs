@@ -12,7 +12,7 @@ namespace Train.Messages
     public class Message003:AbstractRecvMessage
     {
         public const int MESSAGEID = 3;
-        Packet015 p15 = new Packet015();
+        //Packet015 p15 = new Packet015();
         //可选择的信息包，可能有多个
         List<AbstractPacket> apList=new List<AbstractPacket>();
 
@@ -34,9 +34,9 @@ namespace Train.Messages
             T_TRAIN=(uint)(resultArray[2]);
             M_ACK = resultArray[3] == 1;
             NID_LRBG = resultArray[4];
-            bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
-            p15.Resolve(bitArray);
-            pos = p15.GetPacketLength();
+            //bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
+            //p15.Resolve(bitArray);
+            //pos = p15.GetPacketLength();
 
             //获取还未被解析的数据
             bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
@@ -56,7 +56,7 @@ namespace Train.Messages
                 bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
             }
         }
-        public Packet015 GetPacket015() { return p15; }
+        //public Packet015 GetPacket015() { return p15; }
         public List<AbstractPacket> GetAlternativePacket()
         {
             return apList;

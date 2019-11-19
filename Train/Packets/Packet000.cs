@@ -17,8 +17,8 @@ namespace Train.Packets
         public int D_LRBG = -1;             //15bit
         public int Q_DIRLRBG = 2;          //2bit
         public int Q_DLRBG = 2;            //2bit
-        public int L_DOUBTOVER = -1;        //15bit
-        public int L_DOUBTUNDER = -1;       //15bit
+        public int L_DOUBTOVER = 0;        //15bit
+        public int L_DOUBTUNDER = 0;       //15bit
         public int Q_LENGTH = 2;           //2bit
         public int L_TRAININT = -1;         //15bit
         public int V_TRAIN = -1;            //7bit
@@ -33,7 +33,6 @@ namespace Train.Packets
         {
             NID_PACKET = 0;
         }
-
 
         public override BitArray Resolve()
         {
@@ -63,6 +62,27 @@ namespace Train.Packets
                 }
             }
             return bitArray;
+        }
+
+        public Packet000 Snapshot()
+        {
+            Packet000 dst = new Packet000();
+            dst.L_PACKET = L_PACKET;
+            dst.Q_SCALE = Q_SCALE;
+            dst.NID_LRBG = NID_LRBG;
+            dst.D_LRBG = D_LRBG;
+            dst.Q_DIRLRBG = Q_DIRLRBG;
+            dst.Q_DLRBG = Q_DLRBG;
+            dst.L_DOUBTOVER = L_DOUBTOVER;
+            dst.L_DOUBTUNDER = L_DOUBTUNDER;
+            dst.Q_LENGTH = Q_LENGTH;
+            dst.L_TRAININT = L_TRAININT;
+            dst.V_TRAIN = V_TRAIN;
+            dst.Q_DIRTRAIN = Q_DIRTRAIN;
+            dst.M_MODE = M_MODE;
+            dst.M_LEVEL = M_LEVEL;
+            dst.NID_STM = NID_STM;
+            return dst;
         }
     }
 }

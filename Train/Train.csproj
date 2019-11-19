@@ -60,6 +60,7 @@
     <Compile Include="MessageHandlers\EB_MH.cs" />
     <Compile Include="MessageHandlers\LocReport_MH.cs" />
     <Compile Include="MessageHandlers\MA_MH.cs" />
+    <Compile Include="MessageHandlers\Shunt_MH.cs" />
     <Compile Include="MessageHandlers\UltimateHandler_MH.cs" />
     <Compile Include="MessageHandlers\General_MH.cs" />
     <Compile Include="Messages\AbstractSendMessage.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Trains\SetLocForm.Designer.cs">
       <DependentUpon>SetLocForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Trains\TrainDynamics_part2.cs" />
     <Compile Include="Utilities\CircularQueue.cs" />
     <Compile Include="Utilities\Client.cs" />
     <Compile Include="GlobalVariables.cs" />
@@ -166,11 +168,12 @@
     <Compile Include="StaticSpeedLimits\TSR.cs" />
     <Compile Include="Trains\Switchlet.cs" />
     <Compile Include="Trains\Tracklet.cs" />
-    <Compile Include="Trains\TrainDynamics.cs" />
+    <Compile Include="Trains\TrainDynamics_part1.cs" />
     <Compile Include="Utilities\Bits.cs" />
     <Compile Include="Utilities\DebugInfo.cs" />
     <Compile Include="Utilities\Exceptions.cs" />
     <Compile Include="Utilities\IniFile.cs" />
+    <Compile Include="Utilities\TextInfo.cs" />
     <Compile Include="XmlResolve\XmlParser.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

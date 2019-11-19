@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Train.Messages;
 
 namespace Train.MessageHandlers
@@ -41,5 +42,30 @@ namespace Train.MessageHandlers
             m146.T_TRAIN2 = arm.T_TRAIN;
             SendMsg(m146);
         }
+
+        protected bool IsConnected()
+        {
+            if (mh.CommType == _CommType.RBC)
+                return mainForm.IsRBCConnected && Communication.IsConnected(_CommType.RBC);
+            if (mh.CommType == _CommType.NRBC)
+                return mainForm.IsNRBCConnected && Communication.IsConnected(_CommType.NRBC);
+            return false;
+        }
+
+        protected void JudgeDistance(double dis)
+        {
+            TrainLocation trainLocation = mainForm.GetTrainState().TrainLocation;
+            double startLoc = trainLocation.LeftLoc;
+            const int ERROR = 1;
+            while (Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
+            {
+                double curLoc = trainLocation.LeftLoc;
+                double disRun = Math.Abs(curLoc - startLoc);
+                if (Math.Abs(disRun - dis) < ERROR)
+                    break;
+                Thread.Sleep(10);
+            }
+        }
+
     }
 }

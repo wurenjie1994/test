@@ -38,14 +38,7 @@ namespace Train.Packets
             NID_TSR = resultArray[4];
             D_TSR = resultArray[5];
             L_TSR = resultArray[6];
-            if (resultArray[7] == 1)
-            {
-                Q_FRONT = true;
-            }
-            else
-            {
-                Q_FRONT = false;
-            }
+            Q_FRONT = resultArray[7] == 1;
             V_TSR = resultArray[8];
         }
 
@@ -57,6 +50,8 @@ namespace Train.Packets
             tsr.Distance = D_TSR * scale;
             tsr.Velocity = V_TSR * 5 / 3.6;
             tsr.Front = Q_FRONT;
+            tsr.Qdir = Q_DIR;
         }
+
     }
 }

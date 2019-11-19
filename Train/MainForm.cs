@@ -15,35 +15,46 @@ using Train.XmlResolve;
 using Train.Data;
 using Train.MessageHandlers;
 using System.IO;
+using System.Net.Sockets;
 
 namespace Train
 {
     public partial class MainForm : Form
     {
         private DriverConsolerState driverConsoler = DriverConsolerState.GetDriverConsolerA();
+        public DriverConsolerState DriverConsoler { get { return driverConsoler; } }
         private CircularQueue<ListViewContent> recvMsgQueue = new CircularQueue<ListViewContent>();
         private CircularQueue<ListViewContent> sendMsgQueue = new CircularQueue<ListViewContent>();
         private volatile bool isISDNIFConnected = false;//to mark the status of connection with ISDNIF 
         private volatile bool isRBCConnected = false;
         public bool IsRBCConnected { get { return isRBCConnected; } }
+        private volatile bool isNRBCConnected = false;
+        public bool IsNRBCConnected { get { return isNRBCConnected; } }
         private bool isVersionCompatible = true;
         public bool IsVersionCompatible { get { return isVersionCompatible; } }
+        private const int BOUNDARY_POINT = 57406;   // boundary of RBC1 and RBC2,i.e. RBC and NRBC
         Database database = new Database();
 
         public MainForm()
         {
             InitializeComponent();
         }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             database.Init();
             StartTrain();
             StartComm();
-            rbWorkMode_CheckedChanged(rbSB, null);//一开始列车处于SB模式
-            rbSB.Checked = true;
-            rbControlLevel_CheckedChanged(rbCTCS_2, null);
+            rbSB.Checked = true;    // 一开始列车处于SB模式
             rbCTCS_2.Checked = true;
+            rbDown.Checked = true;
         }
+
+        private _CommType CheckRBCRegion()
+        {
+            return trainState.TrainLocation.LeftLoc > BOUNDARY_POINT ? _CommType.NRBC : _CommType.RBC;
+        }
+
         #region 菜单项
         private void ConnectTSMI_Click(object sender, EventArgs e)
         {
@@ -63,13 +74,18 @@ namespace Train
         {
             if (sender == disRBCToolStripMenuItem)
             {
-                SendMsg(new Message156(), _CommType.RBC);
+                Message150 m150 = new Message150();
+                m150.SetPacket0or1(TrainDynamics.GetPacket0());
+                SendMsg(m150, _CommType.RBC);
                 Communication.Disconnect(_CommType.RBC);
                 //isISDNIFConnected = false;
                 //isRBCConnected = false;
             }
-            else if (sender == disNRBCToolStripMenuItem) Communication.Disconnect(_CommType.NRBC);
-            //MessageBox.Show("要经过2MSL时间（约2分钟）后才能再次发起连接！");
+            else if (sender == disNRBCToolStripMenuItem)
+            {
+                Communication.Disconnect(_CommType.NRBC);
+                isNRBCConnected = false;
+            }
         }
 
 
@@ -84,24 +100,23 @@ namespace Train
             版本不兼容ToolStripMenuItem.Checked = ! isVersionCompatible;
         }
 
-
-
         //发送一次指定消息
         private void SendMessagetTSMI_Click(object sender, EventArgs e)
         {
+            _CommType commType = CheckRBCRegion();
             if(sender == Message129ToolStripMenuItem)
             {
                 Message129 m129 = new Message129();
                 m129.SetPacket0or1(TrainDynamics.GetPacket0());
                 //Packet011 are some static configurations,so don't need to set its field here.
-                SendMsg(m129, _CommType.RBC);
+                SendMsg(m129, commType);
             }
             if(sender == Msg132NoPacketToolStripMenuItem)
             {
                 Message132 m132 = new Message132();
                 if (trainDynamic == null) return;
                 m132.SetPacket0or1(TrainDynamics.GetPacket0());
-                SendMsg(m132, _CommType.RBC);
+                SendMsg(m132, commType);
             }
             if (sender == Msg132Packet9ToolStripMenuItem)
             {
@@ -109,57 +124,60 @@ namespace Train
                 if (trainDynamic == null) return;
                 m132.SetPacket0or1(TrainDynamics.GetPacket0());
                 m132.SetAlternativePacket(new Packet009());  //设置可选择的信息包9
-                SendMsg(m132, _CommType.RBC);
+                SendMsg(m132, commType);
             }
             if (sender == Msg136NoPacketToolStripMenuItem)
             {
                 Message136 m136 = new Message136();
                 if (trainDynamic == null) return;
                 m136.SetPacket0or1(TrainDynamics.GetPacket0());
-                SendMsg(m136, _CommType.RBC);
+                SendMsg(m136, commType);
             }
             if (sender == Message150ToolStripMenuItem)
             {
                 Message150 m150 = new Message150();
                 if (trainDynamic == null) return;
                 m150.SetPacket0or1(TrainDynamics.GetPacket0());
-                SendMsg(m150, _CommType.RBC);
+                SendMsg(m150, commType);
             }
             if (sender == Message155ToolStripMenuItem)
             {
                 Message155 m155 = new Message155();
-                SendMsg(m155, _CommType.RBC);
+                SendMsg(m155, commType);
             }
             if(sender == Message156ToolStripMenuItem)
             {
                 Message156 m156 = new Message156();
-                SendMsg(m156, _CommType.RBC);
+                SendMsg(m156, commType);
             }
             if(sender == Msg157NoPacketToolStripMenuItem)
             {
                 Message157 m157 = new Message157();
                 if (trainDynamic == null) return;
                 m157.SetPacket0or1(TrainDynamics.GetPacket0());
-                SendMsg(m157, _CommType.RBC);
+                SendMsg(m157, commType);
             }
             if(sender == Msg159NoPacketToolStripMenuItem)
             {
                 Message159 m159 = new Message159();
-                SendMsg(m159, _CommType.RBC);
+                SendMsg(m159, commType);
             }
             if(sender == Msg159Packet3ToolStripMenuItem)
             {
                 Message159 m159 = new Message159();
                 m159.SetAlternativePacket(new Packet003Train());
-                SendMsg(m159, _CommType.RBC);
+                SendMsg(m159, commType);
             }
         }
         #endregion
 
         #region 主界面
+        // RadioButton.Checked状态由true变为false，或是由false变为true，都会触发此事件
         private void rbCabChoose_CheckedChanged(object sender, EventArgs e)
         {
-            String name = ((RadioButton)sender).Name;
+            RadioButton rb = ((RadioButton)sender);
+            if (rb.Checked == false) return;
+            String name = rb.Name;
             DriverConsolerState lastState = driverConsoler;
             if (name.Equals("rbCabA"))
                 driverConsoler = DriverConsolerState.GetDriverConsolerA().CopyOf(lastState);
@@ -170,13 +188,27 @@ namespace Train
 
         private void rbDirectionChoose_CheckedChanged(object sender, EventArgs e)
         {
-            String name = ((RadioButton)sender).Name;
+            RadioButton rb = ((RadioButton)sender);
+            if (rb.Checked == false) return;
+            String name = rb.Name;
             if (name.Contains("Forward"))
                 driverConsoler.DriveDirection = DriveDirection.RMF;
             else if (name.Contains("Backward"))
                 driverConsoler.DriveDirection = DriveDirection.RMR;
             else driverConsoler.DriveDirection = DriveDirection.ZERO;
         }
+
+        private void rbLine_CheckedChanged(object sender, EventArgs e)
+        {
+            RadioButton rb = ((RadioButton)sender);
+            if (rb.Checked == false) return;
+            String name = rb.Name;
+            if (name.Contains("Up"))
+                driverConsoler.Line = _Line.UP;
+            else
+                driverConsoler.Line = _Line.DOWN;
+        }
+
         //需要在EB_MH 中调用这个函数
         public void rbWorkMode_CheckedChanged(object sender, EventArgs e)
         {
@@ -194,22 +226,34 @@ namespace Train
                     }
                 }
             }
-            else
+            else    // sender is RadioButton
             {
                 RadioButton rb = (RadioButton)sender;
-                if (rb.Checked == false) return;    //由从true变为false的那个RadioButton产生的事件，直接返回
+                if (rb.Checked == false) // 由从true变为false的那个RadioButton产生的事件，直接返回
+                {
+                    if (rbSH.Checked && driverConsoler.WorkMode != _M_MODE.SH)
+                    {
+                        rb.Checked = true;
+                        RequestForSH(); // request for Shunting mode
+                    }
+                    return;
+                } 
+               
                 foreach (_M_MODE wm in Enum.GetValues(typeof(_M_MODE)))
+                {
                     if (rb.Name.Contains(wm.ToString()))
                     {
                         driverConsoler.WorkMode = wm;
                         break;
                     }
+                }
             }
-            if (driverConsoler.WorkMode == _M_MODE.TR)    //需要询问司机是否进入PT模式
+            if (driverConsoler.WorkMode == _M_MODE.TR)    // 需要询问司机是否进入PT模式
             {
                 AskSwitchToPT();
             }
         }
+
         //需要在MA_MH中调用这个函数
         public void rbControlLevel_CheckedChanged(object sender, EventArgs e)
         {
@@ -255,7 +299,8 @@ namespace Train
             //其它情况下，执行注销过程
             Message150 m150 = new Message150();
             m150.SetPacket0or1(TrainDynamics.GetPacket0());
-            SendMsg(m150, _CommType.RBC);
+            _CommType commType = CheckRBCRegion();
+            SendMsg(m150, commType);
             //列车手动进入C2等级导致的注销过程由RBC发起，不需要在这里写
         }
 
@@ -271,6 +316,13 @@ namespace Train
             driverConsoler.SteerValue = trackBarSteer.Value - 10;
         }
         
+        private void RequestForSH()
+        {
+            Message130 m130 = new Message130();
+            m130.SetPacket0or1(TrainDynamics.GetPacket0());
+            SendMsg(m130, _CommType.RBC);
+        }
+
         private void AskSwitchToPT()
         {
             DialogResult dr = MessageBox.Show("是否进入PT模式？","",MessageBoxButtons.YesNo);
@@ -385,6 +437,15 @@ namespace Train
             //纯文本消息
             while (!General_MH.PureText.IsEmpty())
                 tbPureText.Text += General_MH.PureText.Pop().ToString() + "\r\n";
+            // update TextInfo ,too lazy to write a new function
+            string text = TextInfo.GetAllText();
+            if(text.Length> tbTextInfo.Text.Length || 
+                (! text.Equals(tbTextInfo.Text)))
+            {
+                tbTextInfo.Text = text;
+                tbTextInfo.SelectionStart = text.Length;
+                tbTextInfo.ScrollToCaret();
+            }
         }
         public void UpdateVehicleInterfaceFun()
         {
@@ -405,7 +466,6 @@ namespace Train
             string fileName = System.IO.Directory.GetCurrentDirectory() + "\\CommConfig.ini";
             Communication.Init(fileName);
             updateListView += UpdateListView;
-            StartRecvMsgModule(_CommType.RBC);
         }
 
         #region 发包模块
@@ -414,11 +474,20 @@ namespace Train
         /// （除了与ISDNIF接口的建立连接和释放连接过程）
         /// </summary>
         /// <param name="asm"></param>
+        /// <param name="commType"></param>
         public void SendMsg(AbstractSendMessage asm,_CommType commType)
         {
             byte[] sendData = asm.Resolve();
-            sendData = XmlParser.SendData(sendData);
-            Communication.SendMsg(sendData, commType);
+            if(commType == _CommType.RBC)
+            {
+                sendData = XmlParser.SendData(sendData);
+            }
+            try
+            {
+                Communication.SendMsg(sendData, commType);
+            }
+            catch (IOException) { }
+            
             ListViewContent lvc = new ListViewContent(DateTime.Now, asm.NID_MESSAGE, commType, asm);
             this.BeginInvoke(updateListView, lvSendMsg, sendMsgQueue, lvc);
         }
@@ -453,15 +522,22 @@ namespace Train
                 try
                 {
                     byte[] recvData = Communication.RecvMsg(_CommType.NRBC);
-                    if (recvData == null || recvData.Length==0) continue;
+                    if (recvData == null || recvData.Length == 0) continue;
                     AbstractRecvMessage arm = AbstractRecvMessage.GetMessage(recvData);
+                    isNRBCConnected = arm.GetMessageID() != 39;
                     nrbcMsgHandler.Handling(arm);
 
-                    ListViewContent lvc = new ListViewContent(DateTime.Now,arm.NID_MESSAGE,_CommType.NRBC,arm);
+                    ListViewContent lvc = new ListViewContent(DateTime.Now, arm.NID_MESSAGE, _CommType.NRBC, arm);
                     this.BeginInvoke(updateListView, lvRecvMsg, recvMsgQueue, lvc);
                 }
-                catch (Exception)
+                catch (SocketException se)
                 { }
+                catch (IOException ioe)
+                { }
+                catch(Exception ex)
+                {
+                    DebugInfo.WriteToFile(ex.ToString(), "RecvFromNRBC");
+                }
             }
         }
 
@@ -479,6 +555,7 @@ namespace Train
                         if (!isISDNIFConnected) // received disconnect indication;
                         {
                             isRBCConnected = false;
+                            Utilities.TextInfo.Add("received disconnect indication from ISDNIF.");
                             continue;
                         }
                         recvData = XmlParser.RecvData(recvData);
@@ -491,7 +568,9 @@ namespace Train
                         continue;
                     }
                     AbstractRecvMessage arm = AbstractRecvMessage.GetMessage(recvData);
+                   
                     isRBCConnected = arm.GetMessageID() != 39;
+                    if (!isRBCConnected) isISDNIFConnected = false;
                     rbcMsgHandler.Handling(arm);
 
                     ListViewContent lvc = new ListViewContent(DateTime.Now, arm.NID_MESSAGE, _CommType.RBC, arm);
@@ -505,6 +584,7 @@ namespace Train
                 }
             }
         }
+
         private void ListView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ListView listView = (ListView)sender;
@@ -544,6 +624,9 @@ namespace Train
                     listView.Items.Add(GetItem(v));
                 }
             }
+            int count = listView.Items.Count;
+            int lastIndex = count > 1 ? count - 1 : 0;
+            listView.Items[lastIndex].EnsureVisible(); //make scroll bar at the end.
             listView.EndUpdate();
             return; //不加这个return的话，方法会连续执行两次，不知道原因是什么
         }
@@ -665,5 +748,6 @@ namespace Train
             }
         }
         #endregion
+
     }
 }

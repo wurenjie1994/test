@@ -15,7 +15,7 @@ namespace Train.Messages
     {      
         public const int MESSAGEID = 28;
         uint T_TRAIN2;
-        AbstractPacket ap;          //可选择的信息包
+        //AbstractPacket ap;          //可选择的信息包
 
         public override void Resolve(byte[] recvData)
         {
@@ -33,23 +33,11 @@ namespace Train.Messages
             NID_MESSAGE = resultArray[0];
             L_MESSAGE = resultArray[1];
             T_TRAIN=(uint)(resultArray[2]);
-            if (resultArray[3] == 1)
-            {
-                M_ACK = true;
-            }
-            else
-            {
-                M_ACK = false;
-            }
+            M_ACK = (resultArray[3] == 1);
             NID_LRBG = resultArray[4];
             T_TRAIN2 = Convert.ToUInt32(resultArray[5]);
-
-            bitArray = Bits.SubBitArray(bitArray, pos, bitArray.Length - pos);
-            pos = 0;
-            int ID = Bits.ToInt(bitArray, ref pos, 8); //NID_PACKET
-            ap = AbstractPacket.GetPacket(ID);
-            ap.Resolve(bitArray);
         }
+
         public override int GetMessageID()
         {
             return MESSAGEID;

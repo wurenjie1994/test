@@ -41,5 +41,10 @@ namespace Train.Packets
             NID_RADIO = (ulong)Bits.ToLong(bitArray, ref pos, 64);
             Q_SLEEPSESSION = bitArray[pos++];           
         }
+
+        public double GetDrbctr()
+        {
+            return D_RBCTR * GetScale(Q_SCALE);
+        }
     }
 }
