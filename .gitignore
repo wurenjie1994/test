@@ -1,2 +1,4 @@
 /TestResults
 **/Tmp
+.vs
+test.txt
